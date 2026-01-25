@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuration - Pension Scheme Cost Calculator</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: #4fc3f7;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #90a4ae;
+            font-size: 1.1rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #4fc3f7;
+            text-decoration: none;
+            margin-bottom: 24px;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+
+        .back-link:hover {
+            opacity: 0.8;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .card h2 {
+            color: #4fc3f7;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(79, 195, 247, 0.3);
+        }
+
+        .card .section-description {
+            color: #78909c;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+
+        .config-group {
+            margin-bottom: 20px;
+        }
+
+        .config-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .config-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #b0bec5;
+        }
+
+        .config-group .help-text {
+            font-size: 0.8rem;
+            color: #78909c;
+            margin-bottom: 8px;
+        }
+
+        .config-row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .config-item {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .config-item label {
+            font-size: 0.85rem;
+            color: #90a4ae;
+        }
+
+        input[type="number"],
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #263238;
+            color: #e0e0e0;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus,
+        input[type="text"]:focus {
+            border-color: #4fc3f7;
+        }
+
+        .multiplier-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 16px;
+        }
+
+        .multiplier-item {
+            background: #263238;
+            padding: 16px;
+            border-radius: 8px;
+        }
+
+        .multiplier-item label {
+            display: block;
+            font-size: 0.85rem;
+            color: #90a4ae;
+            margin-bottom: 8px;
+        }
+
+        .multiplier-item input {
+            width: 100%;
+        }
+
+        .actions {
+            display: flex;
+            gap: 16px;
+            margin-top: 32px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 16px 32px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: #4fc3f7;
+            color: #1a1a2e;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 4px 20px rgba(79, 195, 247, 0.4);
+        }
+
+        .btn-secondary {
+            background: #37474f;
+            color: #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-danger {
+            background: #d32f2f;
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            box-shadow: 0 4px 20px rgba(211, 47, 47, 0.4);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #2e7d32;
+            color: #fff;
+            padding: 16px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .formula-display {
+            background: #1a1a2e;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.85rem;
+            color: #81c784;
+            margin-top: 12px;
+            overflow-x: auto;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 16px;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Calculator</a>
+
+        <header>
+            <h1>Configuration</h1>
+            <p class="subtitle">Adjust the formulas and multipliers that drive estimates</p>
+        </header>
+
+        <!-- General Settings -->
+        <div class="card">
+            <h2>General Settings</h2>
+            <p class="section-description">Core settings that affect all calculations</p>
+
+            <div class="config-row">
+                <div class="config-item">
+                    <label>Hourly Rate (£)</label>
+                    <input type="number" id="hourlyRate" min="0" step="5">
+                </div>
+                <div class="config-item">
+                    <label>Hours per Day</label>
+                    <input type="number" id="hoursPerDay" min="1" max="24" step="0.5">
+                </div>
+                <div class="config-item">
+                    <label>PM Overhead (%)</label>
+                    <input type="number" id="pmOverhead" min="0" max="100" step="1">
+                </div>
+            </div>
+        </div>
+
+        <!-- Analysis Phase -->
+        <div class="card">
+            <h2>Analysis & Specification</h2>
+            <p class="section-description">Hours allocated for understanding scheme rules and writing specifications</p>
+
+            <div class="config-row">
+                <div class="config-item">
+                    <label>Base Hours</label>
+                    <p class="help-text">Starting hours regardless of complexity</p>
+                    <input type="number" id="analysisBase" min="0" step="1">
+                </div>
+                <div class="config-item">
+                    <label>Per Category (hrs)</label>
+                    <p class="help-text">Additional hours per benefit category</p>
+                    <input type="number" id="analysisPerCategory" min="0" step="1">
+                </div>
+                <div class="config-item">
+                    <label>Per Tranche (hrs)</label>
+                    <p class="help-text">Additional hours per member tranche</p>
+                    <input type="number" id="analysisPerTranche" min="0" step="1">
+                </div>
+            </div>
+
+            <div class="formula-display">
+                Analysis Hours = Base + (Categories × Per Category) + (Tranches × Per Tranche)
+            </div>
+        </div>
+
+        <!-- Test Case Design -->
+        <div class="card">
+            <h2>Test Case Design & Matrix</h2>
+            <p class="section-description">Hours for designing test cases and building the test matrix</p>
+
+            <div class="config-group">
+                <label>Hours per Test Case</label>
+                <p class="help-text">Time to design and document each test case</p>
+                <input type="number" id="testDesignPerCase" min="0" step="0.1" style="max-width: 200px;">
+            </div>
+
+            <div class="formula-display">
+                Test Design Hours = Number of Test Cases × Hours per Case
+            </div>
+        </div>
+
+        <!-- Coding Phase -->
+        <div class="card">
+            <h2>Coding</h2>
+            <p class="section-description">Hours for programming the calculations</p>
+
+            <div class="config-group">
+                <label>Base Hours per Calculation Type</label>
+                <p class="help-text">Hours to code a single calculation type before complexity multiplier</p>
+                <input type="number" id="codingBasePerCalc" min="0" step="1" style="max-width: 200px;">
+            </div>
+
+            <div class="config-group">
+                <label>Scheme Complexity Multipliers</label>
+                <p class="help-text">Multiplier applied based on overall scheme complexity</p>
+                <div class="multiplier-grid">
+                    <div class="multiplier-item">
+                        <label>Simple</label>
+                        <input type="number" id="coding-simple" min="0" step="0.1">
+                    </div>
+                    <div class="multiplier-item">
+                        <label>Moderate</label>
+                        <input type="number" id="coding-moderate" min="0" step="0.1">
+                    </div>
+                    <div class="multiplier-item">
+                        <label>Complex</label>
+                        <input type="number" id="coding-complex" min="0" step="0.1">
+                    </div>
+                    <div class="multiplier-item">
+                        <label>Very Complex</label>
+                        <input type="number" id="coding-very-complex" min="0" step="0.1">
+                    </div>
+                </div>
+            </div>
+
+            <div class="formula-display">
+                Coding Hours = Calc Types × Base Hours × Complexity Multiplier × (1 + (Categories - 1) × 0.1)
+            </div>
+        </div>
+
+        <!-- Testing Phase -->
+        <div class="card">
+            <h2>Testing & Iteration</h2>
+            <p class="section-description">Hours for executing tests and iterating with coding</p>
+
+            <div class="config-group">
+                <label>Hours per Test Case</label>
+                <p class="help-text">Base hours to execute and verify each test case</p>
+                <input type="number" id="testingHoursPerCase" min="0" step="0.1" style="max-width: 200px;">
+            </div>
+
+            <div class="config-group">
+                <label>Testing Complexity Multipliers</label>
+                <p class="help-text">Multiplier for testing based on scheme complexity (iteration cycles)</p>
+                <div class="multiplier-grid">
+                    <div class="multiplier-item">
+                        <label>Simple</label>
+                        <input type="number" id="testing-simple" min="0" step="0.1">
+                    </div>
+                    <div class="multiplier-item">
+                        <label>Moderate</label>
+                        <input type="number" id="testing-moderate" min="0" step="0.1">
+                    </div>
+                    <div class="multiplier-item">
+                        <label>Complex</label>
+                        <input type="number" id="testing-complex" min="0" step="0.1">
+                    </div>
+                    <div class="multiplier-item">
+                        <label>Very Complex</label>
+                        <input type="number" id="testing-very-complex" min="0" step="0.1">
+                    </div>
+                </div>
+            </div>
+
+            <div class="formula-display">
+                Testing Hours = Test Cases × Hours per Case × Complexity Multiplier
+            </div>
+        </div>
+
+        <!-- UAT -->
+        <div class="card">
+            <h2>UAT Support & Sign-off</h2>
+            <p class="section-description">Hours for supporting client user acceptance testing</p>
+
+            <div class="multiplier-grid">
+                <div class="multiplier-item">
+                    <label>Light UAT</label>
+                    <input type="number" id="uat-light" min="0" step="1">
+                </div>
+                <div class="multiplier-item">
+                    <label>Standard UAT</label>
+                    <input type="number" id="uat-standard" min="0" step="1">
+                </div>
+                <div class="multiplier-item">
+                    <label>Intensive UAT</label>
+                    <input type="number" id="uat-intensive" min="0" step="1">
+                </div>
+            </div>
+        </div>
+
+        <!-- Complexity Thresholds -->
+        <div class="card">
+            <h2>Complexity Thresholds</h2>
+            <p class="section-description">Hour thresholds for complexity badge display</p>
+
+            <div class="config-row">
+                <div class="config-item">
+                    <label>Low/Medium boundary</label>
+                    <input type="number" id="threshold-low" min="0" step="10">
+                </div>
+                <div class="config-item">
+                    <label>Medium/High boundary</label>
+                    <input type="number" id="threshold-medium" min="0" step="10">
+                </div>
+                <div class="config-item">
+                    <label>High/Very High boundary</label>
+                    <input type="number" id="threshold-high" min="0" step="10">
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn-primary" onclick="saveConfig()">Save Configuration</button>
+            <button class="btn-secondary" onclick="exportConfig()">Export Config</button>
+            <button class="btn-secondary" onclick="importConfig()">Import Config</button>
+            <button class="btn-danger" onclick="resetConfig()">Reset to Defaults</button>
+        </div>
+
+        <input type="file" id="importFile" accept=".json" style="display: none;">
+    </div>
+
+    <div class="toast" id="toast">Configuration saved!</div>
+
+    <script>
+        // Default configuration
+        const DEFAULT_CONFIG = {
+            hourlyRate: 100,
+            hoursPerDay: 7.5,
+            pmOverhead: 15,
+
+            analysisBase: 16,
+            analysisPerCategory: 8,
+            analysisPerTranche: 4,
+
+            testDesignPerCase: 0.5,
+
+            codingBasePerCalc: 16,
+            codingComplexityMultiplier: {
+                'simple': 1,
+                'moderate': 1.5,
+                'complex': 2.5,
+                'very-complex': 4
+            },
+
+            testingHoursPerCase: 0.5,
+            testingComplexityMultiplier: {
+                'simple': 1,
+                'moderate': 1.3,
+                'complex': 1.8,
+                'very-complex': 2.5
+            },
+
+            uatHours: {
+                'light': 16,
+                'standard': 40,
+                'intensive': 80
+            },
+
+            complexityThresholds: {
+                low: 200,
+                medium: 500,
+                high: 1000
+            }
+        };
+
+        // Load config from localStorage or use defaults
+        function loadConfig() {
+            const saved = localStorage.getItem('calcCostConfig');
+            const config = saved ? { ...DEFAULT_CONFIG, ...JSON.parse(saved) } : DEFAULT_CONFIG;
+
+            // Populate form fields
+            document.getElementById('hourlyRate').value = config.hourlyRate;
+            document.getElementById('hoursPerDay').value = config.hoursPerDay;
+            document.getElementById('pmOverhead').value = config.pmOverhead;
+
+            document.getElementById('analysisBase').value = config.analysisBase;
+            document.getElementById('analysisPerCategory').value = config.analysisPerCategory;
+            document.getElementById('analysisPerTranche').value = config.analysisPerTranche;
+
+            document.getElementById('testDesignPerCase').value = config.testDesignPerCase;
+
+            document.getElementById('codingBasePerCalc').value = config.codingBasePerCalc;
+            document.getElementById('coding-simple').value = config.codingComplexityMultiplier?.simple || DEFAULT_CONFIG.codingComplexityMultiplier.simple;
+            document.getElementById('coding-moderate').value = config.codingComplexityMultiplier?.moderate || DEFAULT_CONFIG.codingComplexityMultiplier.moderate;
+            document.getElementById('coding-complex').value = config.codingComplexityMultiplier?.complex || DEFAULT_CONFIG.codingComplexityMultiplier.complex;
+            document.getElementById('coding-very-complex').value = config.codingComplexityMultiplier?.['very-complex'] || DEFAULT_CONFIG.codingComplexityMultiplier['very-complex'];
+
+            document.getElementById('testingHoursPerCase').value = config.testingHoursPerCase;
+            document.getElementById('testing-simple').value = config.testingComplexityMultiplier?.simple || DEFAULT_CONFIG.testingComplexityMultiplier.simple;
+            document.getElementById('testing-moderate').value = config.testingComplexityMultiplier?.moderate || DEFAULT_CONFIG.testingComplexityMultiplier.moderate;
+            document.getElementById('testing-complex').value = config.testingComplexityMultiplier?.complex || DEFAULT_CONFIG.testingComplexityMultiplier.complex;
+            document.getElementById('testing-very-complex').value = config.testingComplexityMultiplier?.['very-complex'] || DEFAULT_CONFIG.testingComplexityMultiplier['very-complex'];
+
+            document.getElementById('uat-light').value = config.uatHours?.light || DEFAULT_CONFIG.uatHours.light;
+            document.getElementById('uat-standard').value = config.uatHours?.standard || DEFAULT_CONFIG.uatHours.standard;
+            document.getElementById('uat-intensive').value = config.uatHours?.intensive || DEFAULT_CONFIG.uatHours.intensive;
+
+            document.getElementById('threshold-low').value = config.complexityThresholds?.low || DEFAULT_CONFIG.complexityThresholds.low;
+            document.getElementById('threshold-medium').value = config.complexityThresholds?.medium || DEFAULT_CONFIG.complexityThresholds.medium;
+            document.getElementById('threshold-high').value = config.complexityThresholds?.high || DEFAULT_CONFIG.complexityThresholds.high;
+        }
+
+        // Save config to localStorage
+        function saveConfig() {
+            const config = {
+                hourlyRate: parseFloat(document.getElementById('hourlyRate').value),
+                hoursPerDay: parseFloat(document.getElementById('hoursPerDay').value),
+                pmOverhead: parseFloat(document.getElementById('pmOverhead').value),
+
+                analysisBase: parseFloat(document.getElementById('analysisBase').value),
+                analysisPerCategory: parseFloat(document.getElementById('analysisPerCategory').value),
+                analysisPerTranche: parseFloat(document.getElementById('analysisPerTranche').value),
+
+                testDesignPerCase: parseFloat(document.getElementById('testDesignPerCase').value),
+
+                codingBasePerCalc: parseFloat(document.getElementById('codingBasePerCalc').value),
+                codingComplexityMultiplier: {
+                    'simple': parseFloat(document.getElementById('coding-simple').value),
+                    'moderate': parseFloat(document.getElementById('coding-moderate').value),
+                    'complex': parseFloat(document.getElementById('coding-complex').value),
+                    'very-complex': parseFloat(document.getElementById('coding-very-complex').value)
+                },
+
+                testingHoursPerCase: parseFloat(document.getElementById('testingHoursPerCase').value),
+                testingComplexityMultiplier: {
+                    'simple': parseFloat(document.getElementById('testing-simple').value),
+                    'moderate': parseFloat(document.getElementById('testing-moderate').value),
+                    'complex': parseFloat(document.getElementById('testing-complex').value),
+                    'very-complex': parseFloat(document.getElementById('testing-very-complex').value)
+                },
+
+                uatHours: {
+                    'light': parseFloat(document.getElementById('uat-light').value),
+                    'standard': parseFloat(document.getElementById('uat-standard').value),
+                    'intensive': parseFloat(document.getElementById('uat-intensive').value)
+                },
+
+                complexityThresholds: {
+                    low: parseFloat(document.getElementById('threshold-low').value),
+                    medium: parseFloat(document.getElementById('threshold-medium').value),
+                    high: parseFloat(document.getElementById('threshold-high').value)
+                }
+            };
+
+            localStorage.setItem('calcCostConfig', JSON.stringify(config));
+            showToast('Configuration saved!');
+        }
+
+        // Export config as JSON file
+        function exportConfig() {
+            saveConfig(); // Save first
+            const config = localStorage.getItem('calcCostConfig');
+            const blob = new Blob([config], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'calc-cost-config.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('Configuration exported!');
+        }
+
+        // Import config from JSON file
+        function importConfig() {
+            document.getElementById('importFile').click();
+        }
+
+        document.getElementById('importFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const config = JSON.parse(e.target.result);
+                        localStorage.setItem('calcCostConfig', JSON.stringify(config));
+                        loadConfig();
+                        showToast('Configuration imported!');
+                    } catch (err) {
+                        alert('Error reading config file: ' + err.message);
+                    }
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        // Reset to defaults
+        function resetConfig() {
+            if (confirm('Are you sure you want to reset all configuration to defaults?')) {
+                localStorage.removeItem('calcCostConfig');
+                loadConfig();
+                showToast('Configuration reset to defaults!');
+            }
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Initialize
+        loadConfig();
+    </script>
+</body>
+</html>
