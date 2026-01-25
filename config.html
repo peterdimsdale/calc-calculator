@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configuration - Pension Scheme Cost Calculator</title>
+    <title>Configuration | XPS Calcs Cost Calculator</title>
     <style>
         * {
             box-sizing: border-box;
@@ -11,70 +11,235 @@
             padding: 0;
         }
 
+        :root {
+            --xps-blue: #4A9FD9;
+            --xps-blue-light: #6BB3E3;
+            --xps-blue-dark: #3B8AC4;
+            --xps-charcoal: #2D3539;
+            --xps-charcoal-light: #3D474C;
+            --xps-charcoal-dark: #1E2528;
+            --xps-dark-bg: #161B1E;
+            --xps-card-bg: #232A2E;
+            --xps-text: #F0F2F3;
+            --xps-text-muted: #8A9499;
+            --xps-border: rgba(255, 255, 255, 0.1);
+            --xps-success: #4CAF50;
+            --xps-danger: #F44336;
+        }
+
+        [data-theme="light"] {
+            --xps-charcoal: #E8EAEC;
+            --xps-charcoal-light: #F5F6F7;
+            --xps-charcoal-dark: #D0D4D8;
+            --xps-dark-bg: #F0F2F4;
+            --xps-card-bg: #FFFFFF;
+            --xps-text: #1E2528;
+            --xps-text-muted: #5A6469;
+            --xps-border: rgba(0, 0, 0, 0.1);
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--xps-dark-bg);
             min-height: 100vh;
-            color: #e0e0e0;
+            color: var(--xps-text);
             line-height: 1.6;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
+        .header-bar {
+            background: var(--xps-charcoal);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 3px solid var(--xps-blue);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 40px;
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
 
-        h1 {
-            font-size: 2.2rem;
-            color: #4fc3f7;
-            margin-bottom: 10px;
+        .logo-container svg {
+            height: 36px;
+            width: auto;
         }
 
-        .subtitle {
-            color: #90a4ae;
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: var(--xps-text);
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text strong {
+            font-weight: 700;
+        }
+
+        .logo-divider {
+            width: 1px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .app-title {
             font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--xps-text);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
         }
 
         .back-link {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            color: #4fc3f7;
+            color: var(--xps-text-muted);
             text-decoration: none;
-            margin-bottom: 24px;
-            font-weight: 500;
-            transition: opacity 0.2s;
+            font-size: 0.9rem;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            transition: all 0.2s;
+            border: 1px solid var(--xps-border);
         }
 
         .back-link:hover {
-            opacity: 0.8;
+            color: var(--xps-blue);
+            background: rgba(74, 159, 217, 0.15);
+            border-color: var(--xps-blue);
+        }
+
+        .theme-toggle {
+            display: flex;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            padding: 3px;
+            gap: 2px;
+        }
+
+        .theme-toggle button {
+            padding: 8px 14px;
+            border: none;
+            background: transparent;
+            color: var(--xps-text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .theme-toggle button:hover {
+            color: var(--xps-text);
+        }
+
+        .theme-toggle button.active {
+            background: var(--xps-blue);
+            color: var(--xps-charcoal-dark);
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        .page-header {
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--xps-border);
+        }
+
+        .page-header h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--xps-text);
+            margin-bottom: 8px;
+        }
+
+        .page-header .subtitle {
+            color: var(--xps-text-muted);
+            font-size: 1rem;
+        }
+
+        .unit-toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding: 16px;
+            background: var(--xps-charcoal);
+            border-radius: 8px;
+        }
+
+        .unit-toggle-container > span {
+            color: var(--xps-text-muted);
+            font-size: 0.9rem;
+        }
+
+        .unit-toggle {
+            display: flex;
+            background: var(--xps-charcoal-dark);
+            border-radius: 6px;
+            padding: 3px;
+            gap: 2px;
+        }
+
+        .unit-toggle button {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: var(--xps-text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .unit-toggle button:hover {
+            color: var(--xps-text);
+        }
+
+        .unit-toggle button.active {
+            background: var(--xps-blue);
+            color: var(--xps-charcoal-dark);
+        }
+
+        .unit-label {
+            font-size: 0.75rem;
+            color: var(--xps-blue);
+            margin-left: 4px;
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: var(--xps-card-bg);
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 20px;
+            border: 1px solid var(--xps-border);
         }
 
         .card h2 {
-            color: #4fc3f7;
-            font-size: 1.3rem;
+            color: var(--xps-blue);
+            font-size: 1.15rem;
+            font-weight: 600;
             margin-bottom: 8px;
             padding-bottom: 12px;
-            border-bottom: 1px solid rgba(79, 195, 247, 0.3);
+            border-bottom: 2px solid var(--xps-blue);
         }
 
         .card .section-description {
-            color: #78909c;
+            color: var(--xps-text-muted);
             font-size: 0.9rem;
             margin-bottom: 24px;
         }
@@ -87,16 +252,16 @@
             margin-bottom: 0;
         }
 
-        .config-group label {
+        .config-group > label {
             display: block;
             margin-bottom: 6px;
             font-weight: 500;
-            color: #b0bec5;
+            color: var(--xps-text);
         }
 
         .config-group .help-text {
             font-size: 0.8rem;
-            color: #78909c;
+            color: var(--xps-text-muted);
             margin-bottom: 8px;
         }
 
@@ -113,43 +278,46 @@
 
         .config-item label {
             font-size: 0.85rem;
-            color: #90a4ae;
+            color: var(--xps-text-muted);
+            display: block;
+            margin-bottom: 6px;
         }
 
         input[type="number"],
         input[type="text"] {
             width: 100%;
             padding: 12px 14px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: #263238;
-            color: #e0e0e0;
+            border-radius: 6px;
+            border: 2px solid var(--xps-charcoal);
+            background: var(--xps-charcoal-dark);
+            color: var(--xps-text);
             font-size: 1rem;
             outline: none;
-            transition: border-color 0.3s;
+            transition: border-color 0.2s;
         }
 
         input[type="number"]:focus,
         input[type="text"]:focus {
-            border-color: #4fc3f7;
+            border-color: var(--xps-blue);
         }
 
         .multiplier-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px;
         }
 
         .multiplier-item {
-            background: #263238;
+            background: var(--xps-charcoal);
             padding: 16px;
             border-radius: 8px;
+            border: 1px solid var(--xps-border);
         }
 
         .multiplier-item label {
             display: block;
             font-size: 0.85rem;
-            color: #90a4ae;
+            color: var(--xps-text-muted);
             margin-bottom: 8px;
         }
 
@@ -157,67 +325,82 @@
             width: 100%;
         }
 
+        .formula-display {
+            background: var(--xps-charcoal-dark);
+            padding: 14px 16px;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.85rem;
+            color: var(--xps-blue);
+            margin-top: 16px;
+            border-left: 3px solid var(--xps-blue);
+        }
+
         .actions {
             display: flex;
-            gap: 16px;
+            gap: 12px;
             margin-top: 32px;
             flex-wrap: wrap;
         }
 
         button {
-            padding: 16px 32px;
-            border-radius: 8px;
+            padding: 14px 28px;
+            border-radius: 6px;
             border: none;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.2s;
         }
 
         button:hover {
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
 
         .btn-primary {
-            background: #4fc3f7;
-            color: #1a1a2e;
+            background: var(--xps-blue);
+            color: var(--xps-charcoal-dark);
         }
 
         .btn-primary:hover {
-            box-shadow: 0 4px 20px rgba(79, 195, 247, 0.4);
+            background: var(--xps-blue-light);
+            box-shadow: 0 4px 12px rgba(74, 159, 217, 0.3);
         }
 
         .btn-secondary {
-            background: #37474f;
-            color: #e0e0e0;
+            background: var(--xps-charcoal);
+            color: var(--xps-text);
+            border: 1px solid var(--xps-border);
         }
 
         .btn-secondary:hover {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            background: var(--xps-charcoal-light);
         }
 
         .btn-danger {
-            background: #d32f2f;
+            background: var(--xps-danger);
             color: #fff;
         }
 
         .btn-danger:hover {
-            box-shadow: 0 4px 20px rgba(211, 47, 47, 0.4);
+            background: #D32F2F;
+            box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
         }
 
         .toast {
             position: fixed;
             bottom: 24px;
             right: 24px;
-            background: #2e7d32;
+            background: var(--xps-success);
             color: #fff;
-            padding: 16px 24px;
+            padding: 14px 24px;
             border-radius: 8px;
             font-weight: 500;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             transform: translateY(100px);
             opacity: 0;
             transition: all 0.3s;
+            z-index: 1000;
         }
 
         .toast.show {
@@ -225,24 +408,24 @@
             opacity: 1;
         }
 
-        .formula-display {
-            background: #1a1a2e;
-            padding: 16px;
-            border-radius: 8px;
-            font-family: 'Monaco', 'Consolas', monospace;
-            font-size: 0.85rem;
-            color: #81c784;
-            margin-top: 12px;
-            overflow-x: auto;
-        }
+        @media (max-width: 768px) {
+            .header-bar {
+                flex-direction: column;
+                gap: 12px;
+                padding: 12px 16px;
+            }
 
-        @media (max-width: 600px) {
+            .logo-container {
+                width: 100%;
+                justify-content: center;
+            }
+
             .container {
                 padding: 20px 16px;
             }
 
-            h1 {
-                font-size: 1.6rem;
+            .page-header h1 {
+                font-size: 1.4rem;
             }
 
             .card {
@@ -260,13 +443,46 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <a href="index.html" class="back-link">← Back to Calculator</a>
+    <div class="header-bar">
+        <div class="logo-container">
+            <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="5,8 20,25 5,42 12,42 25,29 25,25 12,8" fill="#4A9FD9"/>
+                <polygon points="45,8 38,8 25,21 25,25 38,42 45,42 30,25" fill="#4A9FD9"/>
+                <polygon points="25,21 25,29 30,25 25,21" fill="#3D8BBF"/>
+            </svg>
+            <span class="logo-text"><strong>XPS</strong> Group</span>
+            <div class="logo-divider"></div>
+            <span class="app-title">Configuration</span>
+        </div>
+        <div class="header-actions">
+            <div class="theme-toggle">
+                <button id="theme-light">Light</button>
+                <button id="theme-dark" class="active">Dark</button>
+            </div>
+            <a href="index.html" class="back-link">
+                <svg style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Back to Calculator
+            </a>
+        </div>
+    </div>
 
-        <header>
+    <div class="container">
+        <div class="page-header">
             <h1>Configuration</h1>
             <p class="subtitle">Adjust the formulas and multipliers that drive estimates</p>
-        </header>
+        </div>
+
+        <div class="unit-toggle-container">
+            <span>Display values in:</span>
+            <div class="unit-toggle">
+                <button id="config-unit-hours" class="active">Hours</button>
+                <button id="config-unit-days">Days</button>
+            </div>
+            <span class="unit-label" id="conversion-hint">(using 7.5 hrs/day)</span>
+        </div>
 
         <!-- General Settings -->
         <div class="card">
@@ -280,7 +496,7 @@
                 </div>
                 <div class="config-item">
                     <label>Hours per Day</label>
-                    <input type="number" id="hoursPerDay" min="1" max="24" step="0.5">
+                    <input type="number" id="hoursPerDay" min="1" max="24" step="0.01">
                 </div>
                 <div class="config-item">
                     <label>PM Overhead (%)</label>
@@ -292,27 +508,27 @@
         <!-- Analysis Phase -->
         <div class="card">
             <h2>Analysis & Specification</h2>
-            <p class="section-description">Hours allocated for understanding scheme rules and writing specifications</p>
+            <p class="section-description unit-text" data-hours="Hours allocated for understanding scheme rules and writing specifications" data-days="Days allocated for understanding scheme rules and writing specifications">Hours allocated for understanding scheme rules and writing specifications</p>
 
             <div class="config-row">
                 <div class="config-item">
-                    <label>Base Hours</label>
-                    <p class="help-text">Starting hours regardless of complexity</p>
+                    <label class="unit-text" data-hours="Base Hours" data-days="Base Days">Base Hours</label>
+                    <p class="help-text unit-text" data-hours="Starting hours regardless of complexity" data-days="Starting days regardless of complexity">Starting hours regardless of complexity</p>
                     <input type="number" id="analysisBase" min="0" step="1">
                 </div>
                 <div class="config-item">
-                    <label>Per Category (hrs)</label>
-                    <p class="help-text">Additional hours per benefit category</p>
+                    <label class="unit-text" data-hours="Per Category (hrs)" data-days="Per Category (days)">Per Category (hrs)</label>
+                    <p class="help-text unit-text" data-hours="Additional hours per benefit category" data-days="Additional days per benefit category">Additional hours per benefit category</p>
                     <input type="number" id="analysisPerCategory" min="0" step="1">
                 </div>
                 <div class="config-item">
-                    <label>Per Tranche (hrs)</label>
-                    <p class="help-text">Additional hours per member tranche</p>
+                    <label class="unit-text" data-hours="Per Tranche (hrs)" data-days="Per Tranche (days)">Per Tranche (hrs)</label>
+                    <p class="help-text unit-text" data-hours="Additional hours per member tranche" data-days="Additional days per member tranche">Additional hours per member tranche</p>
                     <input type="number" id="analysisPerTranche" min="0" step="1">
                 </div>
             </div>
 
-            <div class="formula-display">
+            <div class="formula-display unit-text" data-hours="Analysis Hours = Base + (Categories × Per Category) + (Tranches × Per Tranche)" data-days="Analysis Days = Base + (Categories × Per Category) + (Tranches × Per Tranche)">
                 Analysis Hours = Base + (Categories × Per Category) + (Tranches × Per Tranche)
             </div>
         </div>
@@ -320,15 +536,15 @@
         <!-- Test Case Design -->
         <div class="card">
             <h2>Test Case Design & Matrix</h2>
-            <p class="section-description">Hours for designing test cases and building the test matrix</p>
+            <p class="section-description unit-text" data-hours="Hours for designing test cases and building the test matrix" data-days="Days for designing test cases and building the test matrix">Hours for designing test cases and building the test matrix</p>
 
             <div class="config-group">
-                <label>Hours per Test Case</label>
+                <label class="unit-text" data-hours="Hours per Test Case" data-days="Days per Test Case">Hours per Test Case</label>
                 <p class="help-text">Time to design and document each test case</p>
                 <input type="number" id="testDesignPerCase" min="0" step="0.1" style="max-width: 200px;">
             </div>
 
-            <div class="formula-display">
+            <div class="formula-display unit-text" data-hours="Test Design Hours = Number of Test Cases × Hours per Case" data-days="Test Design Days = Number of Test Cases × Days per Case">
                 Test Design Hours = Number of Test Cases × Hours per Case
             </div>
         </div>
@@ -336,11 +552,11 @@
         <!-- Coding Phase -->
         <div class="card">
             <h2>Coding</h2>
-            <p class="section-description">Hours for programming the calculations</p>
+            <p class="section-description unit-text" data-hours="Hours for programming the calculations" data-days="Days for programming the calculations">Hours for programming the calculations</p>
 
             <div class="config-group">
-                <label>Base Hours per Calculation Type</label>
-                <p class="help-text">Hours to code a single calculation type before complexity multiplier</p>
+                <label class="unit-text" data-hours="Base Hours per Calculation Type" data-days="Base Days per Calculation Type">Base Hours per Calculation Type</label>
+                <p class="help-text unit-text" data-hours="Hours to code a single calculation type before complexity multiplier" data-days="Days to code a single calculation type before complexity multiplier">Hours to code a single calculation type before complexity multiplier</p>
                 <input type="number" id="codingBasePerCalc" min="0" step="1" style="max-width: 200px;">
             </div>
 
@@ -367,7 +583,7 @@
                 </div>
             </div>
 
-            <div class="formula-display">
+            <div class="formula-display unit-text" data-hours="Coding Hours = Calc Types × Base Hours × Complexity Multiplier × (1 + (Categories - 1) × 0.1)" data-days="Coding Days = Calc Types × Base Days × Complexity Multiplier × (1 + (Categories - 1) × 0.1)">
                 Coding Hours = Calc Types × Base Hours × Complexity Multiplier × (1 + (Categories - 1) × 0.1)
             </div>
         </div>
@@ -375,11 +591,11 @@
         <!-- Testing Phase -->
         <div class="card">
             <h2>Testing & Iteration</h2>
-            <p class="section-description">Hours for executing tests and iterating with coding</p>
+            <p class="section-description unit-text" data-hours="Hours for executing tests and iterating with coding" data-days="Days for executing tests and iterating with coding">Hours for executing tests and iterating with coding</p>
 
             <div class="config-group">
-                <label>Hours per Test Case</label>
-                <p class="help-text">Base hours to execute and verify each test case</p>
+                <label class="unit-text" data-hours="Hours per Test Case" data-days="Days per Test Case">Hours per Test Case</label>
+                <p class="help-text unit-text" data-hours="Base hours to execute and verify each test case" data-days="Base days to execute and verify each test case">Base hours to execute and verify each test case</p>
                 <input type="number" id="testingHoursPerCase" min="0" step="0.1" style="max-width: 200px;">
             </div>
 
@@ -406,7 +622,7 @@
                 </div>
             </div>
 
-            <div class="formula-display">
+            <div class="formula-display unit-text" data-hours="Testing Hours = Test Cases × Hours per Case × Complexity Multiplier" data-days="Testing Days = Test Cases × Days per Case × Complexity Multiplier">
                 Testing Hours = Test Cases × Hours per Case × Complexity Multiplier
             </div>
         </div>
@@ -414,19 +630,19 @@
         <!-- UAT -->
         <div class="card">
             <h2>UAT Support & Sign-off</h2>
-            <p class="section-description">Hours for supporting client user acceptance testing</p>
+            <p class="section-description unit-text" data-hours="Hours for supporting client user acceptance testing" data-days="Days for supporting client user acceptance testing">Hours for supporting client user acceptance testing</p>
 
             <div class="multiplier-grid">
                 <div class="multiplier-item">
-                    <label>Light UAT</label>
+                    <label class="unit-text" data-hours="Light UAT (hrs)" data-days="Light UAT (days)">Light UAT (hrs)</label>
                     <input type="number" id="uat-light" min="0" step="1">
                 </div>
                 <div class="multiplier-item">
-                    <label>Standard UAT</label>
+                    <label class="unit-text" data-hours="Standard UAT (hrs)" data-days="Standard UAT (days)">Standard UAT (hrs)</label>
                     <input type="number" id="uat-standard" min="0" step="1">
                 </div>
                 <div class="multiplier-item">
-                    <label>Intensive UAT</label>
+                    <label class="unit-text" data-hours="Intensive UAT (hrs)" data-days="Intensive UAT (days)">Intensive UAT (hrs)</label>
                     <input type="number" id="uat-intensive" min="0" step="1">
                 </div>
             </div>
@@ -435,20 +651,53 @@
         <!-- Complexity Thresholds -->
         <div class="card">
             <h2>Complexity Thresholds</h2>
-            <p class="section-description">Hour thresholds for complexity badge display</p>
+            <p class="section-description unit-text" data-hours="Hour thresholds for complexity badge display" data-days="Day thresholds for complexity badge display">Hour thresholds for complexity badge display</p>
 
             <div class="config-row">
                 <div class="config-item">
-                    <label>Low/Medium boundary</label>
+                    <label class="unit-text" data-hours="Low/Medium boundary (hrs)" data-days="Low/Medium boundary (days)">Low/Medium boundary (hrs)</label>
                     <input type="number" id="threshold-low" min="0" step="10">
                 </div>
                 <div class="config-item">
-                    <label>Medium/High boundary</label>
+                    <label class="unit-text" data-hours="Medium/High boundary (hrs)" data-days="Medium/High boundary (days)">Medium/High boundary (hrs)</label>
                     <input type="number" id="threshold-medium" min="0" step="10">
                 </div>
                 <div class="config-item">
-                    <label>High/Very High boundary</label>
+                    <label class="unit-text" data-hours="High/Very High boundary (hrs)" data-days="High/Very High boundary (days)">High/Very High boundary (hrs)</label>
                     <input type="number" id="threshold-high" min="0" step="10">
+                </div>
+            </div>
+        </div>
+
+        <!-- Complexity Areas -->
+        <div class="card">
+            <h2>Complexity Areas</h2>
+            <p class="section-description unit-text" data-hours="Additional hours for specific complexity areas (added when selected)" data-days="Additional days for specific complexity areas (added when selected)">Additional hours for specific complexity areas (added when selected)</p>
+
+            <div class="multiplier-grid">
+                <div class="multiplier-item">
+                    <label class="unit-text" data-hours="GMPe (hrs)" data-days="GMPe (days)">GMPe (hrs)</label>
+                    <input type="number" id="complexity-gmpe" min="0" step="1">
+                </div>
+                <div class="multiplier-item">
+                    <label class="unit-text" data-hours="Underpins (hrs)" data-days="Underpins (days)">Underpins (hrs)</label>
+                    <input type="number" id="complexity-underpins" min="0" step="1">
+                </div>
+                <div class="multiplier-item">
+                    <label class="unit-text" data-hours="Added Years (hrs)" data-days="Added Years (days)">Added Years (hrs)</label>
+                    <input type="number" id="complexity-added-years" min="0" step="1">
+                </div>
+                <div class="multiplier-item">
+                    <label class="unit-text" data-hours="Special Service Credits (hrs)" data-days="Special Service Credits (days)">Special Service Credits (hrs)</label>
+                    <input type="number" id="complexity-service-credits" min="0" step="1">
+                </div>
+                <div class="multiplier-item">
+                    <label class="unit-text" data-hours="Bridging Pension (hrs)" data-days="Bridging Pension (days)">Bridging Pension (hrs)</label>
+                    <input type="number" id="complexity-bridging" min="0" step="1">
+                </div>
+                <div class="multiplier-item">
+                    <label class="unit-text" data-hours="Hybrid (hrs)" data-days="Hybrid (days)">Hybrid (hrs)</label>
+                    <input type="number" id="complexity-hybrid" min="0" step="1">
                 </div>
             </div>
         </div>
@@ -466,18 +715,113 @@
     <div class="toast" id="toast">Configuration saved!</div>
 
     <script>
-        // Default configuration
+        // Theme toggle
+        function initTheme() {
+            const savedTheme = localStorage.getItem('calcCostTheme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateThemeButtons(savedTheme);
+        }
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('calcCostTheme', theme);
+            updateThemeButtons(theme);
+        }
+
+        function updateThemeButtons(theme) {
+            const lightBtn = document.getElementById('theme-light');
+            const darkBtn = document.getElementById('theme-dark');
+            if (theme === 'light') {
+                lightBtn.classList.add('active');
+                darkBtn.classList.remove('active');
+            } else {
+                darkBtn.classList.add('active');
+                lightBtn.classList.remove('active');
+            }
+        }
+
+        initTheme();
+
+        document.getElementById('theme-light').addEventListener('click', () => setTheme('light'));
+        document.getElementById('theme-dark').addEventListener('click', () => setTheme('dark'));
+
+        // Unit toggle (hours/days)
+        let configDisplayUnit = 'hours';
+
+        const hourInputIds = [
+            'analysisBase', 'analysisPerCategory', 'analysisPerTranche',
+            'testDesignPerCase', 'codingBasePerCalc', 'testingHoursPerCase',
+            'uat-light', 'uat-standard', 'uat-intensive',
+            'threshold-low', 'threshold-medium', 'threshold-high',
+            'complexity-gmpe', 'complexity-underpins', 'complexity-added-years',
+            'complexity-service-credits', 'complexity-bridging', 'complexity-hybrid'
+        ];
+
+        function getHoursPerDay() {
+            return parseFloat(document.getElementById('hoursPerDay').value) || 7.5;
+        }
+
+        function convertAllToUnit(toUnit) {
+            const hpd = getHoursPerDay();
+            hourInputIds.forEach(id => {
+                const input = document.getElementById(id);
+                if (input) {
+                    const currentValue = parseFloat(input.value) || 0;
+                    if (toUnit === 'days') {
+                        input.value = (currentValue / hpd).toFixed(2);
+                        input.step = '0.25';
+                    } else {
+                        input.value = Math.round(currentValue * hpd);
+                        input.step = '1';
+                    }
+                }
+            });
+        }
+
+        function updateConversionHint() {
+            const hpd = getHoursPerDay();
+            document.getElementById('conversion-hint').textContent = `(using ${hpd} hrs/day)`;
+        }
+
+        function updateLabels(unit) {
+            document.querySelectorAll('.unit-text').forEach(el => {
+                const text = el.getAttribute(`data-${unit}`);
+                if (text) {
+                    el.textContent = text;
+                }
+            });
+        }
+
+        document.getElementById('config-unit-hours').addEventListener('click', function() {
+            if (configDisplayUnit === 'days') {
+                convertAllToUnit('hours');
+                configDisplayUnit = 'hours';
+                this.classList.add('active');
+                document.getElementById('config-unit-days').classList.remove('active');
+                updateLabels('hours');
+            }
+        });
+
+        document.getElementById('config-unit-days').addEventListener('click', function() {
+            if (configDisplayUnit === 'hours') {
+                convertAllToUnit('days');
+                configDisplayUnit = 'days';
+                this.classList.add('active');
+                document.getElementById('config-unit-hours').classList.remove('active');
+                updateLabels('days');
+            }
+        });
+
+        document.getElementById('hoursPerDay').addEventListener('change', updateConversionHint);
+
         const DEFAULT_CONFIG = {
             hourlyRate: 100,
             hoursPerDay: 7.5,
             pmOverhead: 15,
-
             analysisBase: 16,
             analysisPerCategory: 8,
             analysisPerTranche: 4,
-
             testDesignPerCase: 0.5,
-
             codingBasePerCalc: 16,
             codingComplexityMultiplier: {
                 'simple': 1,
@@ -485,7 +829,6 @@
                 'complex': 2.5,
                 'very-complex': 4
             },
-
             testingHoursPerCase: 0.5,
             testingComplexityMultiplier: {
                 'simple': 1,
@@ -493,26 +836,30 @@
                 'complex': 1.8,
                 'very-complex': 2.5
             },
-
             uatHours: {
                 'light': 16,
                 'standard': 40,
                 'intensive': 80
             },
-
             complexityThresholds: {
                 low: 200,
                 medium: 500,
                 high: 1000
+            },
+            complexityAreaHours: {
+                gmpe: 16,
+                underpins: 12,
+                addedYears: 10,
+                serviceCredits: 8,
+                bridging: 10,
+                hybrid: 14
             }
         };
 
-        // Load config from localStorage or use defaults
         function loadConfig() {
             const saved = localStorage.getItem('calcCostConfig');
             const config = saved ? { ...DEFAULT_CONFIG, ...JSON.parse(saved) } : DEFAULT_CONFIG;
 
-            // Populate form fields
             document.getElementById('hourlyRate').value = config.hourlyRate;
             document.getElementById('hoursPerDay').value = config.hoursPerDay;
             document.getElementById('pmOverhead').value = config.pmOverhead;
@@ -542,47 +889,69 @@
             document.getElementById('threshold-low').value = config.complexityThresholds?.low || DEFAULT_CONFIG.complexityThresholds.low;
             document.getElementById('threshold-medium').value = config.complexityThresholds?.medium || DEFAULT_CONFIG.complexityThresholds.medium;
             document.getElementById('threshold-high').value = config.complexityThresholds?.high || DEFAULT_CONFIG.complexityThresholds.high;
+
+            document.getElementById('complexity-gmpe').value = config.complexityAreaHours?.gmpe || DEFAULT_CONFIG.complexityAreaHours.gmpe;
+            document.getElementById('complexity-underpins').value = config.complexityAreaHours?.underpins || DEFAULT_CONFIG.complexityAreaHours.underpins;
+            document.getElementById('complexity-added-years').value = config.complexityAreaHours?.addedYears || DEFAULT_CONFIG.complexityAreaHours.addedYears;
+            document.getElementById('complexity-service-credits').value = config.complexityAreaHours?.serviceCredits || DEFAULT_CONFIG.complexityAreaHours.serviceCredits;
+            document.getElementById('complexity-bridging').value = config.complexityAreaHours?.bridging || DEFAULT_CONFIG.complexityAreaHours.bridging;
+            document.getElementById('complexity-hybrid').value = config.complexityAreaHours?.hybrid || DEFAULT_CONFIG.complexityAreaHours.hybrid;
+
+            configDisplayUnit = 'hours';
+            document.getElementById('config-unit-hours').classList.add('active');
+            document.getElementById('config-unit-days').classList.remove('active');
+            updateConversionHint();
+            updateLabels('hours');
         }
 
-        // Save config to localStorage
         function saveConfig() {
+            const hpd = getHoursPerDay();
+            const multiplier = configDisplayUnit === 'days' ? hpd : 1;
+
+            function getHourValue(id) {
+                const val = parseFloat(document.getElementById(id).value) || 0;
+                return hourInputIds.includes(id) ? val * multiplier : val;
+            }
+
             const config = {
                 hourlyRate: parseFloat(document.getElementById('hourlyRate').value),
                 hoursPerDay: parseFloat(document.getElementById('hoursPerDay').value),
                 pmOverhead: parseFloat(document.getElementById('pmOverhead').value),
-
-                analysisBase: parseFloat(document.getElementById('analysisBase').value),
-                analysisPerCategory: parseFloat(document.getElementById('analysisPerCategory').value),
-                analysisPerTranche: parseFloat(document.getElementById('analysisPerTranche').value),
-
-                testDesignPerCase: parseFloat(document.getElementById('testDesignPerCase').value),
-
-                codingBasePerCalc: parseFloat(document.getElementById('codingBasePerCalc').value),
+                analysisBase: getHourValue('analysisBase'),
+                analysisPerCategory: getHourValue('analysisPerCategory'),
+                analysisPerTranche: getHourValue('analysisPerTranche'),
+                testDesignPerCase: getHourValue('testDesignPerCase'),
+                codingBasePerCalc: getHourValue('codingBasePerCalc'),
                 codingComplexityMultiplier: {
                     'simple': parseFloat(document.getElementById('coding-simple').value),
                     'moderate': parseFloat(document.getElementById('coding-moderate').value),
                     'complex': parseFloat(document.getElementById('coding-complex').value),
                     'very-complex': parseFloat(document.getElementById('coding-very-complex').value)
                 },
-
-                testingHoursPerCase: parseFloat(document.getElementById('testingHoursPerCase').value),
+                testingHoursPerCase: getHourValue('testingHoursPerCase'),
                 testingComplexityMultiplier: {
                     'simple': parseFloat(document.getElementById('testing-simple').value),
                     'moderate': parseFloat(document.getElementById('testing-moderate').value),
                     'complex': parseFloat(document.getElementById('testing-complex').value),
                     'very-complex': parseFloat(document.getElementById('testing-very-complex').value)
                 },
-
                 uatHours: {
-                    'light': parseFloat(document.getElementById('uat-light').value),
-                    'standard': parseFloat(document.getElementById('uat-standard').value),
-                    'intensive': parseFloat(document.getElementById('uat-intensive').value)
+                    'light': getHourValue('uat-light'),
+                    'standard': getHourValue('uat-standard'),
+                    'intensive': getHourValue('uat-intensive')
                 },
-
                 complexityThresholds: {
-                    low: parseFloat(document.getElementById('threshold-low').value),
-                    medium: parseFloat(document.getElementById('threshold-medium').value),
-                    high: parseFloat(document.getElementById('threshold-high').value)
+                    low: getHourValue('threshold-low'),
+                    medium: getHourValue('threshold-medium'),
+                    high: getHourValue('threshold-high')
+                },
+                complexityAreaHours: {
+                    gmpe: getHourValue('complexity-gmpe'),
+                    underpins: getHourValue('complexity-underpins'),
+                    addedYears: getHourValue('complexity-added-years'),
+                    serviceCredits: getHourValue('complexity-service-credits'),
+                    bridging: getHourValue('complexity-bridging'),
+                    hybrid: getHourValue('complexity-hybrid')
                 }
             };
 
@@ -590,15 +959,14 @@
             showToast('Configuration saved!');
         }
 
-        // Export config as JSON file
         function exportConfig() {
-            saveConfig(); // Save first
+            saveConfig();
             const config = localStorage.getItem('calcCostConfig');
             const blob = new Blob([config], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'calc-cost-config.json';
+            a.download = 'xps-calcs-config.json';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -606,7 +974,6 @@
             showToast('Configuration exported!');
         }
 
-        // Import config from JSON file
         function importConfig() {
             document.getElementById('importFile').click();
         }
@@ -629,7 +996,6 @@
             }
         });
 
-        // Reset to defaults
         function resetConfig() {
             if (confirm('Are you sure you want to reset all configuration to defaults?')) {
                 localStorage.removeItem('calcCostConfig');
@@ -638,7 +1004,6 @@
             }
         }
 
-        // Show toast notification
         function showToast(message) {
             const toast = document.getElementById('toast');
             toast.textContent = message;
@@ -648,7 +1013,6 @@
             }, 3000);
         }
 
-        // Initialize
         loadConfig();
     </script>
 </body>
