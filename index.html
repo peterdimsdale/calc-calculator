@@ -275,6 +275,36 @@
             accent-color: var(--xps-blue);
         }
 
+        .outlier-input-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .outlier-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid var(--xps-blue);
+            border-radius: 6px;
+            background: var(--xps-charcoal-dark);
+            color: var(--xps-blue);
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .outlier-input:focus {
+            border-color: var(--xps-blue-light);
+            box-shadow: 0 0 0 3px rgba(74, 159, 217, 0.2);
+        }
+
+        .outlier-input::-webkit-inner-spin-button,
+        .outlier-input::-webkit-outer-spin-button {
+            opacity: 1;
+        }
+
         /* Select dropdown */
         select {
             width: 100%;
@@ -751,9 +781,12 @@
                 <div class="form-group">
                     <label class="form-label">Test Cases</label>
                     <div class="slider-container">
-                        <div class="slider-wrapper">
+                        <div class="slider-wrapper" id="testCasesSliderWrapper">
                             <input type="range" id="testCasesSlider" min="1" max="50" value="10" oninput="updateSlider('testCases')">
                             <span class="slider-value" id="testCasesValue">10</span>
+                        </div>
+                        <div class="outlier-input-wrapper" id="testCasesInputWrapper" style="display: none;">
+                            <input type="number" id="testCasesInput" min="51" max="999" value="75" oninput="updateSlider('testCases')" class="outlier-input">
                         </div>
                         <div class="outlier-toggle">
                             <input type="checkbox" id="testCasesOutlier" onchange="updateSlider('testCases')">
@@ -955,15 +988,35 @@
             const slider = document.getElementById(name + 'Slider');
             const valueSpan = document.getElementById(name + 'Value');
             const outlierCheckbox = document.getElementById(name + 'Outlier');
+            const sliderWrapper = document.getElementById(name + 'SliderWrapper');
+            const inputWrapper = document.getElementById(name + 'InputWrapper');
+            const outlierInput = document.getElementById(name + 'Input');
 
             if (outlierCheckbox.checked) {
-                valueSpan.textContent = slider.max + '+';
+                // Show input, hide slider
+                sliderWrapper.style.display = 'none';
+                inputWrapper.style.display = 'flex';
                 slider.disabled = true;
             } else {
-                valueSpan.textContent = slider.value;
+                // Show slider, hide input
+                sliderWrapper.style.display = 'flex';
+                inputWrapper.style.display = 'none';
                 slider.disabled = false;
+                valueSpan.textContent = slider.value;
             }
             calculateEstimate();
+        }
+
+        // Get the actual value for a slider (either from slider or outlier input)
+        function getSliderValue(name) {
+            const outlierCheckbox = document.getElementById(name + 'Outlier');
+            if (outlierCheckbox.checked) {
+                const outlierInput = document.getElementById(name + 'Input');
+                return parseInt(outlierInput.value) || 0;
+            } else {
+                const slider = document.getElementById(name + 'Slider');
+                return parseInt(slider.value) || 0;
+            }
         }
 
         // Initialize all sliders on page load
@@ -1016,16 +1069,10 @@
 
         // Calculate estimate
         function calculateEstimate() {
-            const categories = document.getElementById('categoriesOutlier').checked
-                ? 15
-                : parseInt(document.getElementById('categoriesSlider').value);
-            const tranches = document.getElementById('tranchesOutlier').checked
-                ? 15
-                : parseInt(document.getElementById('tranchesSlider').value);
+            const categories = getSliderValue('categories');
+            const tranches = getSliderValue('tranches');
             const schemeComplexity = document.getElementById('schemeComplexity').value;
-            const testCases = document.getElementById('testCasesOutlier').checked
-                ? 75
-                : parseInt(document.getElementById('testCasesSlider').value);
+            const testCases = getSliderValue('testCases');
             const uatComplexity = document.getElementById('uatComplexity').value;
 
             // Count selected calculation types
@@ -1169,10 +1216,15 @@
             document.getElementById('tranchesSlider').value = 1;
             document.getElementById('testCasesSlider').value = 10;
 
-            // Reset outliers
+            // Reset outlier checkboxes
             document.getElementById('categoriesOutlier').checked = false;
             document.getElementById('tranchesOutlier').checked = false;
             document.getElementById('testCasesOutlier').checked = false;
+
+            // Reset outlier inputs to defaults
+            document.getElementById('categoriesInput').value = 15;
+            document.getElementById('tranchesInput').value = 15;
+            document.getElementById('testCasesInput').value = 75;
 
             // Reset dropdowns
             document.getElementById('schemeComplexity').value = 'simple';
@@ -1191,16 +1243,8 @@
             // Reset notes
             document.getElementById('notesTextarea').value = '';
 
-            // Update slider displays and recalculate
-            document.getElementById('categoriesSlider').disabled = false;
-            document.getElementById('tranchesSlider').disabled = false;
-            document.getElementById('testCasesSlider').disabled = false;
-
-            document.getElementById('categoriesValue').textContent = '1';
-            document.getElementById('tranchesValue').textContent = '1';
-            document.getElementById('testCasesValue').textContent = '10';
-
-            calculateEstimate();
+            // Re-initialize sliders (this will show sliders and hide inputs)
+            initSliders();
         });
 
         // Export to text file
@@ -1247,15 +1291,9 @@
                 }
             });
 
-            const categories = document.getElementById('categoriesOutlier').checked
-                ? '10+'
-                : document.getElementById('categoriesSlider').value;
-            const tranches = document.getElementById('tranchesOutlier').checked
-                ? '10+'
-                : document.getElementById('tranchesSlider').value;
-            const testCases = document.getElementById('testCasesOutlier').checked
-                ? '50+'
-                : document.getElementById('testCasesSlider').value;
+            const categories = getSliderValue('categories');
+            const tranches = getSliderValue('tranches');
+            const testCases = getSliderValue('testCases');
 
             const content = `XPS Calcs Cost Calculator - Estimate Export
 ============================================
