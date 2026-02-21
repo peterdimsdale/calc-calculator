@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XPS Calcs Cost Calculator</title>
+    <title>XPS Calcs Timeline Estimator</title>
     <style>
         * {
             box-sizing: border-box;
@@ -196,116 +196,6 @@
             margin-bottom: 8px;
         }
 
-        /* Slider styles */
-        .slider-container {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .slider-wrapper {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        input[type="range"] {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 100%;
-            height: 6px;
-            background: var(--xps-charcoal);
-            border-radius: 3px;
-            outline: none;
-            cursor: pointer;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 18px;
-            height: 18px;
-            background: var(--xps-blue);
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s ease;
-        }
-
-        input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.1);
-        }
-
-        input[type="range"]::-moz-range-thumb {
-            width: 18px;
-            height: 18px;
-            background: var(--xps-blue);
-            border-radius: 50%;
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        input[type="range"]:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .slider-value {
-            min-width: 40px;
-            text-align: center;
-            font-weight: 600;
-            color: var(--xps-blue);
-            font-size: 1rem;
-        }
-
-        .outlier-toggle {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.8rem;
-            color: var(--xps-text-muted);
-        }
-
-        .outlier-toggle input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-            cursor: pointer;
-            accent-color: var(--xps-blue);
-        }
-
-        .outlier-input-wrapper {
-            flex: 1;
-            display: flex;
-            align-items: center;
-        }
-
-        .outlier-input {
-            width: 100%;
-            padding: 10px 14px;
-            border: 2px solid var(--xps-blue);
-            border-radius: 6px;
-            background: var(--xps-charcoal-dark);
-            color: var(--xps-blue);
-            font-size: 1rem;
-            font-weight: 600;
-            text-align: center;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .outlier-input:focus {
-            border-color: var(--xps-blue-light);
-            box-shadow: 0 0 0 3px rgba(74, 159, 217, 0.2);
-        }
-
-        .outlier-input::-webkit-inner-spin-button,
-        .outlier-input::-webkit-outer-spin-button {
-            opacity: 1;
-        }
-
-        /* Select dropdown */
         select {
             width: 100%;
             padding: 12px 14px;
@@ -323,7 +213,6 @@
             border-color: var(--xps-blue);
         }
 
-        /* Checkbox grid */
         .checkbox-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -367,7 +256,6 @@
             flex: 1;
         }
 
-        /* Results card */
         .results-card {
             position: sticky;
             top: 100px;
@@ -375,7 +263,7 @@
 
         .results-summary {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 12px;
             margin-bottom: 20px;
         }
@@ -401,7 +289,6 @@
             margin-top: 4px;
         }
 
-        /* Complexity badge */
         .complexity-badge {
             display: inline-block;
             padding: 6px 14px;
@@ -433,7 +320,6 @@
             color: #9C27B0;
         }
 
-        /* Breakdown section */
         .breakdown-header {
             display: flex;
             align-items: center;
@@ -498,7 +384,6 @@
             color: var(--xps-text);
         }
 
-        /* Notes textarea */
         .notes-section {
             margin-top: 20px;
             padding-top: 16px;
@@ -524,7 +409,6 @@
             border-color: var(--xps-blue);
         }
 
-        /* Action buttons */
         .action-buttons {
             display: flex;
             gap: 10px;
@@ -566,7 +450,176 @@
             background: var(--xps-charcoal-light);
         }
 
-        /* Page header */
+        .client-info-card {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            padding: 20px 28px;
+        }
+
+        @media (max-width: 768px) {
+            .client-info-card {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .client-info-card .form-group {
+            margin-bottom: 0;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid var(--xps-charcoal);
+            border-radius: 6px;
+            background: var(--xps-charcoal-dark);
+            color: var(--xps-text);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .text-input:focus {
+            border-color: var(--xps-blue);
+        }
+
+        .text-input::placeholder {
+            color: var(--xps-text-muted);
+        }
+
+        .save-load-section {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--xps-border);
+        }
+
+        .save-load-section .btn {
+            flex: 1;
+            padding: 10px 12px;
+            font-size: 0.8rem;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--xps-card-bg);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow: hidden;
+            border: 1px solid var(--xps-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--xps-border);
+        }
+
+        .modal-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--xps-text);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--xps-text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: var(--xps-text);
+        }
+
+        .modal-body {
+            padding: 20px 24px;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+
+        .saved-estimate-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            background: var(--xps-charcoal);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid var(--xps-border);
+        }
+
+        .saved-estimate-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .saved-estimate-info {
+            flex: 1;
+        }
+
+        .saved-estimate-name {
+            font-weight: 600;
+            color: var(--xps-text);
+            font-size: 0.95rem;
+        }
+
+        .saved-estimate-meta {
+            font-size: 0.8rem;
+            color: var(--xps-text-muted);
+            margin-top: 4px;
+        }
+
+        .saved-estimate-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .saved-estimate-actions button {
+            padding: 6px 12px;
+            font-size: 0.75rem;
+        }
+
+        .btn-danger {
+            background: var(--xps-danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #d32f2f;
+        }
+
+        .no-saved-estimates {
+            text-align: center;
+            color: var(--xps-text-muted);
+            padding: 30px;
+        }
+
         .page-header {
             grid-column: 1 / -1;
             margin-bottom: 12px;
@@ -586,7 +639,110 @@
             font-size: 1rem;
         }
 
-        /* Responsive */
+        /* Timeline / Gantt */
+        .timeline-section {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid var(--xps-border);
+        }
+
+        .timeline-total {
+            font-size: 0.8rem;
+            color: var(--xps-text-muted);
+            font-weight: 500;
+        }
+
+        .timeline-chart {
+            position: relative;
+        }
+
+        .timeline-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .timeline-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timeline-label {
+            width: 70px;
+            font-size: 0.8rem;
+            color: var(--xps-text-muted);
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .timeline-bar-track {
+            flex: 1;
+            position: relative;
+            height: 26px;
+            background: var(--xps-charcoal);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .timeline-bar {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            border-radius: 4px;
+            min-width: 2px;
+            transition: left 0.3s ease, width 0.3s ease;
+            cursor: default;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: rgba(0, 0, 0, 0.7);
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .analysis-bar {
+            background: #4A9FD9;
+        }
+
+        .coding-bar {
+            background: #6BB3E3;
+        }
+
+        .uat-bar {
+            background: #3B8AC4;
+        }
+
+        .timeline-axis {
+            display: flex;
+            position: relative;
+            height: 20px;
+            margin-left: 80px;
+            border-top: 1px solid var(--xps-border);
+        }
+
+        .timeline-tick {
+            position: absolute;
+            top: 0;
+            transform: translateX(-50%);
+            font-size: 0.65rem;
+            color: var(--xps-text-muted);
+            padding-top: 4px;
+        }
+
+        .timeline-tick::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 1px;
+            height: 4px;
+            background: var(--xps-text-muted);
+        }
+
         @media (max-width: 768px) {
             .header-bar {
                 flex-direction: column;
@@ -620,7 +776,7 @@
             </svg>
             <span class="logo-text"><strong>XPS</strong> Group</span>
             <div class="logo-divider"></div>
-            <span class="app-title">Calcs Cost Calculator</span>
+            <span class="app-title">Timeline Estimator</span>
         </div>
         <div class="header-actions">
             <div class="theme-toggle">
@@ -641,57 +797,51 @@
     <main class="container">
         <!-- Page Header -->
         <div class="page-header">
-            <h1>Cost Estimator</h1>
-            <p class="subtitle">Configure scheme parameters to generate effort and cost estimates</p>
+            <h1>Timeline Estimator</h1>
+            <p class="subtitle">Configure scheme parameters to generate effort estimates</p>
+        </div>
+
+        <!-- Client Info Card -->
+        <div class="card client-info-card">
+            <div class="form-group">
+                <label class="form-label">Client Name</label>
+                <input type="text" id="clientName" class="text-input" placeholder="Enter client name">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Scheme Name</label>
+                <input type="text" id="schemeName" class="text-input" placeholder="Enter scheme name">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Quote Reference</label>
+                <input type="text" id="quoteRef" class="text-input" placeholder="e.g., QTE-2024-001">
+            </div>
         </div>
 
         <!-- Left Column - Inputs -->
         <div class="inputs-column">
-            <!-- Scheme Structure -->
+            <!-- Scheme Parameters -->
             <div class="card">
-                <h2>Scheme Structure</h2>
+                <h2>Scheme Parameters</h2>
 
                 <div class="form-group">
-                    <label class="form-label">Categories</label>
-                    <div class="slider-container">
-                        <div class="slider-wrapper" id="categoriesSliderWrapper">
-                            <input type="range" id="categoriesSlider" min="1" max="10" value="1" oninput="updateSlider('categories')">
-                            <span class="slider-value" id="categoriesValue">1</span>
-                        </div>
-                        <div class="outlier-input-wrapper" id="categoriesInputWrapper" style="display: none;">
-                            <input type="number" id="categoriesInput" min="11" max="999" value="15" oninput="updateSlider('categories')" class="outlier-input">
-                        </div>
-                        <div class="outlier-toggle">
-                            <input type="checkbox" id="categoriesOutlier" onchange="updateSlider('categories')">
-                            <label for="categoriesOutlier">10+</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Tranches</label>
-                    <div class="slider-container">
-                        <div class="slider-wrapper" id="tranchesSliderWrapper">
-                            <input type="range" id="tranchesSlider" min="1" max="10" value="1" oninput="updateSlider('tranches')">
-                            <span class="slider-value" id="tranchesValue">1</span>
-                        </div>
-                        <div class="outlier-input-wrapper" id="tranchesInputWrapper" style="display: none;">
-                            <input type="number" id="tranchesInput" min="11" max="999" value="15" oninput="updateSlider('tranches')" class="outlier-input">
-                        </div>
-                        <div class="outlier-toggle">
-                            <input type="checkbox" id="tranchesOutlier" onchange="updateSlider('tranches')">
-                            <label for="tranchesOutlier">10+</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Scheme Complexity</label>
-                    <select id="schemeComplexity">
+                    <label class="form-label">Complexity of Calcs</label>
+                    <select id="calcComplexity">
+                        <option value="very-simple">Very Simple</option>
                         <option value="simple">Simple</option>
-                        <option value="moderate">Moderate</option>
+                        <option value="moderate" selected>Moderate</option>
                         <option value="complex">Complex</option>
                         <option value="very-complex">Very Complex</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Data Quality</label>
+                    <select id="dataQuality">
+                        <option value="excellent">Excellent - Fully validated, no known issues</option>
+                        <option value="good">Good - Clean, minor gaps</option>
+                        <option value="average" selected>Average - Some gaps/issues</option>
+                        <option value="poor">Poor - Significant data issues</option>
+                        <option value="very-poor">Very Poor - Major remediation needed</option>
                     </select>
                 </div>
             </div>
@@ -740,6 +890,10 @@
                         <input type="checkbox" id="calcDeferredBenefitStatement">
                         <label for="calcDeferredBenefitStatement">Deferred Benefit Statement</label>
                     </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="calcDashboard">
+                        <label for="calcDashboard">Dashboard</label>
+                    </div>
                 </div>
             </div>
 
@@ -771,36 +925,24 @@
                         <input type="checkbox" id="complexHybrid">
                         <label for="complexHybrid">Hybrid</label>
                     </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="complexMyPensionGoLive">
+                        <label for="complexMyPensionGoLive">MyPension Required Go-Live</label>
+                    </div>
                 </div>
             </div>
 
-            <!-- Testing & Sign-off -->
+            <!-- UAT -->
             <div class="card">
-                <h2>Testing &amp; Sign-off</h2>
-
-                <div class="form-group">
-                    <label class="form-label">Test Cases</label>
-                    <div class="slider-container">
-                        <div class="slider-wrapper" id="testCasesSliderWrapper">
-                            <input type="range" id="testCasesSlider" min="1" max="50" value="10" oninput="updateSlider('testCases')">
-                            <span class="slider-value" id="testCasesValue">10</span>
-                        </div>
-                        <div class="outlier-input-wrapper" id="testCasesInputWrapper" style="display: none;">
-                            <input type="number" id="testCasesInput" min="51" max="999" value="75" oninput="updateSlider('testCases')" class="outlier-input">
-                        </div>
-                        <div class="outlier-toggle">
-                            <input type="checkbox" id="testCasesOutlier" onchange="updateSlider('testCases')">
-                            <label for="testCasesOutlier">50+</label>
-                        </div>
-                    </div>
-                </div>
-
+                <h2>UAT</h2>
                 <div class="form-group">
                     <label class="form-label">UAT Complexity</label>
                     <select id="uatComplexity">
+                        <option value="minimal">Minimal</option>
                         <option value="light">Light</option>
                         <option value="standard" selected>Standard</option>
                         <option value="intensive">Intensive</option>
+                        <option value="full-regression">Full Regression</option>
                     </select>
                 </div>
             </div>
@@ -814,16 +956,12 @@
                 <!-- Summary -->
                 <div class="results-summary">
                     <div class="result-item">
-                        <div class="result-value" id="totalHours">0</div>
-                        <div class="result-label">Hours</div>
-                    </div>
-                    <div class="result-item">
                         <div class="result-value" id="totalDays">0</div>
                         <div class="result-label">Days</div>
                     </div>
                     <div class="result-item">
-                        <div class="result-value" id="totalCost">£0</div>
-                        <div class="result-label">Cost</div>
+                        <div class="result-value" id="totalHours">0</div>
+                        <div class="result-label">Hours</div>
                     </div>
                 </div>
 
@@ -835,8 +973,8 @@
                     <div class="breakdown-header">
                         <span class="breakdown-title">Effort Breakdown</span>
                         <div class="unit-toggle">
-                            <button id="hoursToggle" class="active">Hours</button>
-                            <button id="daysToggle">Days</button>
+                            <button id="daysToggle" class="active">Days</button>
+                            <button id="hoursToggle">Hours</button>
                         </div>
                     </div>
                     <div class="breakdown-list" id="breakdownList">
@@ -845,29 +983,44 @@
                             <span class="breakdown-item-value" id="breakdownAnalysis">0</span>
                         </div>
                         <div class="breakdown-item">
-                            <span class="breakdown-item-label">Test Design</span>
-                            <span class="breakdown-item-value" id="breakdownTestDesign">0</span>
-                        </div>
-                        <div class="breakdown-item">
                             <span class="breakdown-item-label">Coding</span>
                             <span class="breakdown-item-value" id="breakdownCoding">0</span>
-                        </div>
-                        <div class="breakdown-item" id="breakdownComplexityRow" style="display: none;">
-                            <span class="breakdown-item-label">Complexity Areas</span>
-                            <span class="breakdown-item-value" id="breakdownComplexityAreas">0</span>
-                        </div>
-                        <div class="breakdown-item">
-                            <span class="breakdown-item-label">Testing</span>
-                            <span class="breakdown-item-value" id="breakdownTesting">0</span>
                         </div>
                         <div class="breakdown-item">
                             <span class="breakdown-item-label">UAT</span>
                             <span class="breakdown-item-value" id="breakdownUAT">0</span>
                         </div>
-                        <div class="breakdown-item">
-                            <span class="breakdown-item-label">PM</span>
-                            <span class="breakdown-item-value" id="breakdownPM">0</span>
+                    </div>
+                </div>
+
+                <!-- Timeline -->
+                <div class="timeline-section">
+                    <div class="breakdown-header">
+                        <span class="breakdown-title">Indicative Timeline</span>
+                        <span class="timeline-total" id="timelineTotal"></span>
+                    </div>
+                    <div class="timeline-chart" id="timelineChart">
+                        <div class="timeline-bars">
+                            <div class="timeline-row">
+                                <span class="timeline-label">Analysis</span>
+                                <div class="timeline-bar-track">
+                                    <div class="timeline-bar analysis-bar" id="barAnalysis"></div>
+                                </div>
+                            </div>
+                            <div class="timeline-row">
+                                <span class="timeline-label">Coding</span>
+                                <div class="timeline-bar-track">
+                                    <div class="timeline-bar coding-bar" id="barCoding"></div>
+                                </div>
+                            </div>
+                            <div class="timeline-row">
+                                <span class="timeline-label">UAT</span>
+                                <div class="timeline-bar-track">
+                                    <div class="timeline-bar uat-bar" id="barUAT"></div>
+                                </div>
+                            </div>
                         </div>
+                        <div class="timeline-axis" id="timelineAxis"></div>
                     </div>
                 </div>
 
@@ -880,59 +1033,77 @@
                 <!-- Action Buttons -->
                 <div class="action-buttons">
                     <button class="btn btn-secondary" id="resetBtn">Reset</button>
-                    <button class="btn btn-primary" id="exportBtn">Export</button>
+                    <button class="btn btn-primary" id="exportTxtBtn">Export as Text</button>
+                </div>
+
+                <!-- Save/Load Section -->
+                <div class="save-load-section">
+                    <button class="btn btn-primary" id="saveEstimateBtn">Save Estimate</button>
+                    <button class="btn btn-secondary" id="loadEstimateBtn">Load Saved</button>
                 </div>
             </div>
         </div>
     </main>
 
+    <!-- Saved Estimates Modal -->
+    <div class="modal-overlay" id="savedEstimatesModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Saved Estimates</h3>
+                <button class="modal-close" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="modal-body" id="savedEstimatesList">
+                <div class="no-saved-estimates">No saved estimates yet</div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Default configuration
+        // Default configuration (values stored in days)
         const DEFAULT_CONFIG = {
-            hourlyRate: 100,
             hoursPerDay: 7.5,
-            pmOverhead: 15,
-            analysisBase: 16,
-            analysisPerCategory: 8,
-            analysisPerTranche: 4,
-            testDesignPerCase: 0.5,
-            codingBasePerCalc: 16,
-            codingComplexityMultiplier: {
+            analysisBase: 3,
+            codingBasePerCalc: 2,
+            complexityMultiplier: {
+                'very-simple': 0.7,
                 'simple': 1,
                 'moderate': 1.5,
                 'complex': 2.5,
                 'very-complex': 4
             },
-            testingHoursPerCase: 0.5,
-            testingComplexityMultiplier: {
-                'simple': 1,
-                'moderate': 1.3,
-                'complex': 1.8,
-                'very-complex': 2.5
+            dataQualityMultiplier: {
+                'excellent': 0.8,
+                'good': 1.0,
+                'average': 1.25,
+                'poor': 1.6,
+                'very-poor': 2.0
             },
-            uatHours: {
-                'light': 16,
-                'standard': 40,
-                'intensive': 80
+            uatDays: {
+                'minimal': 1,
+                'light': 2,
+                'standard': 5,
+                'intensive': 10,
+                'full-regression': 20
+            },
+            complexityAreaDays: {
+                gmpe: 2,
+                underpins: 1.5,
+                addedYears: 1.5,
+                serviceCredits: 1,
+                bridging: 1.5,
+                hybrid: 2,
+                myPensionGoLive: 3
             },
             complexityThresholds: {
-                low: 200,
-                medium: 500,
-                high: 1000
-            },
-            complexityAreaHours: {
-                gmpe: 16,
-                underpins: 12,
-                addedYears: 10,
-                serviceCredits: 8,
-                bridging: 10,
-                hybrid: 14
+                low: 25,
+                medium: 60,
+                high: 120
             }
         };
 
         // Load config from localStorage or use defaults
         let CONFIG = { ...DEFAULT_CONFIG };
-        const savedConfig = localStorage.getItem('calcCostConfig');
+        const savedConfig = localStorage.getItem('calcCostConfigV2');
         if (savedConfig) {
             try {
                 CONFIG = { ...DEFAULT_CONFIG, ...JSON.parse(savedConfig) };
@@ -941,16 +1112,12 @@
             }
         }
 
-        // State
-        let showHours = true;
+        // State — default to Days
+        let showDays = true;
         let breakdown = {
             analysis: 0,
-            testDesign: 0,
             coding: 0,
-            complexityAreas: 0,
-            testing: 0,
-            uat: 0,
-            pm: 0
+            uat: 0
         };
 
         // Theme management
@@ -983,203 +1150,131 @@
         document.getElementById('theme-light').addEventListener('click', () => setTheme('light'));
         document.getElementById('theme-dark').addEventListener('click', () => setTheme('dark'));
 
-        // Slider functionality - called via inline oninput/onchange handlers
-        function updateSlider(name) {
-            const slider = document.getElementById(name + 'Slider');
-            const valueSpan = document.getElementById(name + 'Value');
-            const outlierCheckbox = document.getElementById(name + 'Outlier');
-            const sliderWrapper = document.getElementById(name + 'SliderWrapper');
-            const inputWrapper = document.getElementById(name + 'InputWrapper');
-            const outlierInput = document.getElementById(name + 'Input');
-
-            if (outlierCheckbox.checked) {
-                // Show input, hide slider
-                sliderWrapper.style.display = 'none';
-                inputWrapper.style.display = 'flex';
-                slider.disabled = true;
-            } else {
-                // Show slider, hide input
-                sliderWrapper.style.display = 'flex';
-                inputWrapper.style.display = 'none';
-                slider.disabled = false;
-                valueSpan.textContent = slider.value;
-            }
-            calculateEstimate();
-        }
-
-        // Get the actual value for a slider (either from slider or outlier input)
-        function getSliderValue(name) {
-            const outlierCheckbox = document.getElementById(name + 'Outlier');
-            if (outlierCheckbox.checked) {
-                const outlierInput = document.getElementById(name + 'Input');
-                return parseInt(outlierInput.value) || 0;
-            } else {
-                const slider = document.getElementById(name + 'Slider');
-                return parseInt(slider.value) || 0;
-            }
-        }
-
-        // Initialize all sliders on page load
-        function initSliders() {
-            updateSlider('categories');
-            updateSlider('tranches');
-            updateSlider('testCases');
-        }
-
-        // Checkbox event listeners for calculation types
+        // Checkbox IDs for calculation types
         const calcCheckboxes = [
             'calcActiveDeferred', 'calcActiveRetired', 'calcActiveBenefitStatement',
             'calcAnnualAllowance', 'calcPensionIncrease', 'calcDeferredRetired',
             'calcDeathInService', 'calcDeathInDeferment', 'calcDeathInRetirement',
-            'calcDeferredBenefitStatement'
+            'calcDeferredBenefitStatement', 'calcDashboard'
         ];
 
+        // Checkbox IDs for complexity areas
+        const complexityCheckboxes = [
+            'complexGMPe', 'complexUnderpins', 'complexAddedYears',
+            'complexSpecialServiceCredits', 'complexBridgingPension', 'complexHybrid',
+            'complexMyPensionGoLive'
+        ];
+
+        // Event listeners
         calcCheckboxes.forEach(id => {
             document.getElementById(id).addEventListener('change', calculateEstimate);
         });
-
-        // Checkbox event listeners for complexity areas
-        const complexityCheckboxes = [
-            'complexGMPe', 'complexUnderpins', 'complexAddedYears',
-            'complexSpecialServiceCredits', 'complexBridgingPension', 'complexHybrid'
-        ];
-
         complexityCheckboxes.forEach(id => {
             document.getElementById(id).addEventListener('change', calculateEstimate);
         });
-
-        // Dropdown event listeners
-        document.getElementById('schemeComplexity').addEventListener('change', calculateEstimate);
+        document.getElementById('calcComplexity').addEventListener('change', calculateEstimate);
+        document.getElementById('dataQuality').addEventListener('change', calculateEstimate);
         document.getElementById('uatComplexity').addEventListener('change', calculateEstimate);
 
-        // Unit toggle
-        document.getElementById('hoursToggle').addEventListener('click', () => {
-            showHours = true;
-            document.getElementById('hoursToggle').classList.add('active');
-            document.getElementById('daysToggle').classList.remove('active');
-            updateBreakdownDisplay();
-        });
-
+        // Unit toggle — defaults to Days
         document.getElementById('daysToggle').addEventListener('click', () => {
-            showHours = false;
+            showDays = true;
             document.getElementById('daysToggle').classList.add('active');
             document.getElementById('hoursToggle').classList.remove('active');
             updateBreakdownDisplay();
         });
 
-        // Calculate estimate
+        document.getElementById('hoursToggle').addEventListener('click', () => {
+            showDays = false;
+            document.getElementById('hoursToggle').classList.add('active');
+            document.getElementById('daysToggle').classList.remove('active');
+            updateBreakdownDisplay();
+        });
+
+        // Calculate estimate (all values in days)
         function calculateEstimate() {
-            const categories = getSliderValue('categories');
-            const tranches = getSliderValue('tranches');
-            const schemeComplexity = document.getElementById('schemeComplexity').value;
-            const testCases = getSliderValue('testCases');
+            const calcComplexity = document.getElementById('calcComplexity').value;
+            const dataQuality = document.getElementById('dataQuality').value;
             const uatComplexity = document.getElementById('uatComplexity').value;
 
             // Count selected calculation types
             let calcTypeCount = 0;
             calcCheckboxes.forEach(id => {
-                if (document.getElementById(id).checked) {
-                    calcTypeCount++;
-                }
+                if (document.getElementById(id).checked) calcTypeCount++;
             });
 
-            // Get complexity multiplier
-            const complexityMultiplier = CONFIG.codingComplexityMultiplier?.[schemeComplexity] ||
-                DEFAULT_CONFIG.codingComplexityMultiplier[schemeComplexity];
+            // Multipliers
+            const complexityMult = CONFIG.complexityMultiplier?.[calcComplexity] ||
+                DEFAULT_CONFIG.complexityMultiplier[calcComplexity];
+            const dataQualityMult = CONFIG.dataQualityMultiplier?.[dataQuality] ||
+                DEFAULT_CONFIG.dataQualityMultiplier[dataQuality];
 
-            // Analysis hours
-            const analysisHours = CONFIG.analysisBase +
-                (categories * CONFIG.analysisPerCategory) +
-                (tranches * CONFIG.analysisPerTranche);
+            // Analysis (days) = base × complexity × data quality
+            const analysisDays = CONFIG.analysisBase * complexityMult * dataQualityMult;
 
-            // Test design hours
-            const testDesignHours = testCases * CONFIG.testDesignPerCase;
-
-            // Coding hours
-            const codingHours = calcTypeCount * CONFIG.codingBasePerCalc * complexityMultiplier *
-                (1 + (categories - 1) * 0.1);
-
-            // Complexity areas hours
-            let complexityAreasHours = 0;
+            // Complexity areas (days)
+            let complexityAreasDays = 0;
             const complexityMapping = {
                 'complexGMPe': 'gmpe',
                 'complexUnderpins': 'underpins',
                 'complexAddedYears': 'addedYears',
                 'complexSpecialServiceCredits': 'serviceCredits',
                 'complexBridgingPension': 'bridging',
-                'complexHybrid': 'hybrid'
+                'complexHybrid': 'hybrid',
+                'complexMyPensionGoLive': 'myPensionGoLive'
             };
 
             Object.entries(complexityMapping).forEach(([checkboxId, configKey]) => {
                 if (document.getElementById(checkboxId).checked) {
-                    complexityAreasHours += CONFIG.complexityAreaHours?.[configKey] ||
-                        DEFAULT_CONFIG.complexityAreaHours[configKey];
+                    complexityAreasDays += CONFIG.complexityAreaDays?.[configKey] ||
+                        DEFAULT_CONFIG.complexityAreaDays[configKey];
                 }
             });
 
-            // Testing hours
-            const testingMultiplier = CONFIG.testingComplexityMultiplier?.[schemeComplexity] ||
-                DEFAULT_CONFIG.testingComplexityMultiplier[schemeComplexity];
-            const testingHours = testCases * CONFIG.testingHoursPerCase * testingMultiplier;
+            // Coding (days) = calc types × base per calc × complexity + complexity areas
+            const codingDays = (calcTypeCount * CONFIG.codingBasePerCalc * complexityMult) + complexityAreasDays;
 
-            // UAT hours
-            const uatHours = CONFIG.uatHours?.[uatComplexity] || DEFAULT_CONFIG.uatHours[uatComplexity];
+            // UAT (days) = flat value from UAT complexity
+            const uatDays = CONFIG.uatDays?.[uatComplexity] || DEFAULT_CONFIG.uatDays[uatComplexity];
 
-            // Subtotal before PM
-            const subtotal = analysisHours + testDesignHours + codingHours +
-                complexityAreasHours + testingHours + uatHours;
-
-            // PM hours
-            const pmHours = subtotal * (CONFIG.pmOverhead / 100);
-
-            // Store breakdown
+            // Store breakdown (in days)
             breakdown = {
-                analysis: analysisHours,
-                testDesign: testDesignHours,
-                coding: codingHours,
-                complexityAreas: complexityAreasHours,
-                testing: testingHours,
-                uat: uatHours,
-                pm: pmHours
+                analysis: analysisDays,
+                coding: codingDays,
+                uat: uatDays
             };
 
-            // Calculate totals
-            const totalHours = subtotal + pmHours;
-            const totalDays = totalHours / CONFIG.hoursPerDay;
-            const totalCost = totalHours * CONFIG.hourlyRate;
+            // Totals
+            const totalDays = analysisDays + codingDays + uatDays;
+            const totalHours = totalDays * CONFIG.hoursPerDay;
 
             // Update display
-            document.getElementById('totalHours').textContent = Math.round(totalHours);
             document.getElementById('totalDays').textContent = totalDays.toFixed(1);
-            document.getElementById('totalCost').textContent = '£' + totalCost.toLocaleString('en-GB', {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            });
+            document.getElementById('totalHours').textContent = Math.round(totalHours);
 
-            // Update complexity badge
-            updateComplexityBadge(totalHours);
+            // Complexity badge (thresholds in days)
+            updateComplexityBadge(totalDays);
 
-            // Update breakdown display
+            // Breakdown
             updateBreakdownDisplay();
 
-            // Show/hide complexity areas row
-            const complexityRow = document.getElementById('breakdownComplexityRow');
-            complexityRow.style.display = complexityAreasHours > 0 ? 'flex' : 'none';
+            // Timeline
+            updateTimeline();
         }
 
-        function updateComplexityBadge(totalHours) {
+        function updateComplexityBadge(totalDays) {
             const badge = document.getElementById('complexityBadge');
             badge.classList.remove('complexity-low', 'complexity-medium', 'complexity-high', 'complexity-very-high');
 
             const thresholds = CONFIG.complexityThresholds || DEFAULT_CONFIG.complexityThresholds;
 
-            if (totalHours < thresholds.low) {
+            if (totalDays < thresholds.low) {
                 badge.textContent = 'LOW';
                 badge.classList.add('complexity-low');
-            } else if (totalHours < thresholds.medium) {
+            } else if (totalDays < thresholds.medium) {
                 badge.textContent = 'MEDIUM';
                 badge.classList.add('complexity-medium');
-            } else if (totalHours < thresholds.high) {
+            } else if (totalDays < thresholds.high) {
                 badge.textContent = 'HIGH';
                 badge.classList.add('complexity-high');
             } else {
@@ -1190,72 +1285,162 @@
 
         function updateBreakdownDisplay() {
             const hoursPerDay = CONFIG.hoursPerDay;
-            const suffix = showHours ? 'h' : 'd';
-            const divisor = showHours ? 1 : hoursPerDay;
 
-            document.getElementById('breakdownAnalysis').textContent =
-                (breakdown.analysis / divisor).toFixed(1) + suffix;
-            document.getElementById('breakdownTestDesign').textContent =
-                (breakdown.testDesign / divisor).toFixed(1) + suffix;
-            document.getElementById('breakdownCoding').textContent =
-                (breakdown.coding / divisor).toFixed(1) + suffix;
-            document.getElementById('breakdownComplexityAreas').textContent =
-                (breakdown.complexityAreas / divisor).toFixed(1) + suffix;
-            document.getElementById('breakdownTesting').textContent =
-                (breakdown.testing / divisor).toFixed(1) + suffix;
-            document.getElementById('breakdownUAT').textContent =
-                (breakdown.uat / divisor).toFixed(1) + suffix;
-            document.getElementById('breakdownPM').textContent =
-                (breakdown.pm / divisor).toFixed(1) + suffix;
+            if (showDays) {
+                document.getElementById('breakdownAnalysis').textContent = breakdown.analysis.toFixed(1) + 'd';
+                document.getElementById('breakdownCoding').textContent = breakdown.coding.toFixed(1) + 'd';
+                document.getElementById('breakdownUAT').textContent = breakdown.uat.toFixed(1) + 'd';
+            } else {
+                document.getElementById('breakdownAnalysis').textContent = (breakdown.analysis * hoursPerDay).toFixed(1) + 'h';
+                document.getElementById('breakdownCoding').textContent = (breakdown.coding * hoursPerDay).toFixed(1) + 'h';
+                document.getElementById('breakdownUAT').textContent = (breakdown.uat * hoursPerDay).toFixed(1) + 'h';
+            }
+        }
+
+        // Timeline
+        function updateTimeline() {
+            const totalDays = breakdown.analysis + breakdown.coding + breakdown.uat;
+            const WORKING_DAYS_PER_MONTH = 21.7;
+
+            const barAnalysis = document.getElementById('barAnalysis');
+            const barCoding = document.getElementById('barCoding');
+            const barUAT = document.getElementById('barUAT');
+            const timelineTotal = document.getElementById('timelineTotal');
+            const timelineAxis = document.getElementById('timelineAxis');
+
+            if (totalDays === 0) {
+                barAnalysis.style.width = '0%';
+                barCoding.style.width = '0%';
+                barUAT.style.width = '0%';
+                timelineTotal.textContent = '';
+                timelineAxis.innerHTML = '';
+                return;
+            }
+
+            // Bar positions as percentages
+            const analysisPct = (breakdown.analysis / totalDays) * 100;
+            const codingPct = (breakdown.coding / totalDays) * 100;
+            const uatPct = (breakdown.uat / totalDays) * 100;
+
+            const codingStart = analysisPct;
+            const uatStart = analysisPct + codingPct;
+
+            barAnalysis.style.left = '0%';
+            barAnalysis.style.width = analysisPct + '%';
+            barAnalysis.title = 'Analysis: ' + breakdown.analysis.toFixed(1) + ' days';
+            barAnalysis.textContent = breakdown.analysis >= 1 ? breakdown.analysis.toFixed(1) + 'd' : '';
+
+            barCoding.style.left = codingStart + '%';
+            barCoding.style.width = codingPct + '%';
+            barCoding.title = 'Coding: ' + breakdown.coding.toFixed(1) + ' days';
+            barCoding.textContent = breakdown.coding >= 1 ? breakdown.coding.toFixed(1) + 'd' : '';
+
+            barUAT.style.left = uatStart + '%';
+            barUAT.style.width = uatPct + '%';
+            barUAT.title = 'UAT: ' + breakdown.uat.toFixed(1) + ' days';
+            barUAT.textContent = breakdown.uat >= 1 ? breakdown.uat.toFixed(1) + 'd' : '';
+
+            // Axis ticks
+            const useMonths = totalDays > 10;
+            timelineAxis.innerHTML = '';
+
+            if (useMonths) {
+                const totalMonths = Math.ceil(totalDays / WORKING_DAYS_PER_MONTH);
+                for (let m = 0; m <= totalMonths; m++) {
+                    const tick = document.createElement('span');
+                    tick.className = 'timeline-tick';
+                    const pct = Math.min((m * WORKING_DAYS_PER_MONTH / totalDays) * 100, 100);
+                    tick.style.left = pct + '%';
+                    tick.textContent = m === 0 ? 'Start' : 'M' + m;
+                    timelineAxis.appendChild(tick);
+                }
+                timelineTotal.textContent = '~' + totalMonths + ' month' + (totalMonths !== 1 ? 's' : '');
+            } else {
+                const roundedDays = Math.ceil(totalDays);
+                const step = roundedDays <= 5 ? 1 : Math.ceil(roundedDays / 5);
+                for (let d = 0; d <= roundedDays; d += step) {
+                    const tick = document.createElement('span');
+                    tick.className = 'timeline-tick';
+                    const pct = (d / totalDays) * 100;
+                    tick.style.left = pct + '%';
+                    tick.textContent = d === 0 ? 'Start' : 'D' + d;
+                    timelineAxis.appendChild(tick);
+                }
+                // Ensure end tick
+                if (roundedDays % step !== 0) {
+                    const tick = document.createElement('span');
+                    tick.className = 'timeline-tick';
+                    tick.style.left = '100%';
+                    tick.textContent = 'D' + roundedDays;
+                    timelineAxis.appendChild(tick);
+                }
+                timelineTotal.textContent = '~' + roundedDays + ' working day' + (roundedDays !== 1 ? 's' : '');
+            }
         }
 
         // Reset form
         document.getElementById('resetBtn').addEventListener('click', () => {
-            // Reset sliders
-            document.getElementById('categoriesSlider').value = 1;
-            document.getElementById('tranchesSlider').value = 1;
-            document.getElementById('testCasesSlider').value = 10;
+            document.getElementById('clientName').value = '';
+            document.getElementById('schemeName').value = '';
+            document.getElementById('quoteRef').value = '';
 
-            // Reset outlier checkboxes
-            document.getElementById('categoriesOutlier').checked = false;
-            document.getElementById('tranchesOutlier').checked = false;
-            document.getElementById('testCasesOutlier').checked = false;
-
-            // Reset outlier inputs to defaults
-            document.getElementById('categoriesInput').value = 15;
-            document.getElementById('tranchesInput').value = 15;
-            document.getElementById('testCasesInput').value = 75;
-
-            // Reset dropdowns
-            document.getElementById('schemeComplexity').value = 'simple';
+            document.getElementById('calcComplexity').value = 'moderate';
+            document.getElementById('dataQuality').value = 'average';
             document.getElementById('uatComplexity').value = 'standard';
 
-            // Reset calculation type checkboxes
             calcCheckboxes.forEach(id => {
                 document.getElementById(id).checked = (id === 'calcActiveDeferred');
             });
 
-            // Reset complexity checkboxes
             complexityCheckboxes.forEach(id => {
                 document.getElementById(id).checked = false;
             });
 
-            // Reset notes
             document.getElementById('notesTextarea').value = '';
 
-            // Re-initialize sliders (this will show sliders and hide inputs)
-            initSliders();
+            calculateEstimate();
         });
 
-        // Export to text file
-        document.getElementById('exportBtn').addEventListener('click', () => {
-            const totalHours = document.getElementById('totalHours').textContent;
+        // =====================
+        // Export Functionality
+        // =====================
+
+        function getExportData() {
+            const clientName = document.getElementById('clientName').value || 'Not specified';
+            const schemeName = document.getElementById('schemeName').value || 'Not specified';
+            const quoteRef = document.getElementById('quoteRef').value || 'Not specified';
             const totalDays = document.getElementById('totalDays').textContent;
-            const totalCost = document.getElementById('totalCost').textContent;
+            const totalHours = document.getElementById('totalHours').textContent;
             const complexity = document.getElementById('complexityBadge').textContent;
             const notes = document.getElementById('notesTextarea').value;
 
-            // Gather selected calculation types
+            const dataQualityLabels = {
+                'excellent': 'Excellent - Fully validated, no known issues',
+                'good': 'Good - Clean, minor gaps',
+                'average': 'Average - Some gaps/issues',
+                'poor': 'Poor - Significant data issues',
+                'very-poor': 'Very Poor - Major remediation needed'
+            };
+            const dataQuality = dataQualityLabels[document.getElementById('dataQuality').value];
+
+            const calcComplexityLabels = {
+                'very-simple': 'Very Simple',
+                'simple': 'Simple',
+                'moderate': 'Moderate',
+                'complex': 'Complex',
+                'very-complex': 'Very Complex'
+            };
+            const calcComplexity = calcComplexityLabels[document.getElementById('calcComplexity').value];
+
+            const uatLabels = {
+                'minimal': 'Minimal',
+                'light': 'Light',
+                'standard': 'Standard',
+                'intensive': 'Intensive',
+                'full-regression': 'Full Regression'
+            };
+            const uatComplexity = uatLabels[document.getElementById('uatComplexity').value];
+
             const selectedCalcTypes = [];
             const calcTypeLabels = {
                 'calcActiveDeferred': 'Active to Deferred',
@@ -1267,15 +1452,13 @@
                 'calcDeathInService': 'Death in Service',
                 'calcDeathInDeferment': 'Death in Deferment',
                 'calcDeathInRetirement': 'Death in Retirement',
-                'calcDeferredBenefitStatement': 'Deferred Benefit Statement'
+                'calcDeferredBenefitStatement': 'Deferred Benefit Statement',
+                'calcDashboard': 'Dashboard'
             };
             Object.entries(calcTypeLabels).forEach(([id, label]) => {
-                if (document.getElementById(id).checked) {
-                    selectedCalcTypes.push(label);
-                }
+                if (document.getElementById(id).checked) selectedCalcTypes.push(label);
             });
 
-            // Gather selected complexity areas
             const selectedComplexity = [];
             const complexityLabels = {
                 'complexGMPe': 'GMPe',
@@ -1283,75 +1466,231 @@
                 'complexAddedYears': 'Added Years',
                 'complexSpecialServiceCredits': 'Special Service Credits',
                 'complexBridgingPension': 'Bridging Pension',
-                'complexHybrid': 'Hybrid'
+                'complexHybrid': 'Hybrid',
+                'complexMyPensionGoLive': 'MyPension Required Go-Live'
             };
             Object.entries(complexityLabels).forEach(([id, label]) => {
-                if (document.getElementById(id).checked) {
-                    selectedComplexity.push(label);
-                }
+                if (document.getElementById(id).checked) selectedComplexity.push(label);
             });
 
-            const categories = getSliderValue('categories');
-            const tranches = getSliderValue('tranches');
-            const testCases = getSliderValue('testCases');
+            const filenameParts = [];
+            if (document.getElementById('clientName').value) {
+                filenameParts.push(document.getElementById('clientName').value.replace(/[^a-z0-9]/gi, '-').toLowerCase());
+            }
+            if (document.getElementById('schemeName').value) {
+                filenameParts.push(document.getElementById('schemeName').value.replace(/[^a-z0-9]/gi, '-').toLowerCase());
+            }
+            const filenameBase = filenameParts.length > 0
+                ? filenameParts.join('-')
+                : 'xps-calcs-estimate';
 
-            const content = `XPS Calcs Cost Calculator - Estimate Export
-============================================
+            return {
+                clientName, schemeName, quoteRef, totalDays, totalHours,
+                complexity, notes, dataQuality, calcComplexity, uatComplexity,
+                selectedCalcTypes, selectedComplexity, filenameBase
+            };
+        }
+
+        // Export to text file
+        document.getElementById('exportTxtBtn').addEventListener('click', () => {
+            const d = getExportData();
+
+            const content = `XPS Calcs Timeline Estimator - Estimate Export
+================================================
 Generated: ${new Date().toLocaleString()}
 
-SCHEME STRUCTURE
-----------------
-Categories: ${categories}
-Tranches: ${tranches}
-Scheme Complexity: ${document.getElementById('schemeComplexity').value}
+CLIENT INFORMATION
+------------------
+Client Name: ${d.clientName}
+Scheme Name: ${d.schemeName}
+Quote Reference: ${d.quoteRef}
+
+SCHEME PARAMETERS
+-----------------
+Complexity of Calcs: ${d.calcComplexity}
+Data Quality: ${d.dataQuality}
+UAT Complexity: ${d.uatComplexity}
 
 CALCULATION TYPES
 -----------------
-${selectedCalcTypes.join('\n') || 'None selected'}
+${d.selectedCalcTypes.join('\n') || 'None selected'}
 
 COMPLEXITY AREAS
 ----------------
-${selectedComplexity.join('\n') || 'None selected'}
-
-TESTING & SIGN-OFF
-------------------
-Test Cases: ${testCases}
-UAT Complexity: ${document.getElementById('uatComplexity').value}
+${d.selectedComplexity.join('\n') || 'None selected'}
 
 ESTIMATE RESULTS
 ----------------
-Total Hours: ${totalHours}
-Total Days: ${totalDays}
-Total Cost: ${totalCost}
-Complexity: ${complexity}
+Total Days: ${d.totalDays}
+Total Hours: ${d.totalHours}
+Complexity: ${d.complexity}
 
 EFFORT BREAKDOWN
 ----------------
-Analysis: ${(breakdown.analysis).toFixed(1)}h
-Test Design: ${(breakdown.testDesign).toFixed(1)}h
-Coding: ${(breakdown.coding).toFixed(1)}h
-${breakdown.complexityAreas > 0 ? `Complexity Areas: ${(breakdown.complexityAreas).toFixed(1)}h\n` : ''}Testing: ${(breakdown.testing).toFixed(1)}h
-UAT: ${(breakdown.uat).toFixed(1)}h
-PM: ${(breakdown.pm).toFixed(1)}h
+Analysis: ${breakdown.analysis.toFixed(1)} days
+Coding: ${breakdown.coding.toFixed(1)} days
+UAT: ${breakdown.uat.toFixed(1)} days
+
+INDICATIVE TIMELINE
+-------------------
+Analysis:  Day 1 - Day ${breakdown.analysis.toFixed(1)}  (${breakdown.analysis.toFixed(1)} days)
+Coding:    Day ${breakdown.analysis.toFixed(1)} - Day ${(breakdown.analysis + breakdown.coding).toFixed(1)}  (${breakdown.coding.toFixed(1)} days)
+UAT:       Day ${(breakdown.analysis + breakdown.coding).toFixed(1)} - Day ${(breakdown.analysis + breakdown.coding + breakdown.uat).toFixed(1)}  (${breakdown.uat.toFixed(1)} days)
+Total:     ${document.getElementById('timelineTotal').textContent}
 
 NOTES
 -----
-${notes || 'No notes added'}
+${d.notes || 'No notes added'}
 `;
 
             const blob = new Blob([content], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `xps-calcs-estimate-${new Date().toISOString().split('T')[0]}.txt`;
+            a.download = `${d.filenameBase}-${new Date().toISOString().split('T')[0]}.txt`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         });
 
-        // Initialize sliders and run initial calculation
-        initSliders();
+        // =====================
+        // Save/Load Functionality
+        // =====================
+
+        function getSavedEstimates() {
+            const saved = localStorage.getItem('calcCostSavedEstimatesV2');
+            return saved ? JSON.parse(saved) : [];
+        }
+
+        function saveEstimates(estimates) {
+            localStorage.setItem('calcCostSavedEstimatesV2', JSON.stringify(estimates));
+        }
+
+        function getCurrentEstimateData() {
+            return {
+                id: Date.now(),
+                savedAt: new Date().toISOString(),
+                clientName: document.getElementById('clientName').value,
+                schemeName: document.getElementById('schemeName').value,
+                quoteRef: document.getElementById('quoteRef').value,
+                calcComplexity: document.getElementById('calcComplexity').value,
+                dataQuality: document.getElementById('dataQuality').value,
+                uatComplexity: document.getElementById('uatComplexity').value,
+                calcTypes: calcCheckboxes.filter(id => document.getElementById(id).checked),
+                complexityAreas: complexityCheckboxes.filter(id => document.getElementById(id).checked),
+                notes: document.getElementById('notesTextarea').value,
+                totalDays: document.getElementById('totalDays').textContent,
+                totalHours: document.getElementById('totalHours').textContent
+            };
+        }
+
+        function loadEstimateData(data) {
+            document.getElementById('clientName').value = data.clientName || '';
+            document.getElementById('schemeName').value = data.schemeName || '';
+            document.getElementById('quoteRef').value = data.quoteRef || '';
+
+            document.getElementById('calcComplexity').value = data.calcComplexity || 'moderate';
+            document.getElementById('dataQuality').value = data.dataQuality || 'average';
+            document.getElementById('uatComplexity').value = data.uatComplexity || 'standard';
+
+            calcCheckboxes.forEach(id => {
+                document.getElementById(id).checked = data.calcTypes?.includes(id) || false;
+            });
+
+            complexityCheckboxes.forEach(id => {
+                document.getElementById(id).checked = data.complexityAreas?.includes(id) || false;
+            });
+
+            document.getElementById('notesTextarea').value = data.notes || '';
+
+            calculateEstimate();
+        }
+
+        function renderSavedEstimates() {
+            const estimates = getSavedEstimates();
+            const container = document.getElementById('savedEstimatesList');
+
+            if (estimates.length === 0) {
+                container.innerHTML = '<div class="no-saved-estimates">No saved estimates yet</div>';
+                return;
+            }
+
+            container.innerHTML = estimates.map(est => {
+                const name = est.clientName && est.schemeName
+                    ? `${est.clientName} - ${est.schemeName}`
+                    : est.clientName || est.schemeName || 'Unnamed Estimate';
+                const date = new Date(est.savedAt).toLocaleDateString('en-GB', {
+                    day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                });
+                return `
+                    <div class="saved-estimate-item">
+                        <div class="saved-estimate-info">
+                            <div class="saved-estimate-name">${name}</div>
+                            <div class="saved-estimate-meta">${date} • ${est.totalDays}d</div>
+                        </div>
+                        <div class="saved-estimate-actions">
+                            <button class="btn btn-primary" onclick="loadEstimate(${est.id})">Load</button>
+                            <button class="btn btn-danger" onclick="deleteEstimate(${est.id})">Delete</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function saveCurrentEstimate() {
+            const clientName = document.getElementById('clientName').value.trim();
+            const schemeName = document.getElementById('schemeName').value.trim();
+
+            if (!clientName && !schemeName) {
+                alert('Please enter a Client Name or Scheme Name before saving.');
+                return;
+            }
+
+            const estimates = getSavedEstimates();
+            const newEstimate = getCurrentEstimateData();
+            estimates.unshift(newEstimate);
+            saveEstimates(estimates);
+            alert('Estimate saved successfully!');
+        }
+
+        function loadEstimate(id) {
+            const estimates = getSavedEstimates();
+            const estimate = estimates.find(e => e.id === id);
+            if (estimate) {
+                loadEstimateData(estimate);
+                closeModal();
+            }
+        }
+
+        function deleteEstimate(id) {
+            if (!confirm('Are you sure you want to delete this estimate?')) return;
+            const estimates = getSavedEstimates();
+            const filtered = estimates.filter(e => e.id !== id);
+            saveEstimates(filtered);
+            renderSavedEstimates();
+        }
+
+        function openModal() {
+            renderSavedEstimates();
+            document.getElementById('savedEstimatesModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('savedEstimatesModal').classList.remove('show');
+        }
+
+        // Event listeners for save/load buttons
+        document.getElementById('saveEstimateBtn').addEventListener('click', saveCurrentEstimate);
+        document.getElementById('loadEstimateBtn').addEventListener('click', openModal);
+        document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+
+        document.getElementById('savedEstimatesModal').addEventListener('click', (e) => {
+            if (e.target.id === 'savedEstimatesModal') closeModal();
+        });
+
+        // Initial calculation
+        calculateEstimate();
     </script>
 </body>
 </html>

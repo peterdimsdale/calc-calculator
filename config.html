@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configuration | XPS Calcs Cost Calculator</title>
+    <title>Configuration | XPS Calcs Timeline Estimator</title>
     <style>
         * {
             box-sizing: border-box;
@@ -274,6 +274,12 @@
         .config-item {
             flex: 1;
             min-width: 150px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .config-item .help-text {
+            flex: 1;
         }
 
         .config-item label {
@@ -312,6 +318,8 @@
             padding: 16px;
             border-radius: 8px;
             border: 1px solid var(--xps-border);
+            display: flex;
+            flex-direction: column;
         }
 
         .multiplier-item label {
@@ -319,6 +327,7 @@
             font-size: 0.85rem;
             color: var(--xps-text-muted);
             margin-bottom: 8px;
+            flex: 1;
         }
 
         .multiplier-item input {
@@ -478,8 +487,8 @@
         <div class="unit-toggle-container">
             <span>Display values in:</span>
             <div class="unit-toggle">
-                <button id="config-unit-hours" class="active">Hours</button>
-                <button id="config-unit-days">Days</button>
+                <button id="config-unit-days" class="active">Days</button>
+                <button id="config-unit-hours">Hours</button>
             </div>
             <span class="unit-label" id="conversion-hint">(using 7.5 hrs/day)</span>
         </div>
@@ -489,182 +498,127 @@
             <h2>General Settings</h2>
             <p class="section-description">Core settings that affect all calculations</p>
 
-            <div class="config-row">
-                <div class="config-item">
-                    <label>Hourly Rate (£)</label>
-                    <input type="number" id="hourlyRate" min="0" step="5">
-                </div>
-                <div class="config-item">
-                    <label>Hours per Day</label>
-                    <input type="number" id="hoursPerDay" min="1" max="24" step="0.01">
-                </div>
-                <div class="config-item">
-                    <label>PM Overhead (%)</label>
-                    <input type="number" id="pmOverhead" min="0" max="100" step="1">
-                </div>
+            <div class="config-group">
+                <label>Hours per Day</label>
+                <input type="number" id="hoursPerDay" min="1" max="24" step="0.01" style="max-width: 200px;">
             </div>
         </div>
 
-        <!-- Analysis Phase -->
+        <!-- Analysis -->
         <div class="card">
-            <h2>Analysis & Specification</h2>
-            <p class="section-description unit-text" data-hours="Hours allocated for understanding scheme rules and writing specifications" data-days="Days allocated for understanding scheme rules and writing specifications">Hours allocated for understanding scheme rules and writing specifications</p>
-
-            <div class="config-row">
-                <div class="config-item">
-                    <label class="unit-text" data-hours="Base Hours" data-days="Base Days">Base Hours</label>
-                    <p class="help-text unit-text" data-hours="Starting hours regardless of complexity" data-days="Starting days regardless of complexity">Starting hours regardless of complexity</p>
-                    <input type="number" id="analysisBase" min="0" step="1">
-                </div>
-                <div class="config-item">
-                    <label class="unit-text" data-hours="Per Category (hrs)" data-days="Per Category (days)">Per Category (hrs)</label>
-                    <p class="help-text unit-text" data-hours="Additional hours per benefit category" data-days="Additional days per benefit category">Additional hours per benefit category</p>
-                    <input type="number" id="analysisPerCategory" min="0" step="1">
-                </div>
-                <div class="config-item">
-                    <label class="unit-text" data-hours="Per Tranche (hrs)" data-days="Per Tranche (days)">Per Tranche (hrs)</label>
-                    <p class="help-text unit-text" data-hours="Additional hours per member tranche" data-days="Additional days per member tranche">Additional hours per member tranche</p>
-                    <input type="number" id="analysisPerTranche" min="0" step="1">
-                </div>
-            </div>
-
-            <div class="formula-display unit-text" data-hours="Analysis Hours = Base + (Categories × Per Category) + (Tranches × Per Tranche)" data-days="Analysis Days = Base + (Categories × Per Category) + (Tranches × Per Tranche)">
-                Analysis Hours = Base + (Categories × Per Category) + (Tranches × Per Tranche)
-            </div>
-        </div>
-
-        <!-- Test Case Design -->
-        <div class="card">
-            <h2>Test Case Design & Matrix</h2>
-            <p class="section-description unit-text" data-hours="Hours for designing test cases and building the test matrix" data-days="Days for designing test cases and building the test matrix">Hours for designing test cases and building the test matrix</p>
+            <h2>Analysis</h2>
+            <p class="section-description unit-text" data-days="Base days for analysis phase, multiplied by complexity and data quality" data-hours="Base hours for analysis phase, multiplied by complexity and data quality">Base days for analysis phase, multiplied by complexity and data quality</p>
 
             <div class="config-group">
-                <label class="unit-text" data-hours="Hours per Test Case" data-days="Days per Test Case">Hours per Test Case</label>
-                <p class="help-text">Time to design and document each test case</p>
-                <input type="number" id="testDesignPerCase" min="0" step="0.1" style="max-width: 200px;">
+                <label class="unit-text" data-days="Base Analysis (days)" data-hours="Base Analysis (hours)">Base Analysis (days)</label>
+                <p class="help-text">Starting effort before complexity and data quality multipliers</p>
+                <input type="number" id="analysisBase" min="0" step="0.5" style="max-width: 200px;">
             </div>
 
-            <div class="formula-display unit-text" data-hours="Test Design Hours = Number of Test Cases × Hours per Case" data-days="Test Design Days = Number of Test Cases × Days per Case">
-                Test Design Hours = Number of Test Cases × Hours per Case
+            <div class="formula-display unit-text" data-days="Analysis Days = Base x Complexity Multiplier x Data Quality Multiplier" data-hours="Analysis Hours = Base x Complexity Multiplier x Data Quality Multiplier">
+                Analysis Days = Base x Complexity Multiplier x Data Quality Multiplier
             </div>
         </div>
 
-        <!-- Coding Phase -->
+        <!-- Coding -->
         <div class="card">
             <h2>Coding</h2>
-            <p class="section-description unit-text" data-hours="Hours for programming the calculations" data-days="Days for programming the calculations">Hours for programming the calculations</p>
+            <p class="section-description unit-text" data-days="Days for programming per calculation type" data-hours="Hours for programming per calculation type">Days for programming per calculation type</p>
 
             <div class="config-group">
-                <label class="unit-text" data-hours="Base Hours per Calculation Type" data-days="Base Days per Calculation Type">Base Hours per Calculation Type</label>
-                <p class="help-text unit-text" data-hours="Hours to code a single calculation type before complexity multiplier" data-days="Days to code a single calculation type before complexity multiplier">Hours to code a single calculation type before complexity multiplier</p>
-                <input type="number" id="codingBasePerCalc" min="0" step="1" style="max-width: 200px;">
+                <label class="unit-text" data-days="Base Days per Calculation Type" data-hours="Base Hours per Calculation Type">Base Days per Calculation Type</label>
+                <p class="help-text unit-text" data-days="Days to code a single calculation type before complexity multiplier" data-hours="Hours to code a single calculation type before complexity multiplier">Days to code a single calculation type before complexity multiplier</p>
+                <input type="number" id="codingBasePerCalc" min="0" step="0.5" style="max-width: 200px;">
             </div>
 
-            <div class="config-group">
-                <label>Scheme Complexity Multipliers</label>
-                <p class="help-text">Multiplier applied based on overall scheme complexity</p>
-                <div class="multiplier-grid">
-                    <div class="multiplier-item">
-                        <label>Simple</label>
-                        <input type="number" id="coding-simple" min="0" step="0.1">
-                    </div>
-                    <div class="multiplier-item">
-                        <label>Moderate</label>
-                        <input type="number" id="coding-moderate" min="0" step="0.1">
-                    </div>
-                    <div class="multiplier-item">
-                        <label>Complex</label>
-                        <input type="number" id="coding-complex" min="0" step="0.1">
-                    </div>
-                    <div class="multiplier-item">
-                        <label>Very Complex</label>
-                        <input type="number" id="coding-very-complex" min="0" step="0.1">
-                    </div>
-                </div>
-            </div>
-
-            <div class="formula-display unit-text" data-hours="Coding Hours = Calc Types × Base Hours × Complexity Multiplier × (1 + (Categories - 1) × 0.1)" data-days="Coding Days = Calc Types × Base Days × Complexity Multiplier × (1 + (Categories - 1) × 0.1)">
-                Coding Hours = Calc Types × Base Hours × Complexity Multiplier × (1 + (Categories - 1) × 0.1)
+            <div class="formula-display unit-text" data-days="Coding Days = Calc Types x Base Days x Complexity Multiplier + Complexity Areas" data-hours="Coding Hours = Calc Types x Base Hours x Complexity Multiplier + Complexity Areas">
+                Coding Days = Calc Types x Base Days x Complexity Multiplier + Complexity Areas
             </div>
         </div>
 
-        <!-- Testing Phase -->
+        <!-- Complexity Multipliers -->
         <div class="card">
-            <h2>Testing & Iteration</h2>
-            <p class="section-description unit-text" data-hours="Hours for executing tests and iterating with coding" data-days="Days for executing tests and iterating with coding">Hours for executing tests and iterating with coding</p>
-
-            <div class="config-group">
-                <label class="unit-text" data-hours="Hours per Test Case" data-days="Days per Test Case">Hours per Test Case</label>
-                <p class="help-text unit-text" data-hours="Base hours to execute and verify each test case" data-days="Base days to execute and verify each test case">Base hours to execute and verify each test case</p>
-                <input type="number" id="testingHoursPerCase" min="0" step="0.1" style="max-width: 200px;">
-            </div>
-
-            <div class="config-group">
-                <label>Testing Complexity Multipliers</label>
-                <p class="help-text">Multiplier for testing based on scheme complexity (iteration cycles)</p>
-                <div class="multiplier-grid">
-                    <div class="multiplier-item">
-                        <label>Simple</label>
-                        <input type="number" id="testing-simple" min="0" step="0.1">
-                    </div>
-                    <div class="multiplier-item">
-                        <label>Moderate</label>
-                        <input type="number" id="testing-moderate" min="0" step="0.1">
-                    </div>
-                    <div class="multiplier-item">
-                        <label>Complex</label>
-                        <input type="number" id="testing-complex" min="0" step="0.1">
-                    </div>
-                    <div class="multiplier-item">
-                        <label>Very Complex</label>
-                        <input type="number" id="testing-very-complex" min="0" step="0.1">
-                    </div>
-                </div>
-            </div>
-
-            <div class="formula-display unit-text" data-hours="Testing Hours = Test Cases × Hours per Case × Complexity Multiplier" data-days="Testing Days = Test Cases × Days per Case × Complexity Multiplier">
-                Testing Hours = Test Cases × Hours per Case × Complexity Multiplier
-            </div>
-        </div>
-
-        <!-- UAT -->
-        <div class="card">
-            <h2>UAT Support & Sign-off</h2>
-            <p class="section-description unit-text" data-hours="Hours for supporting client user acceptance testing" data-days="Days for supporting client user acceptance testing">Hours for supporting client user acceptance testing</p>
+            <h2>Complexity Multipliers</h2>
+            <p class="section-description">Multiplier applied to analysis and coding based on overall calc complexity</p>
 
             <div class="multiplier-grid">
                 <div class="multiplier-item">
-                    <label class="unit-text" data-hours="Light UAT (hrs)" data-days="Light UAT (days)">Light UAT (hrs)</label>
-                    <input type="number" id="uat-light" min="0" step="1">
+                    <label>Very Simple</label>
+                    <input type="number" id="complexity-very-simple" min="0" step="0.1">
                 </div>
                 <div class="multiplier-item">
-                    <label class="unit-text" data-hours="Standard UAT (hrs)" data-days="Standard UAT (days)">Standard UAT (hrs)</label>
-                    <input type="number" id="uat-standard" min="0" step="1">
+                    <label>Simple</label>
+                    <input type="number" id="complexity-simple" min="0" step="0.1">
                 </div>
                 <div class="multiplier-item">
-                    <label class="unit-text" data-hours="Intensive UAT (hrs)" data-days="Intensive UAT (days)">Intensive UAT (hrs)</label>
-                    <input type="number" id="uat-intensive" min="0" step="1">
+                    <label>Moderate</label>
+                    <input type="number" id="complexity-moderate" min="0" step="0.1">
+                </div>
+                <div class="multiplier-item">
+                    <label>Complex</label>
+                    <input type="number" id="complexity-complex" min="0" step="0.1">
+                </div>
+                <div class="multiplier-item">
+                    <label>Very Complex</label>
+                    <input type="number" id="complexity-very-complex" min="0" step="0.1">
                 </div>
             </div>
         </div>
 
-        <!-- Complexity Thresholds -->
+        <!-- Data Quality Multipliers -->
         <div class="card">
-            <h2>Complexity Thresholds</h2>
-            <p class="section-description unit-text" data-hours="Hour thresholds for complexity badge display" data-days="Day thresholds for complexity badge display">Hour thresholds for complexity badge display</p>
+            <h2>Data Quality Multipliers</h2>
+            <p class="section-description">Multiplier applied to analysis based on data quality</p>
 
-            <div class="config-row">
-                <div class="config-item">
-                    <label class="unit-text" data-hours="Low/Medium boundary (hrs)" data-days="Low/Medium boundary (days)">Low/Medium boundary (hrs)</label>
-                    <input type="number" id="threshold-low" min="0" step="10">
+            <div class="multiplier-grid">
+                <div class="multiplier-item">
+                    <label>Excellent</label>
+                    <input type="number" id="dq-excellent" min="0" step="0.1">
                 </div>
-                <div class="config-item">
-                    <label class="unit-text" data-hours="Medium/High boundary (hrs)" data-days="Medium/High boundary (days)">Medium/High boundary (hrs)</label>
-                    <input type="number" id="threshold-medium" min="0" step="10">
+                <div class="multiplier-item">
+                    <label>Good</label>
+                    <input type="number" id="dq-good" min="0" step="0.1">
                 </div>
-                <div class="config-item">
-                    <label class="unit-text" data-hours="High/Very High boundary (hrs)" data-days="High/Very High boundary (days)">High/Very High boundary (hrs)</label>
-                    <input type="number" id="threshold-high" min="0" step="10">
+                <div class="multiplier-item">
+                    <label>Average</label>
+                    <input type="number" id="dq-average" min="0" step="0.1">
+                </div>
+                <div class="multiplier-item">
+                    <label>Poor</label>
+                    <input type="number" id="dq-poor" min="0" step="0.1">
+                </div>
+                <div class="multiplier-item">
+                    <label>Very Poor</label>
+                    <input type="number" id="dq-very-poor" min="0" step="0.1">
+                </div>
+            </div>
+        </div>
+
+        <!-- UAT Support -->
+        <div class="card">
+            <h2>UAT Support</h2>
+            <p class="section-description unit-text" data-days="Flat days for each UAT complexity level" data-hours="Flat hours for each UAT complexity level">Flat days for each UAT complexity level</p>
+
+            <div class="multiplier-grid">
+                <div class="multiplier-item">
+                    <label class="unit-text" data-days="Minimal (days)" data-hours="Minimal (hrs)">Minimal (days)</label>
+                    <input type="number" id="uat-minimal" min="0" step="0.5">
+                </div>
+                <div class="multiplier-item">
+                    <label class="unit-text" data-days="Light (days)" data-hours="Light (hrs)">Light (days)</label>
+                    <input type="number" id="uat-light" min="0" step="0.5">
+                </div>
+                <div class="multiplier-item">
+                    <label class="unit-text" data-days="Standard (days)" data-hours="Standard (hrs)">Standard (days)</label>
+                    <input type="number" id="uat-standard" min="0" step="0.5">
+                </div>
+                <div class="multiplier-item">
+                    <label class="unit-text" data-days="Intensive (days)" data-hours="Intensive (hrs)">Intensive (days)</label>
+                    <input type="number" id="uat-intensive" min="0" step="0.5">
+                </div>
+                <div class="multiplier-item">
+                    <label class="unit-text" data-days="Full Regression (days)" data-hours="Full Regression (hrs)">Full Regression (days)</label>
+                    <input type="number" id="uat-full-regression" min="0" step="0.5">
                 </div>
             </div>
         </div>
@@ -672,32 +626,57 @@
         <!-- Complexity Areas -->
         <div class="card">
             <h2>Complexity Areas</h2>
-            <p class="section-description unit-text" data-hours="Additional hours for specific complexity areas (added when selected)" data-days="Additional days for specific complexity areas (added when selected)">Additional hours for specific complexity areas (added when selected)</p>
+            <p class="section-description unit-text" data-days="Additional days for specific complexity areas (added to coding when selected)" data-hours="Additional hours for specific complexity areas (added to coding when selected)">Additional days for specific complexity areas (added to coding when selected)</p>
 
             <div class="multiplier-grid">
                 <div class="multiplier-item">
-                    <label class="unit-text" data-hours="GMPe (hrs)" data-days="GMPe (days)">GMPe (hrs)</label>
-                    <input type="number" id="complexity-gmpe" min="0" step="1">
+                    <label class="unit-text" data-days="GMPe (days)" data-hours="GMPe (hrs)">GMPe (days)</label>
+                    <input type="number" id="ca-gmpe" min="0" step="0.5">
                 </div>
                 <div class="multiplier-item">
-                    <label class="unit-text" data-hours="Underpins (hrs)" data-days="Underpins (days)">Underpins (hrs)</label>
-                    <input type="number" id="complexity-underpins" min="0" step="1">
+                    <label class="unit-text" data-days="Underpins (days)" data-hours="Underpins (hrs)">Underpins (days)</label>
+                    <input type="number" id="ca-underpins" min="0" step="0.5">
                 </div>
                 <div class="multiplier-item">
-                    <label class="unit-text" data-hours="Added Years (hrs)" data-days="Added Years (days)">Added Years (hrs)</label>
-                    <input type="number" id="complexity-added-years" min="0" step="1">
+                    <label class="unit-text" data-days="Added Years (days)" data-hours="Added Years (hrs)">Added Years (days)</label>
+                    <input type="number" id="ca-added-years" min="0" step="0.5">
                 </div>
                 <div class="multiplier-item">
-                    <label class="unit-text" data-hours="Special Service Credits (hrs)" data-days="Special Service Credits (days)">Special Service Credits (hrs)</label>
-                    <input type="number" id="complexity-service-credits" min="0" step="1">
+                    <label class="unit-text" data-days="Special Service Credits (days)" data-hours="Special Service Credits (hrs)">Special Service Credits (days)</label>
+                    <input type="number" id="ca-service-credits" min="0" step="0.5">
                 </div>
                 <div class="multiplier-item">
-                    <label class="unit-text" data-hours="Bridging Pension (hrs)" data-days="Bridging Pension (days)">Bridging Pension (hrs)</label>
-                    <input type="number" id="complexity-bridging" min="0" step="1">
+                    <label class="unit-text" data-days="Bridging Pension (days)" data-hours="Bridging Pension (hrs)">Bridging Pension (days)</label>
+                    <input type="number" id="ca-bridging" min="0" step="0.5">
                 </div>
                 <div class="multiplier-item">
-                    <label class="unit-text" data-hours="Hybrid (hrs)" data-days="Hybrid (days)">Hybrid (hrs)</label>
-                    <input type="number" id="complexity-hybrid" min="0" step="1">
+                    <label class="unit-text" data-days="Hybrid (days)" data-hours="Hybrid (hrs)">Hybrid (days)</label>
+                    <input type="number" id="ca-hybrid" min="0" step="0.5">
+                </div>
+                <div class="multiplier-item">
+                    <label class="unit-text" data-days="MyPension Go-Live (days)" data-hours="MyPension Go-Live (hrs)">MyPension Go-Live (days)</label>
+                    <input type="number" id="ca-mypension-golive" min="0" step="0.5">
+                </div>
+            </div>
+        </div>
+
+        <!-- Complexity Thresholds -->
+        <div class="card">
+            <h2>Complexity Thresholds</h2>
+            <p class="section-description unit-text" data-days="Day thresholds for complexity badge display" data-hours="Hour thresholds for complexity badge display">Day thresholds for complexity badge display</p>
+
+            <div class="config-row">
+                <div class="config-item">
+                    <label class="unit-text" data-days="Low/Medium boundary (days)" data-hours="Low/Medium boundary (hrs)">Low/Medium boundary (days)</label>
+                    <input type="number" id="threshold-low" min="0" step="5">
+                </div>
+                <div class="config-item">
+                    <label class="unit-text" data-days="Medium/High boundary (days)" data-hours="Medium/High boundary (hrs)">Medium/High boundary (days)</label>
+                    <input type="number" id="threshold-medium" min="0" step="5">
+                </div>
+                <div class="config-item">
+                    <label class="unit-text" data-days="High/Very High boundary (days)" data-hours="High/Very High boundary (hrs)">High/Very High boundary (days)</label>
+                    <input type="number" id="threshold-high" min="0" step="5">
                 </div>
             </div>
         </div>
@@ -745,16 +724,15 @@
         document.getElementById('theme-light').addEventListener('click', () => setTheme('light'));
         document.getElementById('theme-dark').addEventListener('click', () => setTheme('dark'));
 
-        // Unit toggle (hours/days)
-        let configDisplayUnit = 'hours';
+        // Unit toggle (days/hours) — defaults to Days
+        let configDisplayUnit = 'days';
 
-        const hourInputIds = [
-            'analysisBase', 'analysisPerCategory', 'analysisPerTranche',
-            'testDesignPerCase', 'codingBasePerCalc', 'testingHoursPerCase',
-            'uat-light', 'uat-standard', 'uat-intensive',
-            'threshold-low', 'threshold-medium', 'threshold-high',
-            'complexity-gmpe', 'complexity-underpins', 'complexity-added-years',
-            'complexity-service-credits', 'complexity-bridging', 'complexity-hybrid'
+        const dayInputIds = [
+            'analysisBase', 'codingBasePerCalc',
+            'uat-minimal', 'uat-light', 'uat-standard', 'uat-intensive', 'uat-full-regression',
+            'ca-gmpe', 'ca-underpins', 'ca-added-years',
+            'ca-service-credits', 'ca-bridging', 'ca-hybrid', 'ca-mypension-golive',
+            'threshold-low', 'threshold-medium', 'threshold-high'
         ];
 
         function getHoursPerDay() {
@@ -763,16 +741,14 @@
 
         function convertAllToUnit(toUnit) {
             const hpd = getHoursPerDay();
-            hourInputIds.forEach(id => {
+            dayInputIds.forEach(id => {
                 const input = document.getElementById(id);
                 if (input) {
                     const currentValue = parseFloat(input.value) || 0;
-                    if (toUnit === 'days') {
-                        input.value = (currentValue / hpd).toFixed(2);
-                        input.step = '0.25';
+                    if (toUnit === 'hours') {
+                        input.value = (currentValue * hpd).toFixed(1);
                     } else {
-                        input.value = Math.round(currentValue * hpd);
-                        input.step = '1';
+                        input.value = (currentValue / hpd).toFixed(2);
                     }
                 }
             });
@@ -792,16 +768,6 @@
             });
         }
 
-        document.getElementById('config-unit-hours').addEventListener('click', function() {
-            if (configDisplayUnit === 'days') {
-                convertAllToUnit('hours');
-                configDisplayUnit = 'hours';
-                this.classList.add('active');
-                document.getElementById('config-unit-days').classList.remove('active');
-                updateLabels('hours');
-            }
-        });
-
         document.getElementById('config-unit-days').addEventListener('click', function() {
             if (configDisplayUnit === 'hours') {
                 convertAllToUnit('days');
@@ -812,161 +778,174 @@
             }
         });
 
+        document.getElementById('config-unit-hours').addEventListener('click', function() {
+            if (configDisplayUnit === 'days') {
+                convertAllToUnit('hours');
+                configDisplayUnit = 'hours';
+                this.classList.add('active');
+                document.getElementById('config-unit-days').classList.remove('active');
+                updateLabels('hours');
+            }
+        });
+
         document.getElementById('hoursPerDay').addEventListener('change', updateConversionHint);
 
+        // Defaults (all base values in days)
         const DEFAULT_CONFIG = {
-            hourlyRate: 100,
             hoursPerDay: 7.5,
-            pmOverhead: 15,
-            analysisBase: 16,
-            analysisPerCategory: 8,
-            analysisPerTranche: 4,
-            testDesignPerCase: 0.5,
-            codingBasePerCalc: 16,
-            codingComplexityMultiplier: {
+            analysisBase: 3,
+            codingBasePerCalc: 2,
+            complexityMultiplier: {
+                'very-simple': 0.7,
                 'simple': 1,
                 'moderate': 1.5,
                 'complex': 2.5,
                 'very-complex': 4
             },
-            testingHoursPerCase: 0.5,
-            testingComplexityMultiplier: {
-                'simple': 1,
-                'moderate': 1.3,
-                'complex': 1.8,
-                'very-complex': 2.5
+            dataQualityMultiplier: {
+                'excellent': 0.8,
+                'good': 1.0,
+                'average': 1.25,
+                'poor': 1.6,
+                'very-poor': 2.0
             },
-            uatHours: {
-                'light': 16,
-                'standard': 40,
-                'intensive': 80
+            uatDays: {
+                'minimal': 1,
+                'light': 2,
+                'standard': 5,
+                'intensive': 10,
+                'full-regression': 20
+            },
+            complexityAreaDays: {
+                gmpe: 2,
+                underpins: 1.5,
+                addedYears: 1.5,
+                serviceCredits: 1,
+                bridging: 1.5,
+                hybrid: 2,
+                myPensionGoLive: 3
             },
             complexityThresholds: {
-                low: 200,
-                medium: 500,
-                high: 1000
-            },
-            complexityAreaHours: {
-                gmpe: 16,
-                underpins: 12,
-                addedYears: 10,
-                serviceCredits: 8,
-                bridging: 10,
-                hybrid: 14
+                low: 25,
+                medium: 60,
+                high: 120
             }
         };
 
         function loadConfig() {
-            const saved = localStorage.getItem('calcCostConfig');
+            const saved = localStorage.getItem('calcCostConfigV2');
             const config = saved ? { ...DEFAULT_CONFIG, ...JSON.parse(saved) } : DEFAULT_CONFIG;
 
-            document.getElementById('hourlyRate').value = config.hourlyRate;
             document.getElementById('hoursPerDay').value = config.hoursPerDay;
-            document.getElementById('pmOverhead').value = config.pmOverhead;
 
             document.getElementById('analysisBase').value = config.analysisBase;
-            document.getElementById('analysisPerCategory').value = config.analysisPerCategory;
-            document.getElementById('analysisPerTranche').value = config.analysisPerTranche;
-
-            document.getElementById('testDesignPerCase').value = config.testDesignPerCase;
-
             document.getElementById('codingBasePerCalc').value = config.codingBasePerCalc;
-            document.getElementById('coding-simple').value = config.codingComplexityMultiplier?.simple || DEFAULT_CONFIG.codingComplexityMultiplier.simple;
-            document.getElementById('coding-moderate').value = config.codingComplexityMultiplier?.moderate || DEFAULT_CONFIG.codingComplexityMultiplier.moderate;
-            document.getElementById('coding-complex').value = config.codingComplexityMultiplier?.complex || DEFAULT_CONFIG.codingComplexityMultiplier.complex;
-            document.getElementById('coding-very-complex').value = config.codingComplexityMultiplier?.['very-complex'] || DEFAULT_CONFIG.codingComplexityMultiplier['very-complex'];
 
-            document.getElementById('testingHoursPerCase').value = config.testingHoursPerCase;
-            document.getElementById('testing-simple').value = config.testingComplexityMultiplier?.simple || DEFAULT_CONFIG.testingComplexityMultiplier.simple;
-            document.getElementById('testing-moderate').value = config.testingComplexityMultiplier?.moderate || DEFAULT_CONFIG.testingComplexityMultiplier.moderate;
-            document.getElementById('testing-complex').value = config.testingComplexityMultiplier?.complex || DEFAULT_CONFIG.testingComplexityMultiplier.complex;
-            document.getElementById('testing-very-complex').value = config.testingComplexityMultiplier?.['very-complex'] || DEFAULT_CONFIG.testingComplexityMultiplier['very-complex'];
+            // Complexity multipliers
+            document.getElementById('complexity-very-simple').value = config.complexityMultiplier?.['very-simple'] ?? DEFAULT_CONFIG.complexityMultiplier['very-simple'];
+            document.getElementById('complexity-simple').value = config.complexityMultiplier?.simple ?? DEFAULT_CONFIG.complexityMultiplier.simple;
+            document.getElementById('complexity-moderate').value = config.complexityMultiplier?.moderate ?? DEFAULT_CONFIG.complexityMultiplier.moderate;
+            document.getElementById('complexity-complex').value = config.complexityMultiplier?.complex ?? DEFAULT_CONFIG.complexityMultiplier.complex;
+            document.getElementById('complexity-very-complex').value = config.complexityMultiplier?.['very-complex'] ?? DEFAULT_CONFIG.complexityMultiplier['very-complex'];
 
-            document.getElementById('uat-light').value = config.uatHours?.light || DEFAULT_CONFIG.uatHours.light;
-            document.getElementById('uat-standard').value = config.uatHours?.standard || DEFAULT_CONFIG.uatHours.standard;
-            document.getElementById('uat-intensive').value = config.uatHours?.intensive || DEFAULT_CONFIG.uatHours.intensive;
+            // Data quality multipliers
+            document.getElementById('dq-excellent').value = config.dataQualityMultiplier?.excellent ?? DEFAULT_CONFIG.dataQualityMultiplier.excellent;
+            document.getElementById('dq-good').value = config.dataQualityMultiplier?.good ?? DEFAULT_CONFIG.dataQualityMultiplier.good;
+            document.getElementById('dq-average').value = config.dataQualityMultiplier?.average ?? DEFAULT_CONFIG.dataQualityMultiplier.average;
+            document.getElementById('dq-poor').value = config.dataQualityMultiplier?.poor ?? DEFAULT_CONFIG.dataQualityMultiplier.poor;
+            document.getElementById('dq-very-poor').value = config.dataQualityMultiplier?.['very-poor'] ?? DEFAULT_CONFIG.dataQualityMultiplier['very-poor'];
 
-            document.getElementById('threshold-low').value = config.complexityThresholds?.low || DEFAULT_CONFIG.complexityThresholds.low;
-            document.getElementById('threshold-medium').value = config.complexityThresholds?.medium || DEFAULT_CONFIG.complexityThresholds.medium;
-            document.getElementById('threshold-high').value = config.complexityThresholds?.high || DEFAULT_CONFIG.complexityThresholds.high;
+            // UAT
+            document.getElementById('uat-minimal').value = config.uatDays?.minimal ?? DEFAULT_CONFIG.uatDays.minimal;
+            document.getElementById('uat-light').value = config.uatDays?.light ?? DEFAULT_CONFIG.uatDays.light;
+            document.getElementById('uat-standard').value = config.uatDays?.standard ?? DEFAULT_CONFIG.uatDays.standard;
+            document.getElementById('uat-intensive').value = config.uatDays?.intensive ?? DEFAULT_CONFIG.uatDays.intensive;
+            document.getElementById('uat-full-regression').value = config.uatDays?.['full-regression'] ?? DEFAULT_CONFIG.uatDays['full-regression'];
 
-            document.getElementById('complexity-gmpe').value = config.complexityAreaHours?.gmpe || DEFAULT_CONFIG.complexityAreaHours.gmpe;
-            document.getElementById('complexity-underpins').value = config.complexityAreaHours?.underpins || DEFAULT_CONFIG.complexityAreaHours.underpins;
-            document.getElementById('complexity-added-years').value = config.complexityAreaHours?.addedYears || DEFAULT_CONFIG.complexityAreaHours.addedYears;
-            document.getElementById('complexity-service-credits').value = config.complexityAreaHours?.serviceCredits || DEFAULT_CONFIG.complexityAreaHours.serviceCredits;
-            document.getElementById('complexity-bridging').value = config.complexityAreaHours?.bridging || DEFAULT_CONFIG.complexityAreaHours.bridging;
-            document.getElementById('complexity-hybrid').value = config.complexityAreaHours?.hybrid || DEFAULT_CONFIG.complexityAreaHours.hybrid;
+            // Complexity areas
+            document.getElementById('ca-gmpe').value = config.complexityAreaDays?.gmpe ?? DEFAULT_CONFIG.complexityAreaDays.gmpe;
+            document.getElementById('ca-underpins').value = config.complexityAreaDays?.underpins ?? DEFAULT_CONFIG.complexityAreaDays.underpins;
+            document.getElementById('ca-added-years').value = config.complexityAreaDays?.addedYears ?? DEFAULT_CONFIG.complexityAreaDays.addedYears;
+            document.getElementById('ca-service-credits').value = config.complexityAreaDays?.serviceCredits ?? DEFAULT_CONFIG.complexityAreaDays.serviceCredits;
+            document.getElementById('ca-bridging').value = config.complexityAreaDays?.bridging ?? DEFAULT_CONFIG.complexityAreaDays.bridging;
+            document.getElementById('ca-hybrid').value = config.complexityAreaDays?.hybrid ?? DEFAULT_CONFIG.complexityAreaDays.hybrid;
+            document.getElementById('ca-mypension-golive').value = config.complexityAreaDays?.myPensionGoLive ?? DEFAULT_CONFIG.complexityAreaDays.myPensionGoLive;
 
-            configDisplayUnit = 'hours';
-            document.getElementById('config-unit-hours').classList.add('active');
-            document.getElementById('config-unit-days').classList.remove('active');
+            // Thresholds
+            document.getElementById('threshold-low').value = config.complexityThresholds?.low ?? DEFAULT_CONFIG.complexityThresholds.low;
+            document.getElementById('threshold-medium').value = config.complexityThresholds?.medium ?? DEFAULT_CONFIG.complexityThresholds.medium;
+            document.getElementById('threshold-high').value = config.complexityThresholds?.high ?? DEFAULT_CONFIG.complexityThresholds.high;
+
+            configDisplayUnit = 'days';
+            document.getElementById('config-unit-days').classList.add('active');
+            document.getElementById('config-unit-hours').classList.remove('active');
             updateConversionHint();
-            updateLabels('hours');
+            updateLabels('days');
         }
 
         function saveConfig() {
             const hpd = getHoursPerDay();
-            const multiplier = configDisplayUnit === 'days' ? hpd : 1;
+            // If displaying in hours, convert back to days for storage
+            const multiplier = configDisplayUnit === 'hours' ? (1 / hpd) : 1;
 
-            function getHourValue(id) {
+            function getDayValue(id) {
                 const val = parseFloat(document.getElementById(id).value) || 0;
-                return hourInputIds.includes(id) ? val * multiplier : val;
+                return dayInputIds.includes(id) ? val * multiplier : val;
             }
 
             const config = {
-                hourlyRate: parseFloat(document.getElementById('hourlyRate').value),
                 hoursPerDay: parseFloat(document.getElementById('hoursPerDay').value),
-                pmOverhead: parseFloat(document.getElementById('pmOverhead').value),
-                analysisBase: getHourValue('analysisBase'),
-                analysisPerCategory: getHourValue('analysisPerCategory'),
-                analysisPerTranche: getHourValue('analysisPerTranche'),
-                testDesignPerCase: getHourValue('testDesignPerCase'),
-                codingBasePerCalc: getHourValue('codingBasePerCalc'),
-                codingComplexityMultiplier: {
-                    'simple': parseFloat(document.getElementById('coding-simple').value),
-                    'moderate': parseFloat(document.getElementById('coding-moderate').value),
-                    'complex': parseFloat(document.getElementById('coding-complex').value),
-                    'very-complex': parseFloat(document.getElementById('coding-very-complex').value)
+                analysisBase: getDayValue('analysisBase'),
+                codingBasePerCalc: getDayValue('codingBasePerCalc'),
+                complexityMultiplier: {
+                    'very-simple': parseFloat(document.getElementById('complexity-very-simple').value),
+                    'simple': parseFloat(document.getElementById('complexity-simple').value),
+                    'moderate': parseFloat(document.getElementById('complexity-moderate').value),
+                    'complex': parseFloat(document.getElementById('complexity-complex').value),
+                    'very-complex': parseFloat(document.getElementById('complexity-very-complex').value)
                 },
-                testingHoursPerCase: getHourValue('testingHoursPerCase'),
-                testingComplexityMultiplier: {
-                    'simple': parseFloat(document.getElementById('testing-simple').value),
-                    'moderate': parseFloat(document.getElementById('testing-moderate').value),
-                    'complex': parseFloat(document.getElementById('testing-complex').value),
-                    'very-complex': parseFloat(document.getElementById('testing-very-complex').value)
+                dataQualityMultiplier: {
+                    'excellent': parseFloat(document.getElementById('dq-excellent').value),
+                    'good': parseFloat(document.getElementById('dq-good').value),
+                    'average': parseFloat(document.getElementById('dq-average').value),
+                    'poor': parseFloat(document.getElementById('dq-poor').value),
+                    'very-poor': parseFloat(document.getElementById('dq-very-poor').value)
                 },
-                uatHours: {
-                    'light': getHourValue('uat-light'),
-                    'standard': getHourValue('uat-standard'),
-                    'intensive': getHourValue('uat-intensive')
+                uatDays: {
+                    'minimal': getDayValue('uat-minimal'),
+                    'light': getDayValue('uat-light'),
+                    'standard': getDayValue('uat-standard'),
+                    'intensive': getDayValue('uat-intensive'),
+                    'full-regression': getDayValue('uat-full-regression')
+                },
+                complexityAreaDays: {
+                    gmpe: getDayValue('ca-gmpe'),
+                    underpins: getDayValue('ca-underpins'),
+                    addedYears: getDayValue('ca-added-years'),
+                    serviceCredits: getDayValue('ca-service-credits'),
+                    bridging: getDayValue('ca-bridging'),
+                    hybrid: getDayValue('ca-hybrid'),
+                    myPensionGoLive: getDayValue('ca-mypension-golive')
                 },
                 complexityThresholds: {
-                    low: getHourValue('threshold-low'),
-                    medium: getHourValue('threshold-medium'),
-                    high: getHourValue('threshold-high')
-                },
-                complexityAreaHours: {
-                    gmpe: getHourValue('complexity-gmpe'),
-                    underpins: getHourValue('complexity-underpins'),
-                    addedYears: getHourValue('complexity-added-years'),
-                    serviceCredits: getHourValue('complexity-service-credits'),
-                    bridging: getHourValue('complexity-bridging'),
-                    hybrid: getHourValue('complexity-hybrid')
+                    low: getDayValue('threshold-low'),
+                    medium: getDayValue('threshold-medium'),
+                    high: getDayValue('threshold-high')
                 }
             };
 
-            localStorage.setItem('calcCostConfig', JSON.stringify(config));
+            localStorage.setItem('calcCostConfigV2', JSON.stringify(config));
             showToast('Configuration saved!');
         }
 
         function exportConfig() {
             saveConfig();
-            const config = localStorage.getItem('calcCostConfig');
+            const config = localStorage.getItem('calcCostConfigV2');
             const blob = new Blob([config], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'xps-calcs-config.json';
+            a.download = 'xps-calcs-config-v2.json';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -985,7 +964,7 @@
                 reader.onload = function(e) {
                     try {
                         const config = JSON.parse(e.target.result);
-                        localStorage.setItem('calcCostConfig', JSON.stringify(config));
+                        localStorage.setItem('calcCostConfigV2', JSON.stringify(config));
                         loadConfig();
                         showToast('Configuration imported!');
                     } catch (err) {
@@ -998,7 +977,7 @@
 
         function resetConfig() {
             if (confirm('Are you sure you want to reset all configuration to defaults?')) {
-                localStorage.removeItem('calcCostConfig');
+                localStorage.removeItem('calcCostConfigV2');
                 loadConfig();
                 showToast('Configuration reset to defaults!');
             }
