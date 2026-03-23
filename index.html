@@ -763,6 +763,134 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ========================
+           Info Tooltip Popups
+           ======================== */
+        .info-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--xps-blue);
+            color: var(--xps-charcoal-dark);
+            font-size: 0.65rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            margin-left: 6px;
+            vertical-align: middle;
+            flex-shrink: 0;
+            line-height: 1;
+            padding: 0;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .tooltip-popup {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: calc(100% - 8px);
+            z-index: 200;
+            background: var(--xps-card-bg);
+            border: 1px solid var(--xps-blue);
+            border-radius: 8px;
+            padding: 16px;
+            min-width: 300px;
+            max-width: 380px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+
+        .tooltip-popup.show {
+            display: block;
+        }
+
+        .tooltip-popup h4 {
+            font-size: 0.75rem;
+            color: var(--xps-blue);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tooltip-level {
+            padding: 7px 0;
+            border-bottom: 1px solid var(--xps-border);
+        }
+
+        .tooltip-level:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .tooltip-level-name {
+            display: block;
+            font-weight: 600;
+            font-size: 0.82rem;
+            color: var(--xps-text);
+            margin-bottom: 2px;
+        }
+
+        .tooltip-level-desc {
+            display: block;
+            font-size: 0.78rem;
+            color: var(--xps-text-muted);
+            line-height: 1.4;
+        }
+
+        /* ========================
+           Caveat Section
+           ======================== */
+        .caveat-section {
+            margin-top: 12px;
+            padding: 10px 12px;
+            background: rgba(255, 152, 0, 0.07);
+            border: 1px solid rgba(255, 152, 0, 0.3);
+            border-radius: 6px;
+            font-size: 0.78rem;
+        }
+
+        .caveat-title {
+            color: #FF9800;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .caveat-summary {
+            color: var(--xps-text-muted);
+            line-height: 1.4;
+        }
+
+        .caveat-toggle {
+            background: none;
+            border: none;
+            color: var(--xps-blue);
+            font-size: 0.78rem;
+            cursor: pointer;
+            padding: 0;
+            margin-top: 4px;
+            text-decoration: underline;
+            display: block;
+        }
+
+        .caveat-detail {
+            display: none;
+            color: var(--xps-text-muted);
+            font-size: 0.78rem;
+            line-height: 1.5;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 152, 0, 0.2);
+        }
+
+        .caveat-detail.show {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -824,7 +952,41 @@
                 <h2>Scheme Parameters</h2>
 
                 <div class="form-group">
-                    <label class="form-label">Complexity of Calcs</label>
+                    <label class="form-label">
+                        Complexity of Calcs
+                        <button class="info-icon" onclick="toggleTooltip('tooltip-complexity', event)" type="button" aria-label="Guide to complexity levels">i</button>
+                    </label>
+
+                    <!-- ================================================================
+                         TOOLTIP: COMPLEXITY OF CALCS
+                         Edit the descriptions below to adjust what appears when the
+                         (i) icon is clicked. Each tooltip-level block is one row.
+                         ================================================================ -->
+                    <div class="tooltip-popup" id="tooltip-complexity">
+                        <h4>Complexity of Calcs — Guide</h4>
+                        <div class="tooltip-level">
+                            <span class="tooltip-level-name">Very Simple</span>
+                            <span class="tooltip-level-desc">A single calculation type with straightforward rules. Standard salary and service-based benefits only — no special factors, tranches, or scheme-specific complexity.</span>
+                        </div>
+                        <div class="tooltip-level">
+                            <span class="tooltip-level-name">Simple</span>
+                            <span class="tooltip-level-desc">One or two calculation types with minor special factors. Rules are well-documented with few exceptions or edge cases requiring interpretation.</span>
+                        </div>
+                        <div class="tooltip-level">
+                            <span class="tooltip-level-name">Moderate</span>
+                            <span class="tooltip-level-desc">Several calculation types with some scheme-specific complexity — for example multiple benefit tranches, revaluation bases, or benefit limits. Rules are clear but require careful implementation.</span>
+                        </div>
+                        <div class="tooltip-level">
+                            <span class="tooltip-level-name">Complex</span>
+                            <span class="tooltip-level-desc">Many calculation types with significant complexity — such as GMP equalisation, underpins, or hybrid benefit structures. Rules may contain ambiguities requiring trustee or legal clarification.</span>
+                        </div>
+                        <div class="tooltip-level">
+                            <span class="tooltip-level-name">Very Complex</span>
+                            <span class="tooltip-level-desc">Full suite of calculation types with multiple interacting complexity areas. Rules are likely to require significant clarification and may involve legislative uncertainty or bespoke benefit structures unique to the scheme.</span>
+                        </div>
+                    </div>
+                    <!-- END TOOLTIP: COMPLEXITY OF CALCS -->
+
                     <select id="calcComplexity">
                         <option value="very-simple">Very Simple</option>
                         <option value="simple">Simple</option>
@@ -835,7 +997,41 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Data Quality</label>
+                    <label class="form-label">
+                        Data Quality
+                        <button class="info-icon" onclick="toggleTooltip('tooltip-dataquality', event)" type="button" aria-label="Guide to data quality levels">i</button>
+                    </label>
+
+                    <!-- ================================================================
+                         TOOLTIP: DATA QUALITY
+                         Edit the descriptions below to adjust what appears when the
+                         (i) icon is clicked. Each tooltip-level block is one row.
+                         ================================================================ -->
+                    <div class="tooltip-popup" id="tooltip-dataquality">
+                        <h4>Data Quality — Guide</h4>
+                        <div class="tooltip-level">
+                            <span class="tooltip-level-name">Excellent</span>
+                            <span class="tooltip-level-desc">Data is fully validated, complete, and consistent. No known issues. Can be used as-is without further investigation or cleansing.</span>
+                        </div>
+                        <div class="tooltip-level">
+                            <span class="tooltip-level-name">Good</span>
+                            <span class="tooltip-level-desc">Data is mostly clean with only minor gaps or anomalies. Minimal investigation needed before calculations can begin.</span>
+                        </div>
+                        <div class="tooltip-level">
+                            <span class="tooltip-level-name">Average</span>
+                            <span class="tooltip-level-desc">Some known gaps, inconsistencies, or missing fields. Data analysis and partial cleansing will be required as part of the analysis phase.</span>
+                        </div>
+                        <div class="tooltip-level">
+                            <span class="tooltip-level-name">Poor</span>
+                            <span class="tooltip-level-desc">Significant data issues including missing records, conflicting data, or format problems. Substantial investigation and remediation expected before calculations can begin.</span>
+                        </div>
+                        <div class="tooltip-level">
+                            <span class="tooltip-level-name">Very Poor</span>
+                            <span class="tooltip-level-desc">Major data problems requiring a significant remediation exercise. A dedicated data cleansing workstream will likely be needed before the calculation build can start in earnest.</span>
+                        </div>
+                    </div>
+                    <!-- END TOOLTIP: DATA QUALITY -->
+
                     <select id="dataQuality">
                         <option value="excellent">Excellent - Fully validated, no known issues</option>
                         <option value="good">Good - Clean, minor gaps</option>
@@ -906,26 +1102,6 @@
                         <label for="complexGMPe">GMPe</label>
                     </div>
                     <div class="checkbox-item">
-                        <input type="checkbox" id="complexUnderpins">
-                        <label for="complexUnderpins">Underpins</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="complexAddedYears">
-                        <label for="complexAddedYears">Added Years</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="complexSpecialServiceCredits">
-                        <label for="complexSpecialServiceCredits">Special Service Credits</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="complexBridgingPension">
-                        <label for="complexBridgingPension">Bridging Pension</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="complexHybrid">
-                        <label for="complexHybrid">Hybrid</label>
-                    </div>
-                    <div class="checkbox-item">
                         <input type="checkbox" id="complexMyPensionGoLive">
                         <label for="complexMyPensionGoLive">MyPension Required Go-Live</label>
                     </div>
@@ -967,6 +1143,23 @@
 
                 <!-- Complexity Badge -->
                 <span class="complexity-badge complexity-low" id="complexityBadge">LOW</span>
+
+                <!-- ================================================================
+                     CAVEAT SECTION
+                     Edit the caveat-summary and caveat-detail text below to adjust
+                     the wording that appears on the results panel and in the tooltip.
+                     ================================================================ -->
+                <div class="caveat-section">
+                    <div class="caveat-title">⚠ Indicative estimate — RFP use only</div>
+                    <div class="caveat-summary">
+                        For tender purposes only. Not a commitment or project plan.
+                        <button class="caveat-toggle" onclick="toggleCaveat(this)">Read full caveat</button>
+                    </div>
+                    <div class="caveat-detail" id="caveatDetail">
+                        This estimate is indicative only and has been produced solely for the purpose of responding to an RFP or tender. It is based on the scheme parameters selected and broad internal assumptions. It should not be relied upon as a commitment, guarantee, or formal project plan. Once work is confirmed and detailed scheme requirements are fully understood, a more accurate project plan can be built with revised timelines and resource estimates.
+                    </div>
+                </div>
+                <!-- END CAVEAT SECTION -->
 
                 <!-- Breakdown -->
                 <div class="breakdown-section">
@@ -1062,7 +1255,9 @@
         // Default configuration (values stored in days)
         const DEFAULT_CONFIG = {
             hoursPerDay: 7.5,
-            analysisBase: 3,
+            // Analysis: days per calc type (before complexity & data quality multipliers)
+            analysisBasePerCalc: 1.5,
+            // Coding: days per calc type (before complexity multiplier)
             codingBasePerCalc: 2,
             complexityMultiplier: {
                 'very-simple': 0.7,
@@ -1078,20 +1273,16 @@
                 'poor': 1.6,
                 'very-poor': 2.0
             },
-            uatDays: {
-                'minimal': 1,
-                'light': 2,
-                'standard': 5,
-                'intensive': 10,
-                'full-regression': 20
+            // UAT: days per calc type for each UAT level
+            uatDaysPerCalc: {
+                'minimal': 0.5,
+                'light': 1,
+                'standard': 2,
+                'intensive': 3,
+                'full-regression': 5
             },
             complexityAreaDays: {
                 gmpe: 2,
-                underpins: 1.5,
-                addedYears: 1.5,
-                serviceCredits: 1,
-                bridging: 1.5,
-                hybrid: 2,
                 myPensionGoLive: 3
             },
             complexityThresholds: {
@@ -1103,7 +1294,7 @@
 
         // Load config from localStorage or use defaults
         let CONFIG = { ...DEFAULT_CONFIG };
-        const savedConfig = localStorage.getItem('calcCostConfigV2');
+        const savedConfig = localStorage.getItem('calcCostConfigV3');
         if (savedConfig) {
             try {
                 CONFIG = { ...DEFAULT_CONFIG, ...JSON.parse(savedConfig) };
@@ -1160,9 +1351,7 @@
 
         // Checkbox IDs for complexity areas
         const complexityCheckboxes = [
-            'complexGMPe', 'complexUnderpins', 'complexAddedYears',
-            'complexSpecialServiceCredits', 'complexBridgingPension', 'complexHybrid',
-            'complexMyPensionGoLive'
+            'complexGMPe', 'complexMyPensionGoLive'
         ];
 
         // Event listeners
@@ -1209,33 +1398,31 @@
             const dataQualityMult = CONFIG.dataQualityMultiplier?.[dataQuality] ||
                 DEFAULT_CONFIG.dataQualityMultiplier[dataQuality];
 
-            // Analysis (days) = base × complexity × data quality
-            const analysisDays = CONFIG.analysisBase * complexityMult * dataQualityMult;
+            // Analysis (days) = calc types × base per calc × complexity × data quality
+            const analysisBasePerCalc = CONFIG.analysisBasePerCalc ?? DEFAULT_CONFIG.analysisBasePerCalc;
+            const analysisDays = calcTypeCount * analysisBasePerCalc * complexityMult * dataQualityMult;
 
-            // Complexity areas (days)
+            // Complexity areas (days) — added to coding
             let complexityAreasDays = 0;
             const complexityMapping = {
                 'complexGMPe': 'gmpe',
-                'complexUnderpins': 'underpins',
-                'complexAddedYears': 'addedYears',
-                'complexSpecialServiceCredits': 'serviceCredits',
-                'complexBridgingPension': 'bridging',
-                'complexHybrid': 'hybrid',
                 'complexMyPensionGoLive': 'myPensionGoLive'
             };
 
             Object.entries(complexityMapping).forEach(([checkboxId, configKey]) => {
-                if (document.getElementById(checkboxId).checked) {
-                    complexityAreasDays += CONFIG.complexityAreaDays?.[configKey] ||
+                const el = document.getElementById(checkboxId);
+                if (el && el.checked) {
+                    complexityAreasDays += CONFIG.complexityAreaDays?.[configKey] ??
                         DEFAULT_CONFIG.complexityAreaDays[configKey];
                 }
             });
 
             // Coding (days) = calc types × base per calc × complexity + complexity areas
-            const codingDays = (calcTypeCount * CONFIG.codingBasePerCalc * complexityMult) + complexityAreasDays;
+            const codingDays = (calcTypeCount * (CONFIG.codingBasePerCalc ?? DEFAULT_CONFIG.codingBasePerCalc) * complexityMult) + complexityAreasDays;
 
-            // UAT (days) = flat value from UAT complexity
-            const uatDays = CONFIG.uatDays?.[uatComplexity] || DEFAULT_CONFIG.uatDays[uatComplexity];
+            // UAT (days) = calc types × days per calc for selected UAT level
+            const uatDaysPerCalc = CONFIG.uatDaysPerCalc?.[uatComplexity] ?? DEFAULT_CONFIG.uatDaysPerCalc[uatComplexity];
+            const uatDays = calcTypeCount * uatDaysPerCalc;
 
             // Store breakdown (in days)
             breakdown = {
@@ -1462,11 +1649,6 @@
             const selectedComplexity = [];
             const complexityLabels = {
                 'complexGMPe': 'GMPe',
-                'complexUnderpins': 'Underpins',
-                'complexAddedYears': 'Added Years',
-                'complexSpecialServiceCredits': 'Special Service Credits',
-                'complexBridgingPension': 'Bridging Pension',
-                'complexHybrid': 'Hybrid',
                 'complexMyPensionGoLive': 'MyPension Required Go-Live'
             };
             Object.entries(complexityLabels).forEach(([id, label]) => {
@@ -1498,6 +1680,14 @@
             const content = `XPS Calcs Timeline Estimator - Estimate Export
 ================================================
 Generated: ${new Date().toLocaleString()}
+
+IMPORTANT — INDICATIVE ESTIMATE ONLY
+--------------------------------------
+This estimate has been produced for RFP/tender purposes only. It is based on
+the scheme parameters selected and internal assumptions. It does not constitute
+a commitment, guarantee, or formal project plan. A revised plan with accurate
+timelines and costs will be produced once work is confirmed and detailed
+requirements are understood.
 
 CLIENT INFORMATION
 ------------------
@@ -1688,6 +1878,32 @@ ${d.notes || 'No notes added'}
         document.getElementById('savedEstimatesModal').addEventListener('click', (e) => {
             if (e.target.id === 'savedEstimatesModal') closeModal();
         });
+
+        // =====================
+        // Tooltip toggle
+        // =====================
+        function toggleTooltip(id, event) {
+            event.stopPropagation();
+            const tooltip = document.getElementById(id);
+            const isOpen = tooltip.classList.contains('show');
+            // Close all open tooltips first
+            document.querySelectorAll('.tooltip-popup.show').forEach(t => t.classList.remove('show'));
+            if (!isOpen) tooltip.classList.add('show');
+        }
+
+        // Close tooltips when clicking anywhere else
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.tooltip-popup.show').forEach(t => t.classList.remove('show'));
+        });
+
+        // =====================
+        // Caveat toggle
+        // =====================
+        function toggleCaveat(btn) {
+            const detail = document.getElementById('caveatDetail');
+            detail.classList.toggle('show');
+            btn.textContent = detail.classList.contains('show') ? 'Hide caveat' : 'Read full caveat';
+        }
 
         // Initial calculation
         calculateEstimate();

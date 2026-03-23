@@ -507,16 +507,16 @@
         <!-- Analysis -->
         <div class="card">
             <h2>Analysis</h2>
-            <p class="section-description unit-text" data-days="Base days for analysis phase, multiplied by complexity and data quality" data-hours="Base hours for analysis phase, multiplied by complexity and data quality">Base days for analysis phase, multiplied by complexity and data quality</p>
+            <p class="section-description unit-text" data-days="Days per calculation type for analysis phase, multiplied by complexity and data quality" data-hours="Hours per calculation type for analysis phase, multiplied by complexity and data quality">Days per calculation type for analysis phase, multiplied by complexity and data quality</p>
 
             <div class="config-group">
-                <label class="unit-text" data-days="Base Analysis (days)" data-hours="Base Analysis (hours)">Base Analysis (days)</label>
-                <p class="help-text">Starting effort before complexity and data quality multipliers</p>
-                <input type="number" id="analysisBase" min="0" step="0.5" style="max-width: 200px;">
+                <label class="unit-text" data-days="Base Analysis Per Calc Type (days)" data-hours="Base Analysis Per Calc Type (hours)">Base Analysis Per Calc Type (days)</label>
+                <p class="help-text">Days per selected calculation type, before complexity and data quality multipliers are applied</p>
+                <input type="number" id="analysisBasePerCalc" min="0" step="0.5" style="max-width: 200px;">
             </div>
 
-            <div class="formula-display unit-text" data-days="Analysis Days = Base x Complexity Multiplier x Data Quality Multiplier" data-hours="Analysis Hours = Base x Complexity Multiplier x Data Quality Multiplier">
-                Analysis Days = Base x Complexity Multiplier x Data Quality Multiplier
+            <div class="formula-display unit-text" data-days="Analysis Days = Calc Types x Base Per Calc x Complexity Multiplier x Data Quality Multiplier" data-hours="Analysis Hours = Calc Types x Base Per Calc x Complexity Multiplier x Data Quality Multiplier">
+                Analysis Days = Calc Types x Base Per Calc x Complexity Multiplier x Data Quality Multiplier
             </div>
         </div>
 
@@ -597,27 +597,27 @@
         <!-- UAT Support -->
         <div class="card">
             <h2>UAT Support</h2>
-            <p class="section-description unit-text" data-days="Flat days for each UAT complexity level" data-hours="Flat hours for each UAT complexity level">Flat days for each UAT complexity level</p>
+            <p class="section-description unit-text" data-days="Days per calculation type for each UAT level" data-hours="Hours per calculation type for each UAT level">Days per calculation type for each UAT level</p>
 
             <div class="multiplier-grid">
                 <div class="multiplier-item">
-                    <label class="unit-text" data-days="Minimal (days)" data-hours="Minimal (hrs)">Minimal (days)</label>
+                    <label class="unit-text" data-days="Minimal (days/calc)" data-hours="Minimal (hrs/calc)">Minimal (days/calc)</label>
                     <input type="number" id="uat-minimal" min="0" step="0.5">
                 </div>
                 <div class="multiplier-item">
-                    <label class="unit-text" data-days="Light (days)" data-hours="Light (hrs)">Light (days)</label>
+                    <label class="unit-text" data-days="Light (days/calc)" data-hours="Light (hrs/calc)">Light (days/calc)</label>
                     <input type="number" id="uat-light" min="0" step="0.5">
                 </div>
                 <div class="multiplier-item">
-                    <label class="unit-text" data-days="Standard (days)" data-hours="Standard (hrs)">Standard (days)</label>
+                    <label class="unit-text" data-days="Standard (days/calc)" data-hours="Standard (hrs/calc)">Standard (days/calc)</label>
                     <input type="number" id="uat-standard" min="0" step="0.5">
                 </div>
                 <div class="multiplier-item">
-                    <label class="unit-text" data-days="Intensive (days)" data-hours="Intensive (hrs)">Intensive (days)</label>
+                    <label class="unit-text" data-days="Intensive (days/calc)" data-hours="Intensive (hrs/calc)">Intensive (days/calc)</label>
                     <input type="number" id="uat-intensive" min="0" step="0.5">
                 </div>
                 <div class="multiplier-item">
-                    <label class="unit-text" data-days="Full Regression (days)" data-hours="Full Regression (hrs)">Full Regression (days)</label>
+                    <label class="unit-text" data-days="Full Regression (days/calc)" data-hours="Full Regression (hrs/calc)">Full Regression (days/calc)</label>
                     <input type="number" id="uat-full-regression" min="0" step="0.5">
                 </div>
             </div>
@@ -626,32 +626,12 @@
         <!-- Complexity Areas -->
         <div class="card">
             <h2>Complexity Areas</h2>
-            <p class="section-description unit-text" data-days="Additional days for specific complexity areas (added to coding when selected)" data-hours="Additional hours for specific complexity areas (added to coding when selected)">Additional days for specific complexity areas (added to coding when selected)</p>
+            <p class="section-description unit-text" data-days="Additional days for complexity areas (added to coding when selected)" data-hours="Additional hours for complexity areas (added to coding when selected)">Additional days for complexity areas (added to coding when selected)</p>
 
             <div class="multiplier-grid">
                 <div class="multiplier-item">
                     <label class="unit-text" data-days="GMPe (days)" data-hours="GMPe (hrs)">GMPe (days)</label>
                     <input type="number" id="ca-gmpe" min="0" step="0.5">
-                </div>
-                <div class="multiplier-item">
-                    <label class="unit-text" data-days="Underpins (days)" data-hours="Underpins (hrs)">Underpins (days)</label>
-                    <input type="number" id="ca-underpins" min="0" step="0.5">
-                </div>
-                <div class="multiplier-item">
-                    <label class="unit-text" data-days="Added Years (days)" data-hours="Added Years (hrs)">Added Years (days)</label>
-                    <input type="number" id="ca-added-years" min="0" step="0.5">
-                </div>
-                <div class="multiplier-item">
-                    <label class="unit-text" data-days="Special Service Credits (days)" data-hours="Special Service Credits (hrs)">Special Service Credits (days)</label>
-                    <input type="number" id="ca-service-credits" min="0" step="0.5">
-                </div>
-                <div class="multiplier-item">
-                    <label class="unit-text" data-days="Bridging Pension (days)" data-hours="Bridging Pension (hrs)">Bridging Pension (days)</label>
-                    <input type="number" id="ca-bridging" min="0" step="0.5">
-                </div>
-                <div class="multiplier-item">
-                    <label class="unit-text" data-days="Hybrid (days)" data-hours="Hybrid (hrs)">Hybrid (days)</label>
-                    <input type="number" id="ca-hybrid" min="0" step="0.5">
                 </div>
                 <div class="multiplier-item">
                     <label class="unit-text" data-days="MyPension Go-Live (days)" data-hours="MyPension Go-Live (hrs)">MyPension Go-Live (days)</label>
@@ -728,10 +708,9 @@
         let configDisplayUnit = 'days';
 
         const dayInputIds = [
-            'analysisBase', 'codingBasePerCalc',
+            'analysisBasePerCalc', 'codingBasePerCalc',
             'uat-minimal', 'uat-light', 'uat-standard', 'uat-intensive', 'uat-full-regression',
-            'ca-gmpe', 'ca-underpins', 'ca-added-years',
-            'ca-service-credits', 'ca-bridging', 'ca-hybrid', 'ca-mypension-golive',
+            'ca-gmpe', 'ca-mypension-golive',
             'threshold-low', 'threshold-medium', 'threshold-high'
         ];
 
@@ -793,7 +772,7 @@
         // Defaults (all base values in days)
         const DEFAULT_CONFIG = {
             hoursPerDay: 7.5,
-            analysisBase: 3,
+            analysisBasePerCalc: 1.5,
             codingBasePerCalc: 2,
             complexityMultiplier: {
                 'very-simple': 0.7,
@@ -809,20 +788,15 @@
                 'poor': 1.6,
                 'very-poor': 2.0
             },
-            uatDays: {
-                'minimal': 1,
-                'light': 2,
-                'standard': 5,
-                'intensive': 10,
-                'full-regression': 20
+            uatDaysPerCalc: {
+                'minimal': 0.5,
+                'light': 1,
+                'standard': 2,
+                'intensive': 3,
+                'full-regression': 5
             },
             complexityAreaDays: {
                 gmpe: 2,
-                underpins: 1.5,
-                addedYears: 1.5,
-                serviceCredits: 1,
-                bridging: 1.5,
-                hybrid: 2,
                 myPensionGoLive: 3
             },
             complexityThresholds: {
@@ -833,12 +807,12 @@
         };
 
         function loadConfig() {
-            const saved = localStorage.getItem('calcCostConfigV2');
+            const saved = localStorage.getItem('calcCostConfigV3');
             const config = saved ? { ...DEFAULT_CONFIG, ...JSON.parse(saved) } : DEFAULT_CONFIG;
 
             document.getElementById('hoursPerDay').value = config.hoursPerDay;
 
-            document.getElementById('analysisBase').value = config.analysisBase;
+            document.getElementById('analysisBasePerCalc').value = config.analysisBasePerCalc ?? DEFAULT_CONFIG.analysisBasePerCalc;
             document.getElementById('codingBasePerCalc').value = config.codingBasePerCalc;
 
             // Complexity multipliers
@@ -855,20 +829,15 @@
             document.getElementById('dq-poor').value = config.dataQualityMultiplier?.poor ?? DEFAULT_CONFIG.dataQualityMultiplier.poor;
             document.getElementById('dq-very-poor').value = config.dataQualityMultiplier?.['very-poor'] ?? DEFAULT_CONFIG.dataQualityMultiplier['very-poor'];
 
-            // UAT
-            document.getElementById('uat-minimal').value = config.uatDays?.minimal ?? DEFAULT_CONFIG.uatDays.minimal;
-            document.getElementById('uat-light').value = config.uatDays?.light ?? DEFAULT_CONFIG.uatDays.light;
-            document.getElementById('uat-standard').value = config.uatDays?.standard ?? DEFAULT_CONFIG.uatDays.standard;
-            document.getElementById('uat-intensive').value = config.uatDays?.intensive ?? DEFAULT_CONFIG.uatDays.intensive;
-            document.getElementById('uat-full-regression').value = config.uatDays?.['full-regression'] ?? DEFAULT_CONFIG.uatDays['full-regression'];
+            // UAT (per calc type)
+            document.getElementById('uat-minimal').value = config.uatDaysPerCalc?.minimal ?? DEFAULT_CONFIG.uatDaysPerCalc.minimal;
+            document.getElementById('uat-light').value = config.uatDaysPerCalc?.light ?? DEFAULT_CONFIG.uatDaysPerCalc.light;
+            document.getElementById('uat-standard').value = config.uatDaysPerCalc?.standard ?? DEFAULT_CONFIG.uatDaysPerCalc.standard;
+            document.getElementById('uat-intensive').value = config.uatDaysPerCalc?.intensive ?? DEFAULT_CONFIG.uatDaysPerCalc.intensive;
+            document.getElementById('uat-full-regression').value = config.uatDaysPerCalc?.['full-regression'] ?? DEFAULT_CONFIG.uatDaysPerCalc['full-regression'];
 
             // Complexity areas
             document.getElementById('ca-gmpe').value = config.complexityAreaDays?.gmpe ?? DEFAULT_CONFIG.complexityAreaDays.gmpe;
-            document.getElementById('ca-underpins').value = config.complexityAreaDays?.underpins ?? DEFAULT_CONFIG.complexityAreaDays.underpins;
-            document.getElementById('ca-added-years').value = config.complexityAreaDays?.addedYears ?? DEFAULT_CONFIG.complexityAreaDays.addedYears;
-            document.getElementById('ca-service-credits').value = config.complexityAreaDays?.serviceCredits ?? DEFAULT_CONFIG.complexityAreaDays.serviceCredits;
-            document.getElementById('ca-bridging').value = config.complexityAreaDays?.bridging ?? DEFAULT_CONFIG.complexityAreaDays.bridging;
-            document.getElementById('ca-hybrid').value = config.complexityAreaDays?.hybrid ?? DEFAULT_CONFIG.complexityAreaDays.hybrid;
             document.getElementById('ca-mypension-golive').value = config.complexityAreaDays?.myPensionGoLive ?? DEFAULT_CONFIG.complexityAreaDays.myPensionGoLive;
 
             // Thresholds
@@ -895,7 +864,7 @@
 
             const config = {
                 hoursPerDay: parseFloat(document.getElementById('hoursPerDay').value),
-                analysisBase: getDayValue('analysisBase'),
+                analysisBasePerCalc: getDayValue('analysisBasePerCalc'),
                 codingBasePerCalc: getDayValue('codingBasePerCalc'),
                 complexityMultiplier: {
                     'very-simple': parseFloat(document.getElementById('complexity-very-simple').value),
@@ -911,7 +880,7 @@
                     'poor': parseFloat(document.getElementById('dq-poor').value),
                     'very-poor': parseFloat(document.getElementById('dq-very-poor').value)
                 },
-                uatDays: {
+                uatDaysPerCalc: {
                     'minimal': getDayValue('uat-minimal'),
                     'light': getDayValue('uat-light'),
                     'standard': getDayValue('uat-standard'),
@@ -920,11 +889,6 @@
                 },
                 complexityAreaDays: {
                     gmpe: getDayValue('ca-gmpe'),
-                    underpins: getDayValue('ca-underpins'),
-                    addedYears: getDayValue('ca-added-years'),
-                    serviceCredits: getDayValue('ca-service-credits'),
-                    bridging: getDayValue('ca-bridging'),
-                    hybrid: getDayValue('ca-hybrid'),
                     myPensionGoLive: getDayValue('ca-mypension-golive')
                 },
                 complexityThresholds: {
@@ -934,13 +898,13 @@
                 }
             };
 
-            localStorage.setItem('calcCostConfigV2', JSON.stringify(config));
+            localStorage.setItem('calcCostConfigV3', JSON.stringify(config));
             showToast('Configuration saved!');
         }
 
         function exportConfig() {
             saveConfig();
-            const config = localStorage.getItem('calcCostConfigV2');
+            const config = localStorage.getItem('calcCostConfigV3');
             const blob = new Blob([config], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -964,7 +928,7 @@
                 reader.onload = function(e) {
                     try {
                         const config = JSON.parse(e.target.result);
-                        localStorage.setItem('calcCostConfigV2', JSON.stringify(config));
+                        localStorage.setItem('calcCostConfigV3', JSON.stringify(config));
                         loadConfig();
                         showToast('Configuration imported!');
                     } catch (err) {
@@ -977,7 +941,7 @@
 
         function resetConfig() {
             if (confirm('Are you sure you want to reset all configuration to defaults?')) {
-                localStorage.removeItem('calcCostConfigV2');
+                localStorage.removeItem('calcCostConfigV3');
                 loadConfig();
                 showToast('Configuration reset to defaults!');
             }
