@@ -988,11 +988,11 @@
                     <!-- END TOOLTIP: COMPLEXITY OF CALCS -->
 
                     <select id="calcComplexity">
-                        <option value="very-simple">Very Simple</option>
-                        <option value="simple">Simple</option>
-                        <option value="moderate" selected>Moderate</option>
-                        <option value="complex">Complex</option>
-                        <option value="very-complex">Very Complex</option>
+                        <option value="very-simple">Very Simple - Single calc type, standard rules only</option>
+                        <option value="simple">Simple - 1-2 calc types, minor special factors</option>
+                        <option value="moderate" selected>Moderate - Several calc types, some scheme complexity</option>
+                        <option value="complex">Complex - Many calc types, significant complexity e.g. GMP</option>
+                        <option value="very-complex">Very Complex - Full calc suite, multiple interacting factors</option>
                     </select>
                 </div>
 
@@ -1621,11 +1621,11 @@
             const dataQuality = dataQualityLabels[document.getElementById('dataQuality').value];
 
             const calcComplexityLabels = {
-                'very-simple': 'Very Simple',
-                'simple': 'Simple',
-                'moderate': 'Moderate',
-                'complex': 'Complex',
-                'very-complex': 'Very Complex'
+                'very-simple': 'Very Simple - Single calc type, standard rules only',
+                'simple': 'Simple - 1-2 calc types, minor special factors',
+                'moderate': 'Moderate - Several calc types, some scheme complexity',
+                'complex': 'Complex - Many calc types, significant complexity e.g. GMP',
+                'very-complex': 'Very Complex - Full calc suite, multiple interacting factors'
             };
             const calcComplexity = calcComplexityLabels[document.getElementById('calcComplexity').value];
 
