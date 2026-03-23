@@ -504,6 +504,29 @@
             </div>
         </div>
 
+        <!-- Calculation Tapering -->
+        <div class="card">
+            <h2>Calculation Tapering</h2>
+            <p class="section-description">Reduces effective calc count when many types are selected, reflecting shared work across calcs. The first N calcs are charged at full rate; each additional calc beyond that counts as a fraction.</p>
+
+            <div class="config-row">
+                <div class="config-item">
+                    <label>Full-rate threshold</label>
+                    <p class="help-text">Calc types up to this number are charged at full rate. Tapering kicks in beyond this point.</p>
+                    <input type="number" id="taperThreshold" min="1" max="11" step="1" style="max-width: 120px;">
+                </div>
+                <div class="config-item">
+                    <label>Reduced rate (fraction)</label>
+                    <p class="help-text">Each calc type beyond the threshold counts as this fraction. E.g. 0.65 means each extra calc adds 65% of the effort of a full calc.</p>
+                    <input type="number" id="taperRate" min="0.1" max="1" step="0.05" style="max-width: 120px;">
+                </div>
+            </div>
+
+            <div class="formula-display">
+                Effective Count = min(calcCount, threshold) + max(0, calcCount − threshold) × taperRate
+            </div>
+        </div>
+
         <!-- Analysis -->
         <div class="card">
             <h2>Analysis</h2>
@@ -515,8 +538,8 @@
                 <input type="number" id="analysisBasePerCalc" min="0" step="0.5" style="max-width: 200px;">
             </div>
 
-            <div class="formula-display unit-text" data-days="Analysis Days = Calc Types x Base Per Calc x Complexity Multiplier x Data Quality Multiplier" data-hours="Analysis Hours = Calc Types x Base Per Calc x Complexity Multiplier x Data Quality Multiplier">
-                Analysis Days = Calc Types x Base Per Calc x Complexity Multiplier x Data Quality Multiplier
+            <div class="formula-display unit-text" data-days="Analysis Days = Effective Count x Base Per Calc x Complexity Multiplier x Data Quality Multiplier" data-hours="Analysis Hours = Effective Count x Base Per Calc x Complexity Multiplier x Data Quality Multiplier">
+                Analysis Days = Effective Count x Base Per Calc x Complexity Multiplier x Data Quality Multiplier
             </div>
         </div>
 
@@ -531,8 +554,8 @@
                 <input type="number" id="codingBasePerCalc" min="0" step="0.5" style="max-width: 200px;">
             </div>
 
-            <div class="formula-display unit-text" data-days="Coding Days = Calc Types x Base Days x Complexity Multiplier + Complexity Areas" data-hours="Coding Hours = Calc Types x Base Hours x Complexity Multiplier + Complexity Areas">
-                Coding Days = Calc Types x Base Days x Complexity Multiplier + Complexity Areas
+            <div class="formula-display unit-text" data-days="Coding Days = Effective Count x Base Days x Complexity Multiplier + Complexity Areas" data-hours="Coding Hours = Effective Count x Base Hours x Complexity Multiplier + Complexity Areas">
+                Coding Days = Effective Count x Base Days x Complexity Multiplier + Complexity Areas
             </div>
         </div>
 
@@ -772,6 +795,8 @@
         // Defaults (all base values in days)
         const DEFAULT_CONFIG = {
             hoursPerDay: 7.5,
+            taperThreshold: 3,
+            taperRate: 0.65,
             analysisBasePerCalc: 1.5,
             codingBasePerCalc: 2,
             complexityMultiplier: {
@@ -812,6 +837,8 @@
 
             document.getElementById('hoursPerDay').value = config.hoursPerDay;
 
+            document.getElementById('taperThreshold').value = config.taperThreshold ?? DEFAULT_CONFIG.taperThreshold;
+            document.getElementById('taperRate').value = config.taperRate ?? DEFAULT_CONFIG.taperRate;
             document.getElementById('analysisBasePerCalc').value = config.analysisBasePerCalc ?? DEFAULT_CONFIG.analysisBasePerCalc;
             document.getElementById('codingBasePerCalc').value = config.codingBasePerCalc;
 
@@ -864,6 +891,8 @@
 
             const config = {
                 hoursPerDay: parseFloat(document.getElementById('hoursPerDay').value),
+                taperThreshold: parseFloat(document.getElementById('taperThreshold').value),
+                taperRate: parseFloat(document.getElementById('taperRate').value),
                 analysisBasePerCalc: getDayValue('analysisBasePerCalc'),
                 codingBasePerCalc: getDayValue('codingBasePerCalc'),
                 complexityMultiplier: {

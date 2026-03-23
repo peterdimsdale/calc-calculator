@@ -1255,6 +1255,9 @@
         // Default configuration (values stored in days)
         const DEFAULT_CONFIG = {
             hoursPerDay: 7.5,
+            // Tapering: first N calcs at full rate, each beyond that at reduced rate
+            taperThreshold: 3,
+            taperRate: 0.65,
             // Analysis: days per calc type (before complexity & data quality multipliers)
             analysisBasePerCalc: 1.5,
             // Coding: days per calc type (before complexity multiplier)
@@ -1398,9 +1401,16 @@
             const dataQualityMult = CONFIG.dataQualityMultiplier?.[dataQuality] ||
                 DEFAULT_CONFIG.dataQualityMultiplier[dataQuality];
 
-            // Analysis (days) = calc types × base per calc × complexity × data quality
+            // Tapering: first N calcs at full rate, each beyond threshold at reduced rate
+            const taperThreshold = CONFIG.taperThreshold ?? DEFAULT_CONFIG.taperThreshold;
+            const taperRate = CONFIG.taperRate ?? DEFAULT_CONFIG.taperRate;
+            const effectiveCount = calcTypeCount <= taperThreshold
+                ? calcTypeCount
+                : taperThreshold + (calcTypeCount - taperThreshold) * taperRate;
+
+            // Analysis (days) = effective count × base per calc × complexity × data quality
             const analysisBasePerCalc = CONFIG.analysisBasePerCalc ?? DEFAULT_CONFIG.analysisBasePerCalc;
-            const analysisDays = calcTypeCount * analysisBasePerCalc * complexityMult * dataQualityMult;
+            const analysisDays = effectiveCount * analysisBasePerCalc * complexityMult * dataQualityMult;
 
             // Complexity areas (days) — added to coding
             let complexityAreasDays = 0;
@@ -1417,12 +1427,12 @@
                 }
             });
 
-            // Coding (days) = calc types × base per calc × complexity + complexity areas
-            const codingDays = (calcTypeCount * (CONFIG.codingBasePerCalc ?? DEFAULT_CONFIG.codingBasePerCalc) * complexityMult) + complexityAreasDays;
+            // Coding (days) = effective count × base per calc × complexity + complexity areas (flat)
+            const codingDays = (effectiveCount * (CONFIG.codingBasePerCalc ?? DEFAULT_CONFIG.codingBasePerCalc) * complexityMult) + complexityAreasDays;
 
-            // UAT (days) = calc types × days per calc for selected UAT level
+            // UAT (days) = effective count × days per calc for selected UAT level
             const uatDaysPerCalc = CONFIG.uatDaysPerCalc?.[uatComplexity] ?? DEFAULT_CONFIG.uatDaysPerCalc[uatComplexity];
-            const uatDays = calcTypeCount * uatDaysPerCalc;
+            const uatDays = effectiveCount * uatDaysPerCalc;
 
             // Store breakdown (in days)
             breakdown = {
