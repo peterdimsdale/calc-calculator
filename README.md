@@ -15,6 +15,8 @@ You describe the scope of a calculation build — which calculation types are in
 - A visual **timeline** showing how the phases sequence from a start date
 - An **exported text file** you can attach to a quote or proposal
 
+All estimates are clearly labelled as indicative RFP figures only. A full caveat is displayed alongside the results and included in every export.
+
 ---
 
 ## Getting Started
@@ -50,13 +52,15 @@ Choose two settings that describe the overall nature of the work:
 - **Data Quality** — how clean and reliable is the source data?
   - Excellent / Good / Average / Poor / Very Poor
 
+Each option includes a short description to help you choose. Click the **(i)** icon next to either label to open a detailed guide to what each level means.
+
 These two settings have the biggest impact on the estimate. Poor data quality increases effort because more time is needed to understand and work around data issues.
 
 ---
 
 ### 3. Calculation Types
 
-Tick the calculation types that are in scope. Each selected type adds to the coding estimate. The options are:
+Tick the calculation types that are in scope. The options are:
 
 - Active to Deferred
 - Active to Retired
@@ -70,21 +74,16 @@ Tick the calculation types that are in scope. Each selected type adds to the cod
 - Deferred Benefit Statement
 - Dashboard
 
-The more types you select, the larger the coding effort.
+Each selected type adds to the Analysis, Coding, and UAT estimates. The tool applies **tapering** when many types are selected — the first few calc types are charged at full rate, but beyond a threshold each additional type carries a reduced rate, reflecting the shared work that comes with building a larger suite. This keeps estimates realistic rather than simply multiplying up.
 
 ---
 
 ### 4. Complexity Areas
 
-Tick any additional complexity areas that apply to this scheme. Each adds extra days to the coding estimate:
+Tick any additional complexity areas that apply to this scheme. Each adds extra days to the Coding estimate:
 
-- GMPe
-- Underpins
-- Added Years
-- Special Service Credits
-- Bridging Pension
-- Hybrid
-- MyPension Required Go-Live
+- **GMPe** — GMP equalisation work
+- **MyPension Required Go-Live** — additional effort for MyPension integration
 
 Leave these unticked if they don't apply.
 
@@ -96,7 +95,7 @@ Choose the level of User Acceptance Testing expected:
 
 - Minimal / Light / Standard / Intensive / Full Regression
 
-This sets a flat number of days for the UAT phase.
+UAT effort scales with the number of calculation types in scope, reflecting the analyst and admin testing time required per calc. A wider scope means more test scenarios.
 
 ---
 
@@ -109,9 +108,11 @@ The right-hand panel updates automatically as you make changes.
 - **Days** — total estimated working days
 - **Hours** — total estimated hours (days multiplied by hours per day, default 7.5)
 
-### Complexity Badge
+### Complexity Badge and Caveat
 
 A coloured badge (Low / Medium / High / Very High) gives a quick visual indicator of the overall size of the project.
+
+Below the badge is an **indicative estimate caveat**. Click **Read full caveat** to see the full disclaimer text. This caveat is also included at the top of every exported file. The estimates are produced for RFP purposes only and should not be treated as a commitment or formal project plan.
 
 ### Effort Breakdown
 
@@ -175,6 +176,7 @@ Use the **Notes** text box to record any assumptions, caveats, or context for th
 
 Click **Export as Text** to download a plain text file containing:
 
+- The indicative estimate caveat and disclaimer
 - Client information and quote reference
 - All your input selections (complexity, data quality, calculation types, UAT level)
 - The estimate results and effort breakdown
@@ -208,12 +210,14 @@ The configuration options are:
 | Setting | What it controls |
 |---------|-----------------|
 | **Hours per Day** | Working hours in a day (default: 7.5) |
-| **Analysis base** | Starting days for the analysis phase before multipliers |
-| **Coding base per calc** | Days to code each calculation type before multipliers |
+| **Full-rate threshold** | How many calc types are charged at full rate before tapering kicks in (default: 3) |
+| **Reduced rate** | The fraction of full effort applied to each calc type beyond the threshold (default: 0.65) |
+| **Analysis base per calc type** | Days per selected calc type for the analysis phase, before multipliers |
+| **Coding base per calc type** | Days per selected calc type for coding, before the complexity multiplier |
 | **Complexity multipliers** | How much each complexity level scales effort (e.g. "Very Complex" = 4×) |
 | **Data quality multipliers** | How much data quality affects analysis effort (e.g. "Very Poor" = 2×) |
-| **UAT values** | Flat days for each UAT level (e.g. Standard = 5 days) |
-| **Complexity area values** | Days added for each complexity area (e.g. GMPe = 2 days) |
+| **UAT values** | Days per calc type for each UAT level (e.g. Standard = 2 days per calc) |
+| **Complexity area values** | Flat days added to coding for GMPe and MyPension Go-Live |
 | **Complexity thresholds** | Day boundaries for the Low/Medium/High/Very High badge |
 
 Team leads can **export** the configuration as a file and **import** it on another machine to share consistent settings across the team.
@@ -225,6 +229,7 @@ Click **Reset to Defaults** to restore all configuration values to their origina
 ## Tips
 
 - Start with **Complexity of Calcs** and **Data Quality** — these have the biggest impact on the estimate
+- Use the **(i)** icons next to those fields for a detailed guide to choosing the right level
 - Use the **timeline view** to give stakeholders a visual sense of project duration
 - Save multiple estimates to compare different scope scenarios side by side
 - Add notes to record your assumptions — they're included in the export
