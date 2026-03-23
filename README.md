@@ -6,12 +6,24 @@ No installation required. Just open the file in your web browser.
 
 ---
 
+## What Does This Tool Do?
+
+You describe the scope of a calculation build — which calculation types are in scope, how complex the scheme rules are, the quality of the data, and the expected level of UAT — and the tool instantly produces:
+
+- A total effort estimate in **days and hours**
+- A breakdown across **Analysis, Coding, and UAT** phases
+- A visual **timeline** showing how the phases sequence from a start date
+- An **exported text file** you can attach to a quote or proposal
+
+---
+
 ## Getting Started
 
-1. Open **index.html** in any web browser (Chrome, Edge, Firefox, Safari)
-2. Fill in the form on the left-hand side
-3. Watch the results update automatically on the right-hand side
-4. Save or export your estimate when you're happy
+1. Open **index.html** in any web browser (Chrome, Edge, Firefox, or Safari)
+2. Fill in the client and scheme details at the top
+3. Work through the options on the left-hand side
+4. The estimate on the right updates automatically as you make changes
+5. When you're happy, save or export your estimate
 
 ---
 
@@ -21,22 +33,26 @@ No installation required. Just open the file in your web browser.
 
 At the top of the page, enter:
 
-- **Client Name** - the name of the client or employer
-- **Scheme Name** - the pension scheme name
-- **Quote Reference** - your internal quote or RFP reference number
+- **Client Name** — the name of the client or employer
+- **Scheme Name** — the pension scheme name
+- **Quote Reference** — your internal quote or RFP reference number
 
-These are used when saving and exporting estimates, so fill them in before you save.
+Fill these in before you save or export, as they appear in the output file and are used to name saved estimates.
+
+---
 
 ### 2. Scheme Parameters
 
 Choose two settings that describe the overall nature of the work:
 
-- **Complexity of Calcs** - how complex are the calculation rules? Choose from:
+- **Complexity of Calcs** — how complex are the calculation rules?
   - Very Simple / Simple / Moderate / Complex / Very Complex
-- **Data Quality** - how clean and reliable is the source data? Choose from:
+- **Data Quality** — how clean and reliable is the source data?
   - Excellent / Good / Average / Poor / Very Poor
 
-Both of these affect the analysis and coding estimates. Poor data quality increases effort because more time is needed to understand and work around data issues.
+These two settings have the biggest impact on the estimate. Poor data quality increases effort because more time is needed to understand and work around data issues.
+
+---
 
 ### 3. Calculation Types
 
@@ -56,6 +72,8 @@ Tick the calculation types that are in scope. Each selected type adds to the cod
 
 The more types you select, the larger the coding effort.
 
+---
+
 ### 4. Complexity Areas
 
 Tick any additional complexity areas that apply to this scheme. Each adds extra days to the coding estimate:
@@ -69,6 +87,8 @@ Tick any additional complexity areas that apply to this scheme. Each adds extra 
 - MyPension Required Go-Live
 
 Leave these unticked if they don't apply.
+
+---
 
 ### 5. UAT
 
@@ -86,8 +106,8 @@ The right-hand panel updates automatically as you make changes.
 
 ### Summary
 
-- **Days** - total estimated working days
-- **Hours** - total estimated hours (days multiplied by hours per day, default 7.5)
+- **Days** — total estimated working days
+- **Hours** — total estimated hours (days multiplied by hours per day, default 7.5)
 
 ### Complexity Badge
 
@@ -103,7 +123,7 @@ Shows how the total breaks down across three phases:
 | **Coding** | Programming the calculations, including complexity areas |
 | **UAT** | Supporting client user acceptance testing and sign-off |
 
-Use the **Days / Hours** toggle to switch the breakdown display.
+Use the **Days / Hours** toggle to switch the breakdown display between days and hours.
 
 ### Indicative Timeline
 
@@ -120,9 +140,15 @@ UAT                                 ██████
 - The timeline only counts **working days** (weekends are excluded)
 - For larger projects, the axis shows **months** (M1, M2, M3...)
 - For smaller projects (under 2 weeks), the axis shows **days** (D1, D2...)
-- Hover over any bar to see the exact number of days
+- Hover over any bar to see the exact number of days for that phase
 
-The total duration is shown in the top-right corner of the timeline section.
+The total calendar duration is shown in the top-right corner of the timeline section.
+
+---
+
+## Notes
+
+Use the **Notes** text box to record any assumptions, caveats, or context for the estimate. Notes are included in the exported text file and saved alongside the estimate.
 
 ---
 
@@ -132,7 +158,7 @@ The total duration is shown in the top-right corner of the timeline section.
 
 1. Make sure you have entered a Client Name or Scheme Name
 2. Click **Save Estimate**
-3. The estimate is saved to your browser's local storage
+3. The estimate is saved in your browser — it will still be there next time you open the file in the same browser on the same computer
 
 ### Load a Saved Estimate
 
@@ -141,27 +167,21 @@ The total duration is shown in the top-right corner of the timeline section.
 3. Click **Load** next to the one you want to restore
 4. Click **Delete** to remove old estimates you no longer need
 
-Saved estimates are stored in your browser only. They won't appear on a different computer or in a different browser.
+> **Note:** Saved estimates are stored in your browser only. They won't appear on a different computer or in a different browser. Use Export (see below) if you need to share or keep a permanent record.
 
 ---
 
 ## Exporting
 
-Click **Export as Text** to download a text file containing:
+Click **Export as Text** to download a plain text file containing:
 
-- Client information
-- All your input selections
+- Client information and quote reference
+- All your input selections (complexity, data quality, calculation types, UAT level)
 - The estimate results and effort breakdown
 - The indicative timeline with day ranges per phase
 - Any notes you've added
 
-The file is named using the client and scheme name, e.g. `acme-corp-db-scheme-2024-06-15.txt`.
-
----
-
-## Notes
-
-Use the **Notes** text box to record any assumptions, caveats, or context for the estimate. Notes are included in the text export and saved with the estimate.
+The file is named using the client and scheme name, for example: `acme-corp-db-scheme-2026-03-23.txt`
 
 ---
 
@@ -173,26 +193,30 @@ Click **Reset** to clear all fields back to their defaults and start a fresh est
 
 ## Changing the Theme
 
-Use the **Light / Dark** toggle in the top-right corner to switch between light and dark mode. Your preference is remembered across sessions.
+Use the **Light / Dark** toggle in the top-right corner of the header to switch between light and dark mode. Your preference is remembered across sessions.
 
 ---
 
-## Configuration (Advanced)
+## Configuration (Advanced — Team Leads Only)
 
-Click the **Config** link in the top-right corner to access the configuration page. This is where you can adjust the underlying values that drive the estimates:
+Click the **Config** link in the top-right corner to access the configuration page. This is where the underlying numbers that drive the estimates can be adjusted.
+
+**Project managers should not normally need to change these.** If the estimates feel too high or too low compared to your team's experience, speak to your team lead who can adjust the values and share the updated settings with the team.
+
+The configuration options are:
 
 | Setting | What it controls |
 |---------|-----------------|
 | **Hours per Day** | Working hours in a day (default: 7.5) |
 | **Analysis base** | Starting days for the analysis phase before multipliers |
 | **Coding base per calc** | Days to code each calculation type before multipliers |
-| **Complexity multipliers** | How much each complexity level scales effort (e.g. "Very Complex" = 4x) |
-| **Data quality multipliers** | How much data quality affects analysis effort (e.g. "Very Poor" = 2x) |
+| **Complexity multipliers** | How much each complexity level scales effort (e.g. "Very Complex" = 4×) |
+| **Data quality multipliers** | How much data quality affects analysis effort (e.g. "Very Poor" = 2×) |
 | **UAT values** | Flat days for each UAT level (e.g. Standard = 5 days) |
 | **Complexity area values** | Days added for each complexity area (e.g. GMPe = 2 days) |
 | **Complexity thresholds** | Day boundaries for the Low/Medium/High/Very High badge |
 
-You can also **export** your configuration as a JSON file and **import** it on another machine to share settings across a team.
+Team leads can **export** the configuration as a file and **import** it on another machine to share consistent settings across the team.
 
 Click **Reset to Defaults** to restore all configuration values to their original settings.
 
@@ -200,8 +224,8 @@ Click **Reset to Defaults** to restore all configuration values to their origina
 
 ## Tips
 
-- Start with the **Complexity of Calcs** and **Data Quality** dropdowns - these have the biggest impact on the estimate
-- Use the timeline view to give stakeholders a visual sense of the project duration
-- Save estimates regularly so you can compare different scenarios
-- Add notes to explain your assumptions - they're included in the export
-- If the default values don't match your experience, ask your team lead to adjust the configuration
+- Start with **Complexity of Calcs** and **Data Quality** — these have the biggest impact on the estimate
+- Use the **timeline view** to give stakeholders a visual sense of project duration
+- Save multiple estimates to compare different scope scenarios side by side
+- Add notes to record your assumptions — they're included in the export
+- If the default values don't reflect your team's experience, ask your team lead to update the configuration
