@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configuration | XPS Calcs Timeline Estimator</title>
+    <title>Configuration | Calcs Timeline Estimator</title>
     <style>
         * {
             box-sizing: border-box;
@@ -54,8 +54,22 @@
             justify-content: space-between;
             border-bottom: 3px solid var(--xps-blue);
             position: sticky;
-            top: 0;
+            top: 33px;
             z-index: 100;
+        }
+
+        .draft-banner {
+            background: #b45309;
+            color: #fff;
+            text-align: center;
+            padding: 6px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            position: sticky;
+            top: 0;
+            z-index: 200;
         }
 
         .logo-container {
@@ -452,15 +466,11 @@
     </style>
 </head>
 <body>
+    <!-- Persistent Draft Banner -->
+    <div class="draft-banner">Draft version — do not use for actual estimates</div>
+
     <div class="header-bar">
         <div class="logo-container">
-            <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polygon points="5,8 20,25 5,42 12,42 25,29 25,25 12,8" fill="#4A9FD9"/>
-                <polygon points="45,8 38,8 25,21 25,25 38,42 45,42 30,25" fill="#4A9FD9"/>
-                <polygon points="25,21 25,29 30,25 25,21" fill="#3D8BBF"/>
-            </svg>
-            <span class="logo-text"><strong>XPS</strong> Group</span>
-            <div class="logo-divider"></div>
             <span class="app-title">Configuration</span>
         </div>
         <div class="header-actions">
@@ -938,7 +948,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'xps-calcs-config-v2.json';
+            a.download = 'calcs-config-v2.json';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
