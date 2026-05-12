@@ -1182,13 +1182,47 @@
             <div class="card">
                 <h2>UAT</h2>
                 <div class="form-group">
-                    <label class="form-label">UAT Complexity</label>
+                    <label class="form-label">
+                        UAT Complexity
+                        <button class="info-icon" onclick="toggleTooltip('tooltip-uat', event)" type="button" aria-label="Guide to UAT complexity levels">i</button>
+                    </label>
+
+                    <!-- ================================================================
+                         TOOLTIP: UAT COMPLEXITY
+                         Edit the descriptions below to adjust what appears when the
+                         (i) icon is clicked. Each tooltip-level block is one row.
+                         ================================================================ -->
+                    <div class="tooltip-popup" id="tooltip-uat">
+                        <h4>UAT Complexity — Guide</h4>
+                        <div class="tooltip-level">
+                            <span class="tooltip-level-name">Minimal</span>
+                            <span class="tooltip-level-desc">Basic sanity checks only. A small number of hand-picked test cases to confirm core calculations produce expected outputs. Suitable for very simple schemes or minor configuration changes.</span>
+                        </div>
+                        <div class="tooltip-level">
+                            <span class="tooltip-level-name">Light</span>
+                            <span class="tooltip-level-desc">Targeted testing of key scenarios with a limited test pack. Covers the main calculation paths but does not exhaustively test edge cases or boundary conditions.</span>
+                        </div>
+                        <div class="tooltip-level">
+                            <span class="tooltip-level-name">Standard</span>
+                            <span class="tooltip-level-desc">Structured test pack covering all calculation types in scope. Includes positive and negative test cases, boundary checks, and validation of outputs against expected results from the spec or existing system.</span>
+                        </div>
+                        <div class="tooltip-level">
+                            <span class="tooltip-level-name">Intensive</span>
+                            <span class="tooltip-level-desc">Comprehensive testing with an extended test pack including edge cases, unusual member scenarios, and cross-calculation dependencies. May involve parallel running against a legacy system or independent actuarial checks.</span>
+                        </div>
+                        <div class="tooltip-level">
+                            <span class="tooltip-level-name">Full Regression</span>
+                            <span class="tooltip-level-desc">Complete regression suite covering all calculation types and scenarios end-to-end. Includes bulk test runs across the full member population, parallel running, and sign-off from multiple stakeholders. Typically required for high-profile scheme migrations or regulatory-driven changes.</span>
+                        </div>
+                    </div>
+                    <!-- END TOOLTIP: UAT COMPLEXITY -->
+
                     <select id="uatComplexity">
-                        <option value="minimal">Minimal</option>
-                        <option value="light">Light</option>
-                        <option value="standard" selected>Standard</option>
-                        <option value="intensive">Intensive</option>
-                        <option value="full-regression">Full Regression</option>
+                        <option value="minimal">Minimal - Basic sanity checks only</option>
+                        <option value="light">Light - Targeted testing, limited test pack</option>
+                        <option value="standard" selected>Standard - Structured test pack, all calc types</option>
+                        <option value="intensive">Intensive - Extended test pack, parallel running</option>
+                        <option value="full-regression">Full Regression - Complete regression, bulk runs</option>
                     </select>
                 </div>
             </div>
@@ -1329,15 +1363,15 @@
             taperThreshold: 3,
             taperRate: 0.65,
             // Analysis: days per calc type (before complexity & data quality multipliers)
-            analysisBasePerCalc: 1.5,
+            analysisBasePerCalc: 5,
             // Coding: days per calc type (before complexity multiplier)
-            codingBasePerCalc: 2,
+            codingBasePerCalc: 5,
             complexityMultiplier: {
                 'very-simple': 0.7,
                 'simple': 1,
-                'moderate': 1.5,
-                'complex': 2.5,
-                'very-complex': 4
+                'moderate': 1.3,
+                'complex': 1.7,
+                'very-complex': 2.2
             },
             dataQualityMultiplier: {
                 'excellent': 0.8,
@@ -1700,11 +1734,11 @@
             const calcComplexity = calcComplexityLabels[document.getElementById('calcComplexity').value];
 
             const uatLabels = {
-                'minimal': 'Minimal',
-                'light': 'Light',
-                'standard': 'Standard',
-                'intensive': 'Intensive',
-                'full-regression': 'Full Regression'
+                'minimal': 'Minimal - Basic sanity checks only',
+                'light': 'Light - Targeted testing, limited test pack',
+                'standard': 'Standard - Structured test pack, all calc types',
+                'intensive': 'Intensive - Extended test pack, parallel running',
+                'full-regression': 'Full Regression - Complete regression, bulk runs'
             };
             const uatComplexity = uatLabels[document.getElementById('uatComplexity').value];
 
