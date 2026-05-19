@@ -74,7 +74,7 @@ const FORMULA = {
     },
     {
       value: "complex",
-      label: "Complex - Many calc types, significant complexity e.g. GMP",
+      label: "Complex - Many calc types, significant complexity e.g. GMPe",
       multiplier: 1.7,
     },
     {
