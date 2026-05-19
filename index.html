@@ -1388,10 +1388,10 @@
             const dataQualityVal = document.getElementById('dataQuality').value;
             const uatVal = document.getElementById('uatComplexity').value;
 
-            // Count selected calc types
+            // Count selected calc types (using weight property, default 1.0)
             let calcTypeCount = 0;
             FORMULA.calcTypes.forEach(ct => {
-                if (document.getElementById('calc-' + ct.id).checked) calcTypeCount++;
+                if (document.getElementById('calc-' + ct.id).checked) calcTypeCount += (ct.weight ?? 1);
             });
 
             // Look up multipliers from FORMULA

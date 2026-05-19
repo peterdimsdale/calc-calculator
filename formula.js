@@ -94,6 +94,8 @@ const FORMULA = {
     // ----- CALCULATION TYPES -----
     // Each entry becomes a checkbox on the form.
     // To add a new calc type, add a new line here.
+    // Optional: set weight (0-1) for calc types that take less effort
+    // than a full calc. Omit weight or set to 1 for full effort.
     // WARNING: changing an id will break previously saved estimates.
 
     calcTypes: [
@@ -107,7 +109,7 @@ const FORMULA = {
         { id: "deathInDeferment",         label: "Death in Deferment" },
         { id: "deathInRetirement",        label: "Death in Retirement" },
         { id: "deferredBenefitStatement", label: "Deferred Benefit Statement" },
-        { id: "dashboard",               label: "Dashboard" },
+        { id: "dashboard",               label: "Dashboard",                    weight: 0.25 },
     ],
 
 
