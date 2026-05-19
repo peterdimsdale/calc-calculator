@@ -2,7 +2,17 @@
 
 A browser-based tool for estimating the effort and timeline for pension scheme calculation builds. Designed for project managers to produce indicative estimates during the RFP stage.
 
-No installation required. Open `index.html` in any web browser.
+No installation required — just open `index.html` in a web browser.
+
+---
+
+## Getting Started
+
+1. **Download** — Click the green **Code** button at the top of this page, then **Download ZIP**
+2. **Extract** — Find the downloaded `.zip` file (usually in your Downloads folder) and extract it. On Windows, right-click and choose "Extract All". On Mac, double-click the zip file.
+3. **Open** — Inside the extracted folder, find `index.html` and double-click it. It will open in your default web browser (Chrome, Edge, Firefox, Safari — any will work).
+
+That's it. Everything runs locally in your browser — nothing to install, no internet connection needed after download.
 
 ---
 
