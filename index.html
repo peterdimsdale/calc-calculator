@@ -981,13 +981,6 @@
                 <button id="theme-light">Light</button>
                 <button id="theme-dark" class="active">Dark</button>
             </div>
-            <a href="config.html" class="config-link">
-                <svg style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="3"></circle>
-                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                </svg>
-                Config
-            </a>
         </div>
     </div>
 
@@ -1057,13 +1050,7 @@
                     </div>
                     <!-- END TOOLTIP: COMPLEXITY OF CALCS -->
 
-                    <select id="calcComplexity">
-                        <option value="very-simple">Very Simple - Single calc type, standard rules only</option>
-                        <option value="simple">Simple - 1-2 calc types, minor special factors</option>
-                        <option value="moderate" selected>Moderate - Several calc types, some scheme complexity</option>
-                        <option value="complex">Complex - Many calc types, significant complexity e.g. GMP</option>
-                        <option value="very-complex">Very Complex - Full calc suite, multiple interacting factors</option>
-                    </select>
+                    <select id="calcComplexity"></select>
                 </div>
 
                 <div class="form-group">
@@ -1102,80 +1089,20 @@
                     </div>
                     <!-- END TOOLTIP: DATA QUALITY -->
 
-                    <select id="dataQuality">
-                        <option value="excellent">Excellent - Fully validated, no known issues</option>
-                        <option value="good">Good - Clean, minor gaps</option>
-                        <option value="average" selected>Average - Some gaps/issues</option>
-                        <option value="poor">Poor - Significant data issues</option>
-                        <option value="very-poor">Very Poor - Major remediation needed</option>
-                    </select>
+                    <select id="dataQuality"></select>
                 </div>
             </div>
 
             <!-- Calculation Types -->
             <div class="card">
                 <h2>Calculation Types</h2>
-                <div class="checkbox-grid">
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="calcActiveDeferred" checked>
-                        <label for="calcActiveDeferred">Active to Deferred</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="calcActiveRetired">
-                        <label for="calcActiveRetired">Active to Retired</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="calcActiveBenefitStatement">
-                        <label for="calcActiveBenefitStatement">Active Benefit Statement</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="calcAnnualAllowance">
-                        <label for="calcAnnualAllowance">Annual Allowance</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="calcPensionIncrease">
-                        <label for="calcPensionIncrease">Pension Increase</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="calcDeferredRetired">
-                        <label for="calcDeferredRetired">Deferred to Retired</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="calcDeathInService">
-                        <label for="calcDeathInService">Death in Service</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="calcDeathInDeferment">
-                        <label for="calcDeathInDeferment">Death in Deferment</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="calcDeathInRetirement">
-                        <label for="calcDeathInRetirement">Death in Retirement</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="calcDeferredBenefitStatement">
-                        <label for="calcDeferredBenefitStatement">Deferred Benefit Statement</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="calcDashboard">
-                        <label for="calcDashboard">Dashboard</label>
-                    </div>
-                </div>
+                <div class="checkbox-grid" id="calcTypesGrid"></div>
             </div>
 
             <!-- Complexity Areas -->
             <div class="card">
                 <h2>Complexity Areas</h2>
-                <div class="checkbox-grid">
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="complexGMPe">
-                        <label for="complexGMPe">GMPe</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="complexMyPensionGoLive">
-                        <label for="complexMyPensionGoLive">MyPension Required Go-Live</label>
-                    </div>
-                </div>
+                <div class="checkbox-grid" id="complexityAreasGrid"></div>
             </div>
 
             <!-- UAT -->
@@ -1217,13 +1144,7 @@
                     </div>
                     <!-- END TOOLTIP: UAT COMPLEXITY -->
 
-                    <select id="uatComplexity">
-                        <option value="minimal">Minimal - Basic sanity checks only</option>
-                        <option value="light">Light - Targeted testing, limited test pack</option>
-                        <option value="standard" selected>Standard - Structured test pack, all calc types</option>
-                        <option value="intensive">Intensive - Extended test pack, parallel running</option>
-                        <option value="full-regression">Full Regression - Complete regression, bulk runs</option>
-                    </select>
+                    <select id="uatComplexity"></select>
                 </div>
             </div>
         </div>
@@ -1355,70 +1276,53 @@
         </div>
     </div>
 
+    <script src="formula.js"></script>
     <script>
-        // Default configuration (values stored in days)
-        const DEFAULT_CONFIG = {
-            hoursPerDay: 7.5,
-            // Tapering: first N calcs at full rate, each beyond that at reduced rate
-            taperThreshold: 3,
-            taperRate: 0.65,
-            // Analysis: days per calc type (before complexity & data quality multipliers)
-            analysisBasePerCalc: 5,
-            // Coding: days per calc type (before complexity multiplier)
-            codingBasePerCalc: 5,
-            complexityMultiplier: {
-                'very-simple': 0.7,
-                'simple': 1,
-                'moderate': 1.3,
-                'complex': 1.7,
-                'very-complex': 2.2
-            },
-            dataQualityMultiplier: {
-                'excellent': 0.8,
-                'good': 1.0,
-                'average': 1.25,
-                'poor': 1.6,
-                'very-poor': 2.0
-            },
-            // UAT: days per calc type for each UAT level
-            uatDaysPerCalc: {
-                'minimal': 0.5,
-                'light': 1,
-                'standard': 2,
-                'intensive': 3,
-                'full-regression': 5
-            },
-            complexityAreaDays: {
-                gmpe: 2,
-                myPensionGoLive: 3
-            },
-            complexityThresholds: {
-                low: 25,
-                medium: 60,
-                high: 120
-            }
-        };
+        // =====================
+        // Dynamic UI Rendering
+        // =====================
+        // Builds dropdowns and checkboxes from FORMULA config.
+        // To add a calc type or complexity area, edit formula.js only.
 
-        // Load config from localStorage or use defaults
-        let CONFIG = { ...DEFAULT_CONFIG };
-        const savedConfig = localStorage.getItem('calcCostConfigV3');
-        if (savedConfig) {
-            try {
-                CONFIG = { ...DEFAULT_CONFIG, ...JSON.parse(savedConfig) };
-            } catch (e) {
-                console.warn('Failed to parse saved config, using defaults');
-            }
+        function renderDropdown(selectId, levels) {
+            const select = document.getElementById(selectId);
+            levels.forEach(level => {
+                const option = document.createElement('option');
+                option.value = level.value;
+                option.textContent = level.label;
+                if (level.default) option.selected = true;
+                select.appendChild(option);
+            });
         }
 
-        // State — default to Days
-        let showDays = true;
-        let breakdown = {
-            analysis: 0,
-            coding: 0,
-            uat: 0
-        };
+        function renderCheckboxes(containerId, items, prefix) {
+            const container = document.getElementById(containerId);
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'checkbox-item';
+                const inputId = prefix + item.id;
+                div.innerHTML =
+                    '<input type="checkbox" id="' + inputId + '"' + (item.default ? ' checked' : '') + '>' +
+                    '<label for="' + inputId + '">' + item.label + '</label>';
+                container.appendChild(div);
+            });
+        }
 
-        // Theme management
+        renderDropdown('calcComplexity', FORMULA.complexityLevels);
+        renderDropdown('dataQuality', FORMULA.dataQualityLevels);
+        renderDropdown('uatComplexity', FORMULA.uatLevels);
+        renderCheckboxes('calcTypesGrid', FORMULA.calcTypes, 'calc-');
+        renderCheckboxes('complexityAreasGrid', FORMULA.complexityAreas, 'complex-');
+
+        // =====================
+        // State
+        // =====================
+        let showDays = true;
+        let breakdown = { analysis: 0, coding: 0, uat: 0 };
+
+        // =====================
+        // Theme
+        // =====================
         function initTheme() {
             const savedTheme = localStorage.getItem('calcCostTheme') || 'dark';
             document.documentElement.setAttribute('data-theme', savedTheme);
@@ -1444,35 +1348,24 @@
         }
 
         initTheme();
-
         document.getElementById('theme-light').addEventListener('click', () => setTheme('light'));
         document.getElementById('theme-dark').addEventListener('click', () => setTheme('dark'));
 
-        // Checkbox IDs for calculation types
-        const calcCheckboxes = [
-            'calcActiveDeferred', 'calcActiveRetired', 'calcActiveBenefitStatement',
-            'calcAnnualAllowance', 'calcPensionIncrease', 'calcDeferredRetired',
-            'calcDeathInService', 'calcDeathInDeferment', 'calcDeathInRetirement',
-            'calcDeferredBenefitStatement', 'calcDashboard'
-        ];
-
-        // Checkbox IDs for complexity areas
-        const complexityCheckboxes = [
-            'complexGMPe', 'complexMyPensionGoLive'
-        ];
-
-        // Event listeners
-        calcCheckboxes.forEach(id => {
+        // =====================
+        // Event Listeners
+        // =====================
+        ['calcComplexity', 'dataQuality', 'uatComplexity'].forEach(id => {
             document.getElementById(id).addEventListener('change', calculateEstimate);
         });
-        complexityCheckboxes.forEach(id => {
-            document.getElementById(id).addEventListener('change', calculateEstimate);
-        });
-        document.getElementById('calcComplexity').addEventListener('change', calculateEstimate);
-        document.getElementById('dataQuality').addEventListener('change', calculateEstimate);
-        document.getElementById('uatComplexity').addEventListener('change', calculateEstimate);
 
-        // Unit toggle — defaults to Days
+        FORMULA.calcTypes.forEach(ct => {
+            document.getElementById('calc-' + ct.id).addEventListener('change', calculateEstimate);
+        });
+
+        FORMULA.complexityAreas.forEach(ca => {
+            document.getElementById('complex-' + ca.id).addEventListener('change', calculateEstimate);
+        });
+
         document.getElementById('daysToggle').addEventListener('click', () => {
             showDays = true;
             document.getElementById('daysToggle').classList.add('active');
@@ -1487,79 +1380,58 @@
             updateBreakdownDisplay();
         });
 
-        // Calculate estimate (all values in days)
+        // =====================
+        // Calculate Estimate
+        // =====================
         function calculateEstimate() {
-            const calcComplexity = document.getElementById('calcComplexity').value;
-            const dataQuality = document.getElementById('dataQuality').value;
-            const uatComplexity = document.getElementById('uatComplexity').value;
+            const complexityVal = document.getElementById('calcComplexity').value;
+            const dataQualityVal = document.getElementById('dataQuality').value;
+            const uatVal = document.getElementById('uatComplexity').value;
 
-            // Count selected calculation types
+            // Count selected calc types
             let calcTypeCount = 0;
-            calcCheckboxes.forEach(id => {
-                if (document.getElementById(id).checked) calcTypeCount++;
+            FORMULA.calcTypes.forEach(ct => {
+                if (document.getElementById('calc-' + ct.id).checked) calcTypeCount++;
             });
 
-            // Multipliers
-            const complexityMult = CONFIG.complexityMultiplier?.[calcComplexity] ||
-                DEFAULT_CONFIG.complexityMultiplier[calcComplexity];
-            const dataQualityMult = CONFIG.dataQualityMultiplier?.[dataQuality] ||
-                DEFAULT_CONFIG.dataQualityMultiplier[dataQuality];
+            // Look up multipliers from FORMULA
+            const complexityMult = FORMULA.complexityLevels.find(l => l.value === complexityVal).multiplier;
+            const dataQualityMult = FORMULA.dataQualityLevels.find(l => l.value === dataQualityVal).multiplier;
+            const uatDaysPerCalc = FORMULA.uatLevels.find(l => l.value === uatVal).daysPerCalc;
 
-            // Tapering: first N calcs at full rate, each beyond threshold at reduced rate
-            const taperThreshold = CONFIG.taperThreshold ?? DEFAULT_CONFIG.taperThreshold;
-            const taperRate = CONFIG.taperRate ?? DEFAULT_CONFIG.taperRate;
-            const effectiveCount = calcTypeCount <= taperThreshold
+            // Tapering
+            const { threshold, rate } = FORMULA.tapering;
+            const effectiveCount = calcTypeCount <= threshold
                 ? calcTypeCount
-                : taperThreshold + (calcTypeCount - taperThreshold) * taperRate;
+                : threshold + (calcTypeCount - threshold) * rate;
 
-            // Analysis (days) = effective count × base per calc × complexity × data quality
-            const analysisBasePerCalc = CONFIG.analysisBasePerCalc ?? DEFAULT_CONFIG.analysisBasePerCalc;
-            const analysisDays = effectiveCount * analysisBasePerCalc * complexityMult * dataQualityMult;
+            // Analysis = effectiveCalcs × basePerCalc × complexity × dataQuality
+            const analysisDays = effectiveCount * FORMULA.phases.analysis.basePerCalc * complexityMult * dataQualityMult;
 
-            // Complexity areas (days) — added to coding
-            let complexityAreasDays = 0;
-            const complexityMapping = {
-                'complexGMPe': 'gmpe',
-                'complexMyPensionGoLive': 'myPensionGoLive'
-            };
-
-            Object.entries(complexityMapping).forEach(([checkboxId, configKey]) => {
-                const el = document.getElementById(checkboxId);
-                if (el && el.checked) {
-                    complexityAreasDays += CONFIG.complexityAreaDays?.[configKey] ??
-                        DEFAULT_CONFIG.complexityAreaDays[configKey];
+            // Complexity area extras (flat days added to coding)
+            let complexityAreaDays = 0;
+            FORMULA.complexityAreas.forEach(ca => {
+                if (document.getElementById('complex-' + ca.id).checked) {
+                    complexityAreaDays += ca.days;
                 }
             });
 
-            // Coding (days) = effective count × base per calc × complexity + complexity areas (flat)
-            const codingDays = (effectiveCount * (CONFIG.codingBasePerCalc ?? DEFAULT_CONFIG.codingBasePerCalc) * complexityMult) + complexityAreasDays;
+            // Coding = effectiveCalcs × basePerCalc × complexity + complexityAreas
+            const codingDays = effectiveCount * FORMULA.phases.coding.basePerCalc * complexityMult + complexityAreaDays;
 
-            // UAT (days) = effective count × days per calc for selected UAT level
-            const uatDaysPerCalc = CONFIG.uatDaysPerCalc?.[uatComplexity] ?? DEFAULT_CONFIG.uatDaysPerCalc[uatComplexity];
+            // UAT = effectiveCalcs × daysPerCalc
             const uatDays = effectiveCount * uatDaysPerCalc;
 
-            // Store breakdown (in days)
-            breakdown = {
-                analysis: analysisDays,
-                coding: codingDays,
-                uat: uatDays
-            };
+            breakdown = { analysis: analysisDays, coding: codingDays, uat: uatDays };
 
-            // Totals
             const totalDays = analysisDays + codingDays + uatDays;
-            const totalHours = totalDays * CONFIG.hoursPerDay;
+            const totalHours = totalDays * FORMULA.hoursPerDay;
 
-            // Update display
             document.getElementById('totalDays').textContent = totalDays.toFixed(1);
             document.getElementById('totalHours').textContent = Math.round(totalHours);
 
-            // Complexity badge (thresholds in days)
             updateComplexityBadge(totalDays);
-
-            // Breakdown
             updateBreakdownDisplay();
-
-            // Timeline
             updateTimeline();
         }
 
@@ -1567,15 +1439,14 @@
             const badge = document.getElementById('complexityBadge');
             badge.classList.remove('complexity-low', 'complexity-medium', 'complexity-high', 'complexity-very-high');
 
-            const thresholds = CONFIG.complexityThresholds || DEFAULT_CONFIG.complexityThresholds;
-
-            if (totalDays < thresholds.low) {
+            const t = FORMULA.complexityBadge;
+            if (totalDays < t.low) {
                 badge.textContent = 'LOW';
                 badge.classList.add('complexity-low');
-            } else if (totalDays < thresholds.medium) {
+            } else if (totalDays < t.medium) {
                 badge.textContent = 'MEDIUM';
                 badge.classList.add('complexity-medium');
-            } else if (totalDays < thresholds.high) {
+            } else if (totalDays < t.high) {
                 badge.textContent = 'HIGH';
                 badge.classList.add('complexity-high');
             } else {
@@ -1585,20 +1456,21 @@
         }
 
         function updateBreakdownDisplay() {
-            const hoursPerDay = CONFIG.hoursPerDay;
-
+            const hpd = FORMULA.hoursPerDay;
             if (showDays) {
                 document.getElementById('breakdownAnalysis').textContent = breakdown.analysis.toFixed(1) + 'd';
                 document.getElementById('breakdownCoding').textContent = breakdown.coding.toFixed(1) + 'd';
                 document.getElementById('breakdownUAT').textContent = breakdown.uat.toFixed(1) + 'd';
             } else {
-                document.getElementById('breakdownAnalysis').textContent = (breakdown.analysis * hoursPerDay).toFixed(1) + 'h';
-                document.getElementById('breakdownCoding').textContent = (breakdown.coding * hoursPerDay).toFixed(1) + 'h';
-                document.getElementById('breakdownUAT').textContent = (breakdown.uat * hoursPerDay).toFixed(1) + 'h';
+                document.getElementById('breakdownAnalysis').textContent = (breakdown.analysis * hpd).toFixed(1) + 'h';
+                document.getElementById('breakdownCoding').textContent = (breakdown.coding * hpd).toFixed(1) + 'h';
+                document.getElementById('breakdownUAT').textContent = (breakdown.uat * hpd).toFixed(1) + 'h';
             }
         }
 
+        // =====================
         // Timeline
+        // =====================
         function updateTimeline() {
             const totalDays = breakdown.analysis + breakdown.coding + breakdown.uat;
             const WORKING_DAYS_PER_MONTH = 21.7;
@@ -1618,30 +1490,25 @@
                 return;
             }
 
-            // Bar positions as percentages
             const analysisPct = (breakdown.analysis / totalDays) * 100;
             const codingPct = (breakdown.coding / totalDays) * 100;
             const uatPct = (breakdown.uat / totalDays) * 100;
-
-            const codingStart = analysisPct;
-            const uatStart = analysisPct + codingPct;
 
             barAnalysis.style.left = '0%';
             barAnalysis.style.width = analysisPct + '%';
             barAnalysis.title = 'Analysis: ' + breakdown.analysis.toFixed(1) + ' days';
             barAnalysis.textContent = breakdown.analysis >= 1 ? breakdown.analysis.toFixed(1) + 'd' : '';
 
-            barCoding.style.left = codingStart + '%';
+            barCoding.style.left = analysisPct + '%';
             barCoding.style.width = codingPct + '%';
             barCoding.title = 'Coding: ' + breakdown.coding.toFixed(1) + ' days';
             barCoding.textContent = breakdown.coding >= 1 ? breakdown.coding.toFixed(1) + 'd' : '';
 
-            barUAT.style.left = uatStart + '%';
+            barUAT.style.left = (analysisPct + codingPct) + '%';
             barUAT.style.width = uatPct + '%';
             barUAT.title = 'UAT: ' + breakdown.uat.toFixed(1) + ' days';
             barUAT.textContent = breakdown.uat >= 1 ? breakdown.uat.toFixed(1) + 'd' : '';
 
-            // Axis ticks
             const useMonths = totalDays > 10;
             timelineAxis.innerHTML = '';
 
@@ -1650,8 +1517,7 @@
                 for (let m = 0; m <= totalMonths; m++) {
                     const tick = document.createElement('span');
                     tick.className = 'timeline-tick';
-                    const pct = Math.min((m * WORKING_DAYS_PER_MONTH / totalDays) * 100, 100);
-                    tick.style.left = pct + '%';
+                    tick.style.left = Math.min((m * WORKING_DAYS_PER_MONTH / totalDays) * 100, 100) + '%';
                     tick.textContent = m === 0 ? 'Start' : 'M' + m;
                     timelineAxis.appendChild(tick);
                 }
@@ -1662,12 +1528,10 @@
                 for (let d = 0; d <= roundedDays; d += step) {
                     const tick = document.createElement('span');
                     tick.className = 'timeline-tick';
-                    const pct = (d / totalDays) * 100;
-                    tick.style.left = pct + '%';
+                    tick.style.left = (d / totalDays) * 100 + '%';
                     tick.textContent = d === 0 ? 'Start' : 'D' + d;
                     timelineAxis.appendChild(tick);
                 }
-                // Ensure end tick
                 if (roundedDays % step !== 0) {
                     const tick = document.createElement('span');
                     tick.className = 'timeline-tick';
@@ -1679,33 +1543,38 @@
             }
         }
 
-        // Reset form
+        // =====================
+        // Reset
+        // =====================
         document.getElementById('resetBtn').addEventListener('click', () => {
             document.getElementById('clientName').value = '';
             document.getElementById('schemeName').value = '';
             document.getElementById('quoteRef').value = '';
 
-            document.getElementById('calcComplexity').value = 'moderate';
-            document.getElementById('dataQuality').value = 'average';
-            document.getElementById('uatComplexity').value = 'standard';
+            // Reset dropdowns to their defaults from FORMULA
+            function resetDropdown(selectId, levels) {
+                const def = levels.find(l => l.default);
+                document.getElementById(selectId).value = def ? def.value : levels[0].value;
+            }
+            resetDropdown('calcComplexity', FORMULA.complexityLevels);
+            resetDropdown('dataQuality', FORMULA.dataQualityLevels);
+            resetDropdown('uatComplexity', FORMULA.uatLevels);
 
-            calcCheckboxes.forEach(id => {
-                document.getElementById(id).checked = (id === 'calcActiveDeferred');
+            FORMULA.calcTypes.forEach(ct => {
+                document.getElementById('calc-' + ct.id).checked = !!ct.default;
             });
 
-            complexityCheckboxes.forEach(id => {
-                document.getElementById(id).checked = false;
+            FORMULA.complexityAreas.forEach(ca => {
+                document.getElementById('complex-' + ca.id).checked = false;
             });
 
             document.getElementById('notesTextarea').value = '';
-
             calculateEstimate();
         });
 
         // =====================
-        // Export Functionality
+        // Export
         // =====================
-
         function getExportData() {
             const clientName = document.getElementById('clientName').value || 'Not specified';
             const schemeName = document.getElementById('schemeName').value || 'Not specified';
@@ -1715,70 +1584,25 @@
             const complexity = document.getElementById('complexityBadge').textContent;
             const notes = document.getElementById('notesTextarea').value;
 
-            const dataQualityLabels = {
-                'excellent': 'Excellent - Fully validated, no known issues',
-                'good': 'Good - Clean, minor gaps',
-                'average': 'Average - Some gaps/issues',
-                'poor': 'Poor - Significant data issues',
-                'very-poor': 'Very Poor - Major remediation needed'
-            };
-            const dataQuality = dataQualityLabels[document.getElementById('dataQuality').value];
+            // Look up labels from FORMULA arrays
+            const calcComplexity = FORMULA.complexityLevels.find(l => l.value === document.getElementById('calcComplexity').value).label;
+            const dataQuality = FORMULA.dataQualityLevels.find(l => l.value === document.getElementById('dataQuality').value).label;
+            const uatComplexity = FORMULA.uatLevels.find(l => l.value === document.getElementById('uatComplexity').value).label;
 
-            const calcComplexityLabels = {
-                'very-simple': 'Very Simple - Single calc type, standard rules only',
-                'simple': 'Simple - 1-2 calc types, minor special factors',
-                'moderate': 'Moderate - Several calc types, some scheme complexity',
-                'complex': 'Complex - Many calc types, significant complexity e.g. GMP',
-                'very-complex': 'Very Complex - Full calc suite, multiple interacting factors'
-            };
-            const calcComplexity = calcComplexityLabels[document.getElementById('calcComplexity').value];
+            const selectedCalcTypes = FORMULA.calcTypes
+                .filter(ct => document.getElementById('calc-' + ct.id).checked)
+                .map(ct => ct.label);
 
-            const uatLabels = {
-                'minimal': 'Minimal - Basic sanity checks only',
-                'light': 'Light - Targeted testing, limited test pack',
-                'standard': 'Standard - Structured test pack, all calc types',
-                'intensive': 'Intensive - Extended test pack, parallel running',
-                'full-regression': 'Full Regression - Complete regression, bulk runs'
-            };
-            const uatComplexity = uatLabels[document.getElementById('uatComplexity').value];
-
-            const selectedCalcTypes = [];
-            const calcTypeLabels = {
-                'calcActiveDeferred': 'Active to Deferred',
-                'calcActiveRetired': 'Active to Retired',
-                'calcActiveBenefitStatement': 'Active Benefit Statement',
-                'calcAnnualAllowance': 'Annual Allowance',
-                'calcPensionIncrease': 'Pension Increase',
-                'calcDeferredRetired': 'Deferred to Retired',
-                'calcDeathInService': 'Death in Service',
-                'calcDeathInDeferment': 'Death in Deferment',
-                'calcDeathInRetirement': 'Death in Retirement',
-                'calcDeferredBenefitStatement': 'Deferred Benefit Statement',
-                'calcDashboard': 'Dashboard'
-            };
-            Object.entries(calcTypeLabels).forEach(([id, label]) => {
-                if (document.getElementById(id).checked) selectedCalcTypes.push(label);
-            });
-
-            const selectedComplexity = [];
-            const complexityLabels = {
-                'complexGMPe': 'GMPe',
-                'complexMyPensionGoLive': 'MyPension Required Go-Live'
-            };
-            Object.entries(complexityLabels).forEach(([id, label]) => {
-                if (document.getElementById(id).checked) selectedComplexity.push(label);
-            });
+            const selectedComplexity = FORMULA.complexityAreas
+                .filter(ca => document.getElementById('complex-' + ca.id).checked)
+                .map(ca => ca.label);
 
             const filenameParts = [];
-            if (document.getElementById('clientName').value) {
+            if (document.getElementById('clientName').value)
                 filenameParts.push(document.getElementById('clientName').value.replace(/[^a-z0-9]/gi, '-').toLowerCase());
-            }
-            if (document.getElementById('schemeName').value) {
+            if (document.getElementById('schemeName').value)
                 filenameParts.push(document.getElementById('schemeName').value.replace(/[^a-z0-9]/gi, '-').toLowerCase());
-            }
-            const filenameBase = filenameParts.length > 0
-                ? filenameParts.join('-')
-                : 'calcs-estimate';
+            const filenameBase = filenameParts.length > 0 ? filenameParts.join('-') : 'calcs-estimate';
 
             return {
                 clientName, schemeName, quoteRef, totalDays, totalHours,
@@ -1787,7 +1611,6 @@
             };
         }
 
-        // Export to text file
         document.getElementById('exportTxtBtn').addEventListener('click', () => {
             const d = getExportData();
 
@@ -1859,16 +1682,15 @@ ${d.notes || 'No notes added'}
         });
 
         // =====================
-        // Save/Load Functionality
+        // Save/Load
         // =====================
-
         function getSavedEstimates() {
-            const saved = localStorage.getItem('calcCostSavedEstimatesV2');
+            const saved = localStorage.getItem('calcCostSavedEstimatesV3');
             return saved ? JSON.parse(saved) : [];
         }
 
         function saveEstimates(estimates) {
-            localStorage.setItem('calcCostSavedEstimatesV2', JSON.stringify(estimates));
+            localStorage.setItem('calcCostSavedEstimatesV3', JSON.stringify(estimates));
         }
 
         function getCurrentEstimateData() {
@@ -1881,8 +1703,12 @@ ${d.notes || 'No notes added'}
                 calcComplexity: document.getElementById('calcComplexity').value,
                 dataQuality: document.getElementById('dataQuality').value,
                 uatComplexity: document.getElementById('uatComplexity').value,
-                calcTypes: calcCheckboxes.filter(id => document.getElementById(id).checked),
-                complexityAreas: complexityCheckboxes.filter(id => document.getElementById(id).checked),
+                calcTypes: FORMULA.calcTypes
+                    .filter(ct => document.getElementById('calc-' + ct.id).checked)
+                    .map(ct => ct.id),
+                complexityAreas: FORMULA.complexityAreas
+                    .filter(ca => document.getElementById('complex-' + ca.id).checked)
+                    .map(ca => ca.id),
                 notes: document.getElementById('notesTextarea').value,
                 totalDays: document.getElementById('totalDays').textContent,
                 totalHours: document.getElementById('totalHours').textContent
@@ -1898,16 +1724,15 @@ ${d.notes || 'No notes added'}
             document.getElementById('dataQuality').value = data.dataQuality || 'average';
             document.getElementById('uatComplexity').value = data.uatComplexity || 'standard';
 
-            calcCheckboxes.forEach(id => {
-                document.getElementById(id).checked = data.calcTypes?.includes(id) || false;
+            FORMULA.calcTypes.forEach(ct => {
+                document.getElementById('calc-' + ct.id).checked = data.calcTypes?.includes(ct.id) || false;
             });
 
-            complexityCheckboxes.forEach(id => {
-                document.getElementById(id).checked = data.complexityAreas?.includes(id) || false;
+            FORMULA.complexityAreas.forEach(ca => {
+                document.getElementById('complex-' + ca.id).checked = data.complexityAreas?.includes(ca.id) || false;
             });
 
             document.getElementById('notesTextarea').value = data.notes || '';
-
             calculateEstimate();
         }
 
@@ -1952,8 +1777,7 @@ ${d.notes || 'No notes added'}
             }
 
             const estimates = getSavedEstimates();
-            const newEstimate = getCurrentEstimateData();
-            estimates.unshift(newEstimate);
+            estimates.unshift(getCurrentEstimateData());
             saveEstimates(estimates);
             alert('Estimate saved successfully!');
         }
@@ -1969,9 +1793,7 @@ ${d.notes || 'No notes added'}
 
         function deleteEstimate(id) {
             if (!confirm('Are you sure you want to delete this estimate?')) return;
-            const estimates = getSavedEstimates();
-            const filtered = estimates.filter(e => e.id !== id);
-            saveEstimates(filtered);
+            saveEstimates(getSavedEstimates().filter(e => e.id !== id));
             renderSavedEstimates();
         }
 
@@ -1984,7 +1806,6 @@ ${d.notes || 'No notes added'}
             document.getElementById('savedEstimatesModal').classList.remove('show');
         }
 
-        // Event listeners for save/load buttons
         document.getElementById('saveEstimateBtn').addEventListener('click', saveCurrentEstimate);
         document.getElementById('loadEstimateBtn').addEventListener('click', openModal);
         document.getElementById('closeModalBtn').addEventListener('click', closeModal);
@@ -1994,32 +1815,29 @@ ${d.notes || 'No notes added'}
         });
 
         // =====================
-        // Tooltip toggle
+        // Tooltips & Caveats
         // =====================
         function toggleTooltip(id, event) {
             event.stopPropagation();
             const tooltip = document.getElementById(id);
             const isOpen = tooltip.classList.contains('show');
-            // Close all open tooltips first
             document.querySelectorAll('.tooltip-popup.show').forEach(t => t.classList.remove('show'));
             if (!isOpen) tooltip.classList.add('show');
         }
 
-        // Close tooltips when clicking anywhere else
         document.addEventListener('click', function() {
             document.querySelectorAll('.tooltip-popup.show').forEach(t => t.classList.remove('show'));
         });
 
-        // =====================
-        // Caveat toggle
-        // =====================
         function toggleCaveat(btn) {
             const detail = document.getElementById('caveatDetail');
             detail.classList.toggle('show');
             btn.textContent = detail.classList.contains('show') ? 'Hide caveat' : 'Read full caveat';
         }
 
-        // Initial calculation
+        // =====================
+        // Init
+        // =====================
         calculateEstimate();
     </script>
 </body>
