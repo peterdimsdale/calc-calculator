@@ -19,7 +19,7 @@
 // ------------
 //   Analysis days = effectiveCalcs x analysis.basePerCalc x complexityMultiplier x dataQualityMultiplier
 //   Coding days   = effectiveCalcs x coding.basePerCalc x complexityMultiplier + complexityAreaDays
-//   UAT days      = effectiveCalcs x uatDaysPerCalc
+//   UAT days      = effectiveCalcs x uat.basePerCalc x uatMultiplier
 //   Total         = Analysis + Coding + UAT
 //
 // TAPERING (efficiency discount for multiple calc types)
@@ -49,6 +49,7 @@ const FORMULA = {
   phases: {
     analysis: { basePerCalc: 5 },
     coding: { basePerCalc: 5 },
+    uat: { basePerCalc: 2 },
   },
 
   // ----- COMPLEXITY -----
@@ -110,34 +111,35 @@ const FORMULA = {
   ],
 
   // ----- UAT -----
-  // Days per calc type for each UAT testing level.
+  // Multiplier applied to UAT phase.
+  // 1.0 is the baseline (standard testing). Higher = more effort.
 
   uatLevels: [
     {
       value: "minimal",
       label: "Minimal - Basic sanity checks only",
-      daysPerCalc: 0.5,
+      multiplier: 0.25,
     },
     {
       value: "light",
       label: "Light - Targeted testing, limited test pack",
-      daysPerCalc: 1,
+      multiplier: 0.5,
     },
     {
       value: "standard",
       label: "Standard - Structured test pack, all calc types",
-      daysPerCalc: 2,
+      multiplier: 1.0,
       default: true,
     },
     {
       value: "intensive",
       label: "Intensive - Extended test pack, parallel running",
-      daysPerCalc: 3,
+      multiplier: 1.5,
     },
     {
       value: "full-regression",
       label: "Full Regression - Complete regression, bulk runs",
-      daysPerCalc: 5,
+      multiplier: 2.5,
     },
   ],
 

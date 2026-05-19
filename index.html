@@ -1397,7 +1397,7 @@
             // Look up multipliers from FORMULA
             const complexityMult = FORMULA.complexityLevels.find(l => l.value === complexityVal).multiplier;
             const dataQualityMult = FORMULA.dataQualityLevels.find(l => l.value === dataQualityVal).multiplier;
-            const uatDaysPerCalc = FORMULA.uatLevels.find(l => l.value === uatVal).daysPerCalc;
+            const uatMult = FORMULA.uatLevels.find(l => l.value === uatVal).multiplier;
 
             // Tapering
             const { threshold, rate } = FORMULA.tapering;
@@ -1419,8 +1419,8 @@
             // Coding = effectiveCalcs × basePerCalc × complexity + complexityAreas
             const codingDays = effectiveCount * FORMULA.phases.coding.basePerCalc * complexityMult + complexityAreaDays;
 
-            // UAT = effectiveCalcs × daysPerCalc
-            const uatDays = effectiveCount * uatDaysPerCalc;
+            // UAT = effectiveCalcs × basePerCalc × uatMultiplier
+            const uatDays = effectiveCount * FORMULA.phases.uat.basePerCalc * uatMult;
 
             breakdown = { analysis: analysisDays, coding: codingDays, uat: uatDays };
 
