@@ -42,9 +42,11 @@ The estimator calculates effort across three sequential phases:
 ```
 Analysis days = effectiveCalcs x basePerCalc x complexityMultiplier x dataQualityMultiplier
 Coding days   = effectiveCalcs x basePerCalc x complexityMultiplier + complexityAreaDays
-UAT days      = effectiveCalcs x uatDaysPerCalc
+UAT days      = effectiveCalcs x basePerCalc x uatMultiplier
 Total         = Analysis + Coding + UAT
 ```
+
+Each phase has its own `basePerCalc` value in `formula.js` (analysis and coding default to 5, UAT to 2).
 
 ### Tapering
 
@@ -59,8 +61,9 @@ effectiveCalcs = 3 + (2 x 0.65) = 4.3
 
 - **Complexity** multiplier applies to both analysis and coding. Ranges from 0.7 (very simple) to 2.2 (very complex).
 - **Data quality** multiplier applies to analysis only. Ranges from 0.8 (excellent) to 2.0 (very poor).
-- **UAT** has a flat days-per-calc rate for each testing level, from 0.5 (minimal) to 5 (full regression).
+- **UAT** multiplier applies to the UAT phase. Ranges from 0.25 (minimal) to 2.5 (full regression), applied on top of the UAT `basePerCalc`.
 - **Complexity areas** (e.g. GMPe) add flat extra days to the coding phase.
+- **Calc type weight** — most calc types count as 1, but some (e.g. Dashboard at 0.25) count as a fraction. Set `weight` on a calc type to override.
 
 All of these values are defined in `formula.js` and can be changed there.
 
@@ -90,8 +93,8 @@ Click the **(i)** icon next to each for a guide to choosing the right level.
 
 ### Results
 
-- **Days / Hours** — total estimate, with a toggle to switch the breakdown display
-- **Complexity Badge** — coloured indicator (Low / Medium / High / Very High)
+- **Days / Hours** — total estimate, with a toggle to switch the breakdown display. The hours conversion uses `hoursPerDay` in `formula.js` (default 7.5).
+- **Complexity Badge** — coloured indicator (Low / Medium / High / Very High), with thresholds set by `complexityBadge` in `formula.js`
 - **Effort Breakdown** — days per phase
 - **Timeline** — visual waterfall chart showing phases sequentially, with month or day axis
 - **Caveat** — all estimates include a disclaimer that they are indicative RFP figures only
@@ -126,14 +129,19 @@ Add a line to the `calcTypes` array:
 
 ```javascript
 calcTypes: [
-    { id: "activeDeferred",  label: "Active to Deferred", default: true },
+    { id: "activeDeferred",  label: "Active to Deferred" },
     { id: "activeRetired",   label: "Active to Retired" },
     // ... existing types ...
-    { id: "transferValue",   label: "Transfer Value" },       // <-- new
+    { id: "transferValue",   label: "Transfer Value" },                 // <-- new
+    { id: "memberPortal",    label: "Member Portal", weight: 0.25 },    // <-- new, counts as a fraction
 ],
 ```
 
 The checkbox will appear automatically. No HTML editing needed.
+
+Optional fields:
+- `default: true` — pre-tick the checkbox
+- `weight` (0–1) — count this calc type as a fraction of a full calc. Omit for full effort.
 
 ### Add a new complexity area
 
@@ -154,9 +162,23 @@ Add a line to the relevant array (`complexityLevels`, `dataQualityLevels`, or `u
 ```javascript
 uatLevels: [
     // ... existing levels ...
-    { value: "full-regression", label: "Full Regression - Complete regression, bulk runs", daysPerCalc: 5 },
-    { value: "parallel-run",   label: "Parallel Run - Full parallel with legacy system",  daysPerCalc: 8 },  // <-- new
+    { value: "full-regression", label: "Full Regression - Complete regression, bulk runs", multiplier: 2.5 },
+    { value: "parallel-run",   label: "Parallel Run - Full parallel with legacy system",  multiplier: 4 },  // <-- new
 ],
+```
+
+Note: `complexityLevels`, `dataQualityLevels`, and `uatLevels` all use a `multiplier` field. The actual day rate is `phases.<phase>.basePerCalc x multiplier`.
+
+### Change the hours-per-day or badge thresholds
+
+```javascript
+hoursPerDay: 7.5,             // used for the Days/Hours toggle
+
+complexityBadge: {            // total-days thresholds for the badge
+  low: 25,                    // below this = LOW
+  medium: 60,                 // below this = MEDIUM
+  high: 120,                  // below this = HIGH, above = VERY HIGH
+},
 ```
 
 ### Change the default selection
